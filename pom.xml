@@ -15,7 +15,7 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<!-- Версия Java 1.6 -->
+					<!-- Версия Java 1.7 -->
 					<source>1.7</source>
 					<target>1.7</target>
 				</configuration>
@@ -24,7 +24,11 @@
 	</build>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>com.atlascopco</groupId>
+			<artifactId>hunspell-bridj</artifactId>
+			<version>[1.0.0,)</version>
+		</dependency>
 		<dependency>
 			<!-- координаты необходимой библиотеки -->
 			<groupId>junit</groupId>
@@ -73,8 +77,8 @@
 		</profile>
 	</profiles>
 
-	<!-- Добавляем сторонний репозиторий, содержащий SWT, т. к. в репозитории по умолчанию этого зла нет :) -->
 	<repositories>
+		<!-- Добавляем сторонний репозиторий, содержащий SWT, т. к. в репозитории по умолчанию этого зла нет :) -->
 		<repository>
 			<id>swt-repo</id>
 			<url>https://swt-repo.googlecode.com/svn/repo/</url>
