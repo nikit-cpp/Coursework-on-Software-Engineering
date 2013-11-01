@@ -1,4 +1,4 @@
-package model;
+п»їpackage model;
 
 import java.util.ArrayList;
 
@@ -7,7 +7,7 @@ public class Tokenizer {
 		if(input==null) return null;
 		System.out.println("tokenize()");
 		ArrayList<Token> al = new ArrayList<Token>();
-		// TODO сделать метод add()
+		// TODO СЃРґРµР»Р°С‚СЊ РјРµС‚РѕРґ add()
 		String[] ab = input.split("\\s|,|\\(|\\)|\\[|\\]|\\}|\\{|:|\\\"");
 		for (String s : ab)
 			if(s!=null && !s.isEmpty()){

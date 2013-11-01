@@ -1,8 +1,8 @@
-import java.util.Collection;
+п»їimport java.util.Collection;
 
 /**
- * Интерфейс Наблюдателя
- * @author Ник
+ * РРЅС‚РµСЂС„РµР№СЃ РќР°Р±Р»СЋРґР°С‚РµР»СЏ
+ * @author РќРёРє
  *
  */
 public interface IModel {

@@ -1,4 +1,4 @@
-package view;
+п»їpackage view;
 import model.Model;
 import model.Token;
 
@@ -20,7 +20,7 @@ public class ModelObserver{
 	}
 
 	private void putNewItemToList() {
-		// TODO сделать инициализатор и засунуть это туда
+		// TODO СЃРґРµР»Р°С‚СЊ РёРЅРёС†РёР°Р»РёР·Р°С‚РѕСЂ Рё Р·Р°СЃСѓРЅСѓС‚СЊ СЌС‚Рѕ С‚СѓРґР°
 		table.removeAll();
 		for(Token t : model.tokenize(text.getText())){
 			String s = t.value;
