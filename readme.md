@@ -34,7 +34,8 @@
 
 ##IV. Установка Window Builder(опционально)
 * Плагин [WindowBuilder](http://www.eclipse.org/windowbuilder/ "Страница WindowBuilder на сайте Eclipse") добавляет WYSIWYG-редактор, с помощью которого можно быстро создавать окошки.  
-* [Страница загрузки WindowBuilder](http://www.eclipse.org/windowbuilder/download.php), на которой нужно выбрать соответствующую вашей версии Eclipse ссылку: ![](http://img-fotki.yandex.ru/get/9166/165433899.0/0_e6a60_88e8cad2_orig)  
+* [Страница загрузки WindowBuilder](http://www.eclipse.org/windowbuilder/download.php), на которой нужно выбрать соответствующую вашей версии Eclipse ссылку:  
+![](http://img-fotki.yandex.ru/get/9166/165433899.0/0_e6a60_88e8cad2_orig)  
 [Эта ссылка, например для Eclipse Kepler](http://download.eclipse.org/windowbuilder/WB/release/R201309271200/4.3/), как и все остальные, содержит инструкции по установке.
 * Использование: ![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a3c_e7a0a5f5_orig)
 ![](http://img-fotki.yandex.ru/get/9092/165433899.0/0_e6a3f_b3413d1f_orig)
@@ -47,11 +48,12 @@
 3. Выбираем SCM URL: git и вставляем ссылку:<a name="connector"></a> ![](http://img-fotki.yandex.ru/get/9106/165433899.0/0_e6a30_bdfdd25a_orig)
 
 Здесь есть одна особенность - а именно: Eclipse может 'задуматься' на несколько секунд(Windows) или на несколько минут(Linux) перед тем, как собственно отобразить проект в Package Explorer.  
-4. Дальше обновляем проект(иногда сам Maven просит это сделать через Problems View)
-![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a27_2152292e_orig "Выбираем Maven -> Update Project...")
+4. Дальше обновляем проект(иногда сам Maven просит это сделать через Problems View):
+![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a27_2152292e_orig "Выбираем Maven -> Update Project...")  
+Снимаем галочку Offline:  
 ![](http://img-fotki.yandex.ru/get/9109/165433899.0/0_e6a22_75102b8c_orig "Снимоем галочку Offline")  
 5. Скорее всего на значке проекта будет восклицательный знак, либо красный крест - это от того что Eclipse не видит нужных библиотек(зависимостей). Сейчас мы их скачаем:  
-Запускаем Тесты, maven скачает все нужные для сборки maven-плагины и зависимости(библиотеки)... [Куда?](#diskspace)
+Запускаем Тесты, maven скачает все нужные для сборки maven-плагины и зависимости(библиотеки)... [Куда?](#repo)
 ![Запускаем тесты](http://img-fotki.yandex.ru/get/9163/165433899.0/0_e6a28_6ccd25e_orig "Запускаем тесты: Run As -> Maven test")
 
 ##VI. Известные проблемы
@@ -61,7 +63,7 @@
 `# Removing BOM from all text files in current directory:`  
 `sed -i '1 s/^\xef\xbb\xbf//' *.java`
 ###2. Куда подевался гигабайт дискового пространства?
-1. Maven скачивает зависимости и прочие плагины в `~/.m2/repository` на Linux и в `%USERPROFILE%\.m2\repository` на Windows. Очищать эти папки во время работы над проектом нет смысла.
+1. Maven скачивает зависимости(библиотеки) и прочие maven-плагины в `~/.m2/repository` на Linux и в `%USERPROFILE%\.m2\repository` на Windows. Очищать эти папки во время работы над проектом нет смысла.<a name="repo"></a> 
 2. По непонятным причинам Maven забирает примерно 500МБ в `You_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`<a name="diskspace"></a>  
 Это безобразие можно отключить, выставив галочки вот так: ![alt-текст](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e6a23_57a3866c_orig "Галочка Offline должна быть снята!")  
 (решение взято [отсюда](http://stackoverflow.com/questions/8539841/eclipse-metadata-plugins-disk-space), но нужно оставить снятой галочку `Offline`, иначе не скачаются новые файлы(плагины и зависимости), а значит мы не сможем собрать только что импортированный проект).  
