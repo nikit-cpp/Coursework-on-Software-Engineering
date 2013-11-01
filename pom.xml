@@ -8,7 +8,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
-	
+
 
 	<build>
 		<resources>
@@ -16,43 +16,39 @@
 				<directory>resources</directory>
 			</resource>
 		</resources>
-		
-		   <!--pluginManagement>
-				<plugins>
+
+		<!-- Приказываем одной шизоидной системе m2e не мешать исполнению плагина 
+			maven-download-plugin во время фазы generate-resources -->
+		<!-- http://wiki.eclipse.org/M2E_plugin_execution_not_covered#ignore_plugin_goal -->
+		<pluginManagement>
+			<plugins>
 				<plugin>
-				 <groupId>org.eclipse.m2e</groupId>
-				 <artifactId>lifecycle-mapping</artifactId>
-				 <version>1.0.0</version>
-				 <configuration>
-				   <lifecycleMappingMetadata>
-					 <pluginExecutions>
-					   <pluginExecution>
-						 <pluginExecutionFilter>
-						   <groupId>com.googlecode.maven-download-plugin</groupId>
-						   <artifactId>maven-download-plugin</artifactId>
-						   <versionRange>[1.1.0,)</versionRange>
-						   <goals>
-						   	 <goal>initialize</goal>
-						   	 <goal>generate-resources</goal>
-							 <goal>resources</goal>
-						   	 <goal>default-resources</goal>
-							 <goal>process-resources</goal>
-						   </goals>
-						 </pluginExecutionFilter>
-						 <action>
-						   <execute>
-				             <runOnIncremental>false</runOnIncremental>
-				           </execute >
-						 </action>
-					   </pluginExecution>
-					 </pluginExecutions>
-				   </lifecycleMappingMetadata>
-				 </configuration>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>com.googlecode.maven-download-plugin</groupId>
+										<artifactId>maven-download-plugin</artifactId>
+										<versionRange>[1.1.0,)</versionRange>
+										<goals>
+											<goal>wget</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
 				</plugin>
-				
-				</plugins>
-			</pluginManagement-->
-		
+			</plugins>
+		</pluginManagement>
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
@@ -62,50 +58,35 @@
 					<target>1.6</target>
 				</configuration>
 			</plugin>
-			
+
 			<!-- https://github.com/maven-download-plugin/maven-download-plugin -->
-		    <plugin>
-			    <groupId>com.googlecode.maven-download-plugin</groupId>
-			    <artifactId>maven-download-plugin</artifactId>
-			    <version>1.1.0</version>
-			    <executions>
-			        <execution>
-			            <id>install-hunspell-ru</id>
-						<phase>pre-integration-test</phase>
-			            <!--phase>process-resources</phase-->
-			            <goals>
-			                <goal>wget</goal>
-			            </goals>
-			            <configuration>
-			                <url>http://hunspell-ru.googlecode.com/files/ru_RU_UTF-8_20120501.zip</url>
-			                <unpack>true</unpack>
-			                <outputDirectory>${basedir}/resources</outputDirectory>
-			                <md5>6b29df84526b8f4759fcda1519f86b04</md5>
-			            </configuration>
-			        </execution>
-			    </executions>
+			<plugin>
+				<groupId>com.googlecode.maven-download-plugin</groupId>
+				<artifactId>maven-download-plugin</artifactId>
+				<version>1.1.0</version>
+				<executions>
+					<execution>
+						<id>install-hunspell-ru</id>
+						<!--phase>pre-integration-test</phase -->
+						<phase>generate-resources</phase>
+						<goals>
+							<goal>wget</goal>
+						</goals>
+						<configuration>
+							<url>http://hunspell-ru.googlecode.com/files/ru_RU_UTF-8_20120501.zip</url>
+							<unpack>true</unpack>
+							<outputDirectory>${basedir}/resources</outputDirectory>
+							<md5>6b29df84526b8f4759fcda1519f86b04</md5>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
-			
-			      <!--plugin>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.5</version>
-					<executions>
-					  <execution>
-						<id>default-resources</id>
-						<phase>process-resources</phase>
-						<goals>
-						  <goal>resources</goal>
-						</goals>
-					  </execution>
-					  <execution>
-						<id>default-testResources</id>
-						<phase>process-test-resources</phase>
-						<goals>
-						  <goal>testResources</goal>
-						</goals>
-					  </execution>
-					</executions>
-				  </plugin-->
+
+			<!--plugin> <artifactId>maven-resources-plugin</artifactId> <version>2.5</version> 
+				<executions> <execution> <id>default-resources</id> <phase>process-resources</phase> 
+				<goals> <goal>resources</goal> </goals> </execution> <execution> <id>default-testResources</id> 
+				<phase>process-test-resources</phase> <goals> <goal>testResources</goal> 
+				</goals> </execution> </executions> </plugin -->
 		</plugins>
 	</build>
 
