@@ -8,6 +8,7 @@
 
 1. ![](http://img-fotki.yandex.ru/get/9061/165433899.0/0_e6a34_b9311bf6_orig "Window -> Customize Perspective...")
 2. ![](http://img-fotki.yandex.ru/get/9065/165433899.0/0_e6a35_cc927160_orig "Command Groups Availability -> Git")
+
 ##II. Установка Maven-плагина
 Взято [отсюда](http://www.apache-maven.ru/quick_start.html).  
 Для установки:
