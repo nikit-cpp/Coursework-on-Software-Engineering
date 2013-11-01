@@ -27,29 +27,31 @@
 1. Click Help
 2. Install New Software
 3. Uncheck the box labeled `Group items by category` (this step is important or you won't see the connector in the table)
-4. Paste in this URL `http://repository.tesla.io:8081/nexus/content/sites/m2e.extras/m2eclipse-egit/0.14.0/N/0.14.0.201305250025/` - ссылка обновлена по сравнению с той что в статье...
+4. Paste in this URL <http://repository.tesla.io:8081/nexus/content/sites/m2e.extras/m2eclipse-egit/0.14.0/N/0.14.0.201305250025/> <- **осторожно, ссылка может быть обрезана из-за того что не умещается по длине** - ссылка обновлена по сравнению с той что в статье...
 ![Скрин](http://img-fotki.yandex.ru/get/9166/165433899.0/0_e6a24_bc33a4af_orig "Снять галочку Group items by category")
 5. Eclipse предупредит об установке неподписанного плагина, соглашаемся...
 6. Finish the plugin install wizard and restart the workspace
 
 ##IV. Установка Window Builder(опционально)
 * Плагин [WindowBuilder](http://www.eclipse.org/windowbuilder/ "Страница WindowBuilder на сайте Eclipse") добавляет WYSIWYG-редактор, с помощью которого можно быстро создавать окошки.  
-![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a3c_e7a0a5f5_orig)
+* [Страница загрузки WindowBuilder](http://www.eclipse.org/windowbuilder/download.php), на которой нужно выбрать соответствующую вашей версии Eclipse ссылку: ![](http://img-fotki.yandex.ru/get/9166/165433899.0/0_e6a60_88e8cad2_orig)  
+[Эта ссылка, например для Eclipse Kepler](http://download.eclipse.org/windowbuilder/WB/release/R201309271200/4.3/), как и все остальные, содержит инструкции по установке.
+* Использование: ![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a3c_e7a0a5f5_orig)
 ![](http://img-fotki.yandex.ru/get/9092/165433899.0/0_e6a3f_b3413d1f_orig)
-* [Страница загрузки WindowBuilder](http://www.eclipse.org/windowbuilder/download.php), на которой нужно выбрать соответствующую вашей версии Eclipse ссылку. [Эта ссылка, например для Eclipse Kepler](http://download.eclipse.org/windowbuilder/WB/release/R201309271200/4.3/), как и все остальные, содержит инструкции по установке.
 
 ##V. Импорт maven-проекта из GitHub в Eclipse Workspace
 Взято [отсюда](http://stackoverflow.com/questions/4869815/importing-a-maven-project-into-eclipse-from-git) и дополнено.
 
 1. Select the "Import..." context menu from the Package Explorer view
 2. Select "Check out Maven projects from SCM" option under the Maven category
-3. <a name="connector"></a> ![](http://img-fotki.yandex.ru/get/9106/165433899.0/0_e6a30_bdfdd25a_orig)
+3. Выбираем SCM URL: git и вставляем ссылку:<a name="connector"></a> ![](http://img-fotki.yandex.ru/get/9106/165433899.0/0_e6a30_bdfdd25a_orig)
 
 Здесь есть одна особенность - а именно: Eclipse может 'задуматься' на несколько секунд(Windows) или на несколько минут(Linux) перед тем, как собственно отобразить проект в Package Explorer.  
 4. Дальше обновляем проект(иногда сам Maven просит это сделать через Problems View)
 ![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a27_2152292e_orig "Выбираем Maven -> Update Project...")
 ![](http://img-fotki.yandex.ru/get/9109/165433899.0/0_e6a22_75102b8c_orig "Снимоем галочку Offline")  
-5. Запускаем Тесты, maven скачает все нужные для сборки плагины и зависимости...
+5. Скорее всего на значке проекта будет восклицательный знак, либо красный крест - это от того что Eclipse не видит нужных библиотек(зависимостей). Сейчас мы их скачаем:  
+Запускаем Тесты, maven скачает все нужные для сборки maven-плагины и зависимости(библиотеки)... [Куда?](#diskspace)
 ![Запускаем тесты](http://img-fotki.yandex.ru/get/9163/165433899.0/0_e6a28_6ccd25e_orig "Запускаем тесты: Run As -> Maven test")
 
 ##VI. Известные проблемы
