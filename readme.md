@@ -63,8 +63,8 @@
 `# Removing BOM from all text files in current directory:`  
 `sed -i '1 s/^\xef\xbb\xbf//' *.java`
 ###2. Куда подевался гигабайт дискового пространства?
-1. Maven скачивает зависимости(библиотеки) и прочие maven-плагины в `~/.m2/repository` на Linux и в `%USERPROFILE%\.m2\repository` на Windows. Очищать эти папки во время работы над проектом нет смысла.<a name="repo"></a> 
-2. По непонятным причинам Maven забирает примерно 500МБ в `You_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`<a name="diskspace"></a>  
+1. <a name="repo"></a>Maven скачивает зависимости(библиотеки) и прочие maven-плагины в `~/.m2/repository` на Linux и в `%USERPROFILE%\.m2\repository` на Windows. Очищать эти папки во время работы над проектом нет смысла. 
+2. <a name="diskspace"></a>По непонятным причинам Maven забирает примерно 500МБ в `You_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`  
 Это безобразие можно отключить, выставив галочки вот так: ![alt-текст](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e6a23_57a3866c_orig "Галочка Offline должна быть снята!")  
 (решение взято [отсюда](http://stackoverflow.com/questions/8539841/eclipse-metadata-plugins-disk-space), но нужно оставить снятой галочку `Offline`, иначе не скачаются новые файлы(плагины и зависимости), а значит мы не сможем собрать только что импортированный проект).  
 Затем можно удалить папку `You_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`.
