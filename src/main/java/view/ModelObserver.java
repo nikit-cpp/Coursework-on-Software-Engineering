@@ -1,4 +1,4 @@
-﻿package view;
+package view;
 import model.Model;
 import model.Token;
 

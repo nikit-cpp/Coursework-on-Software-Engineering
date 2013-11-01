@@ -1,4 +1,4 @@
-﻿import java.util.Collection;
+import java.util.Collection;
 
 /**
  * Интерфейс Наблюдателя
