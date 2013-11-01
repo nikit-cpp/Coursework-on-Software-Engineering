@@ -9,6 +9,44 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
+	<dependencies>
+		<dependency>
+			<groupId>com.atlascopco</groupId>
+			<artifactId>hunspell-bridj</artifactId>
+			<version>[1.0.0,)</version>
+		</dependency>
+		<dependency>
+			<!-- координаты необходимой библиотеки -->
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<!-- >= 4.11 -->
+			<version>[4.11,)</version>
+			<!-- эта библиотека используется только для запуска и компилирования тестов -->
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<repositories>
+		<!-- Добавляем сторонний репозиторий, содержащий SWT, т. к. в репозитории 
+			по умолчанию этого зла нет :) -->
+		<repository>
+			<id>swt-repo</id>
+			<url>https://swt-repo.googlecode.com/svn/repo/</url>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>sonatype-public-repository</id>
+			<url>https://oss.sonatype.org/content/groups/public</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
 
 	<build>
 		<resources>
@@ -100,22 +138,7 @@
 		</plugins>
 	</build>
 
-	<dependencies>
-		<dependency>
-			<groupId>com.atlascopco</groupId>
-			<artifactId>hunspell-bridj</artifactId>
-			<version>[1.0.0,)</version>
-		</dependency>
-		<dependency>
-			<!-- координаты необходимой библиотеки -->
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<!-- >= 4.11 -->
-			<version>[4.11,)</version>
-			<!-- эта библиотека используется только для запуска и компилирования тестов -->
-			<scope>test</scope>
-		</dependency>
-	</dependencies>
+
 
 	<!-- В связи с системо-зависимостью SWT необходимо создать профили для каждой 
 		системы -->
@@ -155,13 +178,5 @@
 		</profile>
 	</profiles>
 
-	<repositories>
-		<!-- Добавляем сторонний репозиторий, содержащий SWT, т. к. в репозитории 
-			по умолчанию этого зла нет :) -->
-		<repository>
-			<id>swt-repo</id>
-			<url>https://swt-repo.googlecode.com/svn/repo/</url>
-		</repository>
-	</repositories>
 
 </project>
