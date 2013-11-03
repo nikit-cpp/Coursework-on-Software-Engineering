@@ -4,6 +4,7 @@
 * [подготовка](#preparing) Eclipse Standart (впрочем, оно также подходит для версии Eclipse for Java developers, ибо тех Maven- и WindowBuilder-плагинов, что там стоят, недостаточно) к импорту данного Maven-проекта
 * собственно [импорт](#import) данного проекта
 * возникшие в процессе и решённые [проблемы](#troubles)
+* [ссылки](#links) различной степени полезности
 
 #<a name="req"></a>a.Системные требования
 > Требования? А где ожидаемая кроссплатформенность, мы же используем Java...
@@ -13,17 +14,17 @@
 Возникли из-за проблем совместимости версий Eclipse с плагинами для него(`m2e`, `Maven SCM Handler for EGit`).  
 Так вот, руководство актуально для `Eclipse Kepler`: **Eclipse Standard 4.3** или **Eclipse IDE for Java Developers 4.3** на момент 2 ноября 2013.
 
-У товарища была [проблема](#eejunotrouble) при использовании Eclipse IDE for Java EE Developers версии Juno.
+У товарища была [проблема](#eejunotrouble) при использовании `Eclipse IDE for Java EE Developers` версии `Juno`.
 
 ###2. Требования к версиям библиотек
 
 Описаны в файле `pom.xml`, по возможности были указаны не жёстко номера версий, а >=, например для SWT `<version>[4.3,)</version>` означает 'использовать версию 4.3 или старше'.
 
-Учитывая отсутствие `.project` и `.settings` проект *теоретически* можно собрать даже без среды.
+Учитывая отсутствие `.project`, `.settings`, а тем более `.classpath` проект *теоретически* можно собрать даже без среды.
 
 ###3. Требования к ОС
 
-Являются следствием системозависимости либы `SWT`, на данный момент(3 ноября 2013) в `pom.xml` созданы профили для `Windows x86` и `Linux AMD64`. Для остальных вариантов `Windows` и `Linux` можно создать профили по аналогии.
+Являются следствием системозависимости либы `SWT`, на данный момент(3 ноября 2013) в `pom.xml` созданы профили для `Windows x86`, `Windows AMD64` и `Linux AMD64`.
 
 `Mac OS` не поддерживается библиотекой `Hunspell-BridJ`.
 
@@ -57,7 +58,7 @@
 5. Eclipse предупредит об установке неподписанного плагина, соглашаемся...
 6. Finish the plugin install wizard and restart the workspace
 
-##IV. Установка Window Builder(опционально)
+##IV. Установка WindowBuilder(опционально)
 * Плагин [WindowBuilder](http://www.eclipse.org/windowbuilder/ "Страница WindowBuilder на сайте Eclipse") добавляет WYSIWYG-редактор, с помощью которого можно быстро создавать окошки.  
 * [Страница загрузки WindowBuilder](http://www.eclipse.org/windowbuilder/download.php), на которой нужно выбрать соответствующую вашей версии Eclipse ссылку:  
 ![](http://img-fotki.yandex.ru/get/9166/165433899.0/0_e6a60_88e8cad2_orig)  
@@ -125,7 +126,21 @@
 ![](http://img-fotki.yandex.ru/get/9161/165433899.0/0_e6b0b_153e0b3f_orig)  
 Решение: [Используйте Eclipse Kepler 4.3](#idereq)
 
-#e.Полезные ссылки
+###6. No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+`[INFO] —-----------------------------------------------------------`  
+`[ERROR] COMPILATION ERROR :`  
+`[INFO] —-----------------------------------------------------------`  
+`[ERROR] No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?`
+
+Проблема возникает из-за того что встроенный Maven не видит JDK, и как следствие не может скомпилировать:
+
+* Если не установлена JDK - установить.
+* JDK установлена, но в Eclipse сбились `Installed JREs` - выставлена JRE:  
+![](http://img-fotki.yandex.ru/get/9107/165433899.0/0_e6bc4_c24be19c_orig)  
+Должна быть JDK:  
+![](http://img-fotki.yandex.ru/get/9319/165433899.0/0_e6bc3_bf80314f_orig)
+
+#<a name="links"></a>e.Полезные ссылки
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
 * <http://habrahabr.ru/post/77382/> - Apache Maven — основы
 * <https://wiki.openmrs.org/display/docs/Using+the+M2Eclipse+Maven+Plugin+in+Eclipse> - работа с m2eclipse
