@@ -5,7 +5,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestSplitter.class })
+@SuiteClasses({ TestTokenizer.class, TestNormalizer.class })
 public class AllTests {
 
 }

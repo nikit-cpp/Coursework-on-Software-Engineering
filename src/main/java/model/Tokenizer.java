@@ -3,6 +3,11 @@ package model;
 import java.util.ArrayList;
 
 public class Tokenizer {
+	/**
+	 * Разбивает строку на токены
+	 * @param input
+	 * @return
+	 */
 	public ArrayList<Token> tokenize(String input){
 		if(input==null) return null;
 		System.out.println("tokenize()");

@@ -140,6 +140,18 @@
 Должна быть JDK:  
 ![](http://img-fotki.yandex.ru/get/9319/165433899.0/0_e6bc3_bf80314f_orig)
 
+###7. При запуске тестов из-под maven имеем
+`UTF-8 encoding error. Missing continuation byte in 0. character position:`  
+`асептический`  
+`This UTF-8 encoding can't convert to UTF-16:`  
+`асептический`  
+
+Решение:
+Закомментировать в `pom.xml`:  
+`<!--properties>
+<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
+</properties-->`
+
 #<a name="links"></a>e.Полезные ссылки
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
 * <http://habrahabr.ru/post/77382/> - Apache Maven — основы

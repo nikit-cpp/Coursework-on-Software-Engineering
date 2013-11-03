@@ -5,9 +5,15 @@
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<properties>
+	<!-- Лечим ошибку, закомментировав кодировку UTF-8
+	UTF-8 encoding error. Missing continuation byte in 0. character position:
+	асептический
+	This UTF-8 encoding can't convert to UTF-16:
+	асептический
+	-->
+	<!--properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
+	</properties-->
 
 	<dependencies>
 		<dependency>

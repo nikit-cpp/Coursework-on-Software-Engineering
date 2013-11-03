@@ -9,7 +9,7 @@ import model.*;
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestSplitter {
+public class TestTokenizer {
 	
 	Model model;
 	ArrayList<Token> at = new ArrayList<Token>();

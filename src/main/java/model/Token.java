@@ -9,6 +9,11 @@ public class Token {
 		this.tag=tag;
 	}
 
+	public Token(String s) {
+		this.value=s;
+		this.tag=Tag.WORD;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -35,5 +40,10 @@ public class Token {
 		} else if (!value.equals(other.value))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Token [value=" + value + ", tag=" + tag + "]";
 	}
 }
