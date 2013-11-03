@@ -1,8 +1,33 @@
-В данном руководстве описано:
+В данном руководстве описаны:
 
-* как подготовить Eclipse Standart (впрочем, оно также подходит для версии Eclipse for Java developers, ибо тех Maven- и WindowBuilder-плагинов, что там стоят, недостаточно) для импорта данного Maven-проекта и 
-* как собственно импортировать данный проект.
+* [системные требования](#req)
+* [подготовка](#preparing) Eclipse Standart (впрочем, оно также подходит для версии Eclipse for Java developers, ибо тех Maven- и WindowBuilder-плагинов, что там стоят, недостаточно) к импорту данного Maven-проекта
+* собственно [импорт](#import) данного проекта
+* возникшие в процессе и решённые [проблемы](#troubles)
 
+#<a name="req"></a>a.Системные требования
+> Требования? А где ожидаемая кроссплатформенность, мы же используем Java...
+
+###<a name="idereq"></a>1. Требования к IDE
+
+Возникли из-за проблем совместимости версий Eclipse с плагинами для него(`m2e`, `Maven SCM Handler for EGit`).  
+Так вот, руководство актуально для `Eclipse Kepler`: **Eclipse Standard 4.3** или **Eclipse IDE for Java Developers 4.3** на момент 2 ноября 2013.
+
+У товарища была [проблема](#eejunotrouble) при использовании Eclipse IDE for Java EE Developers версии Juno.
+
+###2. Требования к версиям библиотек
+
+Описаны в файле `pom.xml`, по возможности были указаны не жёстко номера версий, а >=, например для SWT `<version>[4.3,)</version>` означает 'использовать версию 4.3 или старше'.
+
+Учитывая отсутствие `.project` и `.settings` проект *теоретически* можно собрать даже без среды.
+
+###3. Требования к ОС
+
+Являются следствием системозависимости либы `SWT`, на данный момент(3 ноября 2013) в `pom.xml` созданы профили для `Windows x86` и `Linux AMD64`. Для остальных вариантов `Windows` и `Linux` можно создать профили по аналогии.
+
+`Mac OS` не поддерживается библиотекой `Hunspell-BridJ`.
+
+#<a name="preparing">b.Подготовка Eclipse</a>
 ##I. Добавление кнопок git на панель
 [Взято из предыдущего моего мануала Eclipse+GitHub](http://yadi.sk/d/Bd1JqGraBCPgK)
 
@@ -40,6 +65,7 @@
 * Использование: ![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a3c_e7a0a5f5_orig)
 ![](http://img-fotki.yandex.ru/get/9092/165433899.0/0_e6a3f_b3413d1f_orig)
 
+#<a name="import"></a>c.Импорт
 ##V. Импорт maven-проекта из GitHub в Eclipse Workspace
 Взято [отсюда](http://stackoverflow.com/questions/4869815/importing-a-maven-project-into-eclipse-from-git) и дополнено.
 
@@ -48,29 +74,39 @@
 3. Выбираем SCM URL: git и вставляем ссылку:<a name="connector"></a> ![](http://img-fotki.yandex.ru/get/9106/165433899.0/0_e6a30_bdfdd25a_orig)
 
 Здесь есть одна особенность - а именно: Eclipse может 'задуматься' на несколько секунд(Windows) или на несколько минут(Linux) перед тем, как собственно отобразить проект в Package Explorer.  
-4. Дальше обновляем проект(иногда сам Maven просит это сделать через Problems View):
+4. <a name="mavenupd"></a>Дальше обновляем проект(иногда сам Maven просит это сделать через Problems View):  
+`Maven` -> `Update Project...`  
 ![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a27_2152292e_orig "Выбираем Maven -> Update Project...")  
 Снимаем галочку Offline:  
-![](http://img-fotki.yandex.ru/get/9109/165433899.0/0_e6a22_75102b8c_orig "Снимоем галочку Offline")  
-5. Скорее всего на значке проекта будет восклицательный знак, либо красный крест - это от того что Eclipse не видит нужных библиотек(зависимостей). Сейчас мы их скачаем:  
-Запускаем Тесты, maven скачает все нужные для сборки maven-плагины и зависимости(библиотеки)... [Куда?](#repo)
-![Запускаем тесты](http://img-fotki.yandex.ru/get/9163/165433899.0/0_e6a28_6ccd25e_orig "Запускаем тесты: Run As -> Maven test")
+![](http://img-fotki.yandex.ru/get/9109/165433899.0/0_e6a22_75102b8c_orig "Снимаем галочку Offline")  
+5. Скорее всего на значке проекта будет восклицательный знак, либо красный крест - это от того что Eclipse не видит нужных библиотек(зависимостей).
+![](http://img-fotki.yandex.ru/get/9168/165433899.0/0_e6b0e_b7b154b9_orig)  
+Сейчас мы их скачаем:  
+Запускаем Тесты: `Run As` -> `Maven test`  
+![Запускаем тесты](http://img-fotki.yandex.ru/get/9163/165433899.0/0_e6a28_6ccd25e_orig "Запускаем тесты: Run As -> Maven test")  
+Ждём, пока maven скачает все нужные для сборки maven-плагины и зависимости(библиотеки)... [Куда?](#repo)  
+![](http://img-fotki.yandex.ru/get/6727/165433899.0/0_e6b0f_39f3aa1e_orig)  
+Успех:  
+![](http://img-fotki.yandex.ru/get/9584/165433899.0/0_e6b10_f93495bb_orig)  
+Если на значке проекта по-прежнему остаётся восклицательный знак или красный крест, то [обновляем](#mavenupd) проект.
 
-##VI. Известные проблемы
-###1. Ругается на кодировку `illegal character: \65279`
+#<a name="troubles"></a>d.Известные проблемы
+###1. Ругается на наличие BOM: `illegal character: \65279`
 Проблема проявилась на Linux Mint amd64, но не проявилась на Windows x86.  
 [Решение:](http://stackoverflow.com/questions/1068650/using-awk-to-remove-the-byte-order-mark)  
 `# Removing BOM from all text files in current directory:`  
 `sed -i '1 s/^\xef\xbb\xbf//' *.java`
 ###2. Куда подевался гигабайт дискового пространства?
 1. <a name="repo"></a>Maven скачивает зависимости(библиотеки) и прочие maven-плагины в `~/.m2/repository` на Linux и в `%USERPROFILE%\.m2\repository` на Windows. Очищать эти папки во время работы над проектом нет смысла. 
-2. <a name="diskspace"></a>По непонятным причинам Maven забирает примерно 500МБ в `You_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`  
-Это безобразие можно отключить, выставив галочки вот так: ![alt-текст](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e6a23_57a3866c_orig "Галочка Offline должна быть снята!")  
+2. <a name="diskspace"></a>По непонятным причинам Maven забирает примерно 500МБ в `Your_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`  
+Это безобразие можно отключить, открыв `Window` -> `Preferences`  
+![](http://img-fotki.yandex.ru/get/9311/165433899.0/0_e6b0c_d4b4aafb_orig)  
+и выставив галочки вот так: ![alt-текст](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e6a23_57a3866c_orig "Галочка Offline должна быть снята!")  
 (решение взято [отсюда](http://stackoverflow.com/questions/8539841/eclipse-metadata-plugins-disk-space), но нужно оставить снятой галочку `Offline`, иначе не скачаются новые файлы(плагины и зависимости), а значит мы не сможем собрать только что импортированный проект).  
-Затем можно удалить папку `You_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`.
+**Затем** можно удалить папку `Your_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`.
 
-###3. pom.xml скорее всего не совместим со старым maven 2.x,
-в Eclipse, судя по возникшим проблемам, используется 3.x.
+###3. pom.xml скорее всего не совместим со старым maven 2.x
+В Eclipse, судя по возникшим проблемам, используется maven 3.x.
 
 ###4. An error occurred while collecting items to be installed...
 Или "Восстанавливаем работоспособность `Help -> Install New Software` и `Help -> Check for Updates` в Eclipse Kepler".  
@@ -82,4 +118,15 @@
 `C:\Program Files\eclipse\p2\org.eclipse.equinox.p2.engine\.settings`  
 `C:\Program Files\eclipse\p2\org.eclipse.equinox.p2.engine\profileRegistry\epp.package.standard.profile\.data\.settings`  
 4. start eclipse
-5. import the bookmarks.xml file (Software Updates->Manage sites->Import) that was exported in step 1
+5. import the bookmarks.xml file (Install/Update->Available Software Sites->Import) that was exported in step 1
+
+###5. <a name="eejunotrouble"></a>Checking out maven projects has encountered a problem
+Возникает при импорте проекта(`Import...` -> `Check out Maven projects from SCM` -> `SCM URL`) на старых версиях Eclipse.  
+![](http://img-fotki.yandex.ru/get/9161/165433899.0/0_e6b0b_153e0b3f_orig)  
+Решение: [Используйте Eclipse Kepler 4.3](#idereq)
+
+#e.Полезные ссылки
+* <http://git-scm.com/book/ru/> - "Pro Git" на русском
+* <http://habrahabr.ru/post/77382/> - Apache Maven — основы
+* <https://wiki.openmrs.org/display/docs/Using+the+M2Eclipse+Maven+Plugin+in+Eclipse> - работа с m2eclipse
+* <http://markable.in/editor/> - онлайн-редактор Markdown, этот текст был написан в нём
