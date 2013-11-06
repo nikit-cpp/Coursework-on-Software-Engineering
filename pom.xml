@@ -5,15 +5,16 @@
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<!-- Лечим ошибку, закомментировав кодировку UTF-8
-	UTF-8 encoding error. Missing continuation byte in 0. character position:
-	асептический
-	This UTF-8 encoding can't convert to UTF-16:
-	асептический
-	-->
-	<!--properties>
+	<!-- Лечим ошибку незапуска тестов Hunspell(TestNormalizer) из-под Maven
+	"UTF-8 encoding error. Missing continuation byte in 0. character position:"
+	"асептический"
+	"This UTF-8 encoding can't convert to UTF-16:"
+	"асептический"
+	
+	, закомментировав кодировку UTF-8 :-->
+	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties-->
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -43,6 +44,7 @@
 	</repositories>
 
 	<pluginRepositories>
+		<!-- Репозиторий maven-download-plugin -->
 		<pluginRepository>
 			<id>sonatype-public-repository</id>
 			<url>https://oss.sonatype.org/content/groups/public</url>
@@ -62,9 +64,10 @@
 			</resource>
 		</resources>
 
-		<!-- Приказываем одной шизоидной системе m2e не мешать исполнению плагина 
-			maven-download-plugin во время фазы generate-resources -->
-		<!-- http://wiki.eclipse.org/M2E_plugin_execution_not_covered#ignore_plugin_goal -->
+		<!-- Приказываем одной шизоидной подсистеме m2e не мешать исполнению плагина 
+			maven-download-plugin во время фазы generate-resources, подробнее:
+			http://wiki.eclipse.org/M2E_plugin_execution_not_covered#ignore_plugin_goal
+		-->
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -99,12 +102,14 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.7</source>
+					<target>1.7</target>
 				</configuration>
 			</plugin>
 
-			<!-- https://github.com/maven-download-plugin/maven-download-plugin -->
+			<!-- Скачиваем русский словарь с помощью maven-download-plugin
+			https://github.com/maven-download-plugin/maven-download-plugin
+			-->
 			<plugin>
 				<groupId>com.googlecode.maven-download-plugin</groupId>
 				<artifactId>maven-download-plugin</artifactId>
@@ -126,6 +131,23 @@
 					</execution>
 				</executions>
 			</plugin>
+			
+			<plugin>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <version>2.10</version>
+		        <configuration>
+      <encoding>cp1251</encoding>
+    </configuration>
+		        <executions>
+		          <execution>
+		            <id>default-test</id>
+		            <phase>test</phase>
+		            <goals>
+		              <goal>test</goal>
+		            </goals>
+		          </execution>
+		        </executions>
+		     </plugin>
 
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
@@ -144,8 +166,6 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
 
 	<!-- В связи с системо-зависимостью SWT необходимо создать профили для каждой 
 		системы -->
@@ -183,7 +203,23 @@
 			</dependencies>
 		</profile>
 		<profile>
-			<id>unixprofile</id>
+			<id>linuxprofile32</id>
+			<activation>
+				<os>
+					<family>linux</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.swt</groupId>
+					<artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
+					<version>[4.3,)</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<id>linuxprofile64</id>
 			<activation>
 				<os>
 					<family>linux</family>

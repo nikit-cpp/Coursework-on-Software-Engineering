@@ -1,5 +1,6 @@
 package model;
 
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,14 +19,21 @@ public class Normalizer {
 	 * @return
 	 */
 	public ArrayList<Token> normalize(Token t){
-		final String word = t.value;
+		String word = t.value;
+		word = convertFromUTF8ToSystemDefault(word);
+		
 		List<String> stemList = hunspell.stem(word);
 		ArrayList<Token> retStemArr = new ArrayList<Token>();
-		//System.out.println("Printing stem for \""+ word + "\"; founded " +stemList.size()+" elements:");
 		for(String s : stemList){
-			//System.out.println(s);
 			retStemArr.add(new Token(s));
 		}
 		return retStemArr;
+	}
+	
+	/**
+	 * Костыль для зависимости hunspell от умолчальной кодировки 1251 под виндой
+	 */
+	public static String convertFromUTF8ToSystemDefault(String in){
+		return new String(in.getBytes(Charset.forName("UTF-8")), Charset.defaultCharset());
 	}
 }

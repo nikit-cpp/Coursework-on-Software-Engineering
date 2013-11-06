@@ -31,8 +31,9 @@ public class Model {
 	public ArrayList<Token> tokenize(String input){
 		return tokenizer.tokenize(input);
 	}
+	
 	/**
-	 * Возвращает список корней(стемов) для данного слова
+	 * Возвращает список корней(стемов) для данной строки
 	 * @param inArray - входной список слов, обёрнутых в токены 
 	 * @return
 	 */
@@ -41,6 +42,18 @@ public class Model {
 		for(Token t: inArray){
 			retArray.addAll(normalizer.normalize(t));
 		}
+		return retArray;
+	}
+	
+	/**
+	 * Возвращает список корней(стемов) для данного токена-слова
+	 * @param inArray - входной список слов, обёрнутых в токены 
+	 * @return
+	 */
+	public ArrayList<Token> normalize(Token inArray){
+		ArrayList<Token> retArray = new ArrayList<Token>();
+		Token t = inArray;
+		retArray.addAll(normalizer.normalize(t));
 		return retArray;
 	}
 	

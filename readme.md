@@ -24,7 +24,7 @@
 
 ###3. Требования к ОС
 
-Являются следствием системозависимости либы `SWT`, на данный момент(3 ноября 2013) в `pom.xml` созданы профили для `Windows x86`, `Windows AMD64` и `Linux AMD64`.
+Являются следствием системозависимости либы `SWT`, на данный момент(6 ноября 2013) в `pom.xml` созданы профили для `Windows x86`, `Windows AMD64`, `Linux x86` и `Linux AMD64`.
 
 `Mac OS` не поддерживается библиотекой `Hunspell-BridJ`.
 
@@ -151,6 +151,14 @@
 `<!--properties>
 <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
 </properties-->`
+
+###8. Неправильно отображаются русские буквы
+![](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e74ac_5d994ca0_orig)  
+Решение: `Properties` -> `Resource` -> `Text File Encoding` -> `UTF-8`  
+![](http://img-fotki.yandex.ru/get/9068/165433899.0/0_e74aa_d1dfb8ce_orig)  
+![](http://img-fotki.yandex.ru/get/4906/165433899.0/0_e74ab_12aac62_orig)  
+Результат:  
+![](http://img-fotki.yandex.ru/get/9326/165433899.0/0_e74a9_bebeee36_orig)  
 
 #<a name="links"></a>e.Полезные ссылки
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском

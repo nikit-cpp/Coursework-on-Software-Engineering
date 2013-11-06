@@ -64,6 +64,23 @@ public class TestTokenizer {
 	}
 	
 	@Test
+	public void testWordDot() {
+		at = model.tokenize("давно.");
+		assertEquals(2, at.size());
+		generateStringsList();
+		assertArrayEquals(new String[]{"давно", "."},  as.toArray());
+		assertEquals(at.get(1), new Token(".", Tag.DOT));
+	}
+	
+	@Test
+	public void testWordQuestion() {
+		at = model.tokenize("давно?");
+		assertEquals(2, at.size());
+		generateStringsList();
+		assertArrayEquals(new String[]{"давно", "?"},  as.toArray());
+	}
+	
+	@Test
 	public void testColon() {
 		at = model.tokenize("public String ololo:split");
 		assertEquals(4, at.size());
