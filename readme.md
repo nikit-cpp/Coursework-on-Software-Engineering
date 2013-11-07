@@ -140,19 +140,7 @@
 Должна быть JDK:  
 ![](http://img-fotki.yandex.ru/get/9319/165433899.0/0_e6bc3_bf80314f_orig)
 
-###7. При запуске тестов из-под maven имеем
-`UTF-8 encoding error. Missing continuation byte in 0. character position:`  
-`асептический`  
-`This UTF-8 encoding can't convert to UTF-16:`  
-`асептический`  
-
-Решение:
-Закомментировать в `pom.xml`:  
-`<!--properties>
-<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding> 
-</properties-->`
-
-###8. Неправильно отображаются русские буквы
+###7. Неправильно отображаются русские буквы
 ![](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e74ac_5d994ca0_orig)  
 Решение: `Properties` -> `Resource` -> `Text File Encoding` -> `UTF-8`  
 ![](http://img-fotki.yandex.ru/get/9068/165433899.0/0_e74aa_d1dfb8ce_orig)  
