@@ -1,11 +1,9 @@
 package mytests;
 
 import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import model.Model;
-import model.Normalizer;
 import model.Token;
 
 import org.junit.Before;
@@ -28,14 +26,14 @@ public class TestNormalizer {
 	public void testPrefix() {
 		at.add(new Token("асептический"));
 		ar = model.normalize(at);
-		assertEquals(Normalizer.convertFromUTF8ToSystemDefault("септический"), ar.get(0).value);
+		assertEquals("септический", ar.get(0).value);
 	}
 	
 	@Test
 	public void testSuffix() {
 		at.add(new Token("атомов"));
 		ar = model.normalize(at);
-		assertEquals(Normalizer.convertFromUTF8ToSystemDefault("атом"), ar.get(0).value);
+		assertEquals("атом", ar.get(0).value);
 	}
 
 }

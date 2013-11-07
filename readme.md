@@ -148,6 +148,10 @@
 Результат:  
 ![](http://img-fotki.yandex.ru/get/9326/165433899.0/0_e74a9_bebeee36_orig)  
 
+###8. Внезапно появились ошибки - Eclipse не видит импортируемые пакеты
+![](http://img-fotki.yandex.ru/get/9168/165433899.0/0_e6b0e_b7b154b9_orig)  
+Решение: [обновите](#mavenupd) проект.
+
 #<a name="links"></a>e.Полезные ссылки
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
 * <http://habrahabr.ru/post/77382/> - Apache Maven — основы
