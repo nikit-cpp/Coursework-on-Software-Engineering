@@ -1,16 +1,25 @@
-package model;
+package normalizer;
 
+import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
+
+import options.OptId;
+import options.Options;
 
 import com.atlascopco.hunspell.Hunspell;
 
 public class Normalizer {
 	private Hunspell hunspell;
-	
-	public Normalizer(Hunspell hunspell) {
-		this.hunspell=hunspell;
+	private Options options;
+		
+	public Normalizer() {
+		this.options = Options.getInstance();
+		final String dicPath = new File(options.getString(OptId.DIC_PATH)).getAbsolutePath();
+		final String affPath = new File(options.getString(OptId.AFF_PATH)).getAbsolutePath();
+		
+		hunspell = new Hunspell(dicPath, affPath);
 	}
 
 	/**
@@ -18,23 +27,21 @@ public class Normalizer {
 	 * @param t
 	 * @return
 	 */
-	public ArrayList<Token> normalize(Token t){
-		String word = t.value;
-		word = convertFromUTF8ToSystemDefault(word);
-		
+	public List<String> normalize(String word){
+		word = UTF8_SystemDefault(word);
 		List<String> stemList = hunspell.stem(word);
-		ArrayList<Token> retStemArr = new ArrayList<Token>();
-		for(String s : stemList){
-			s = convertFromSystemDefaultToUTF8(s);
-			retStemArr.add(new Token(s));
-		}
-		return retStemArr;
+		
+		List<String> out=new ArrayList<String>();
+		for(String st : stemList)
+			out.add(SystemDefault_UTF8(st));
+		
+		return out;
 	}
 	
 	/**
 	 * Костыль для зависимости hunspell от умолчальной кодировки 1251 под виндой
 	 */
-	public static String convertFromUTF8ToSystemDefault(String in){
+	public static String UTF8_SystemDefault(String in){
 		if(Charset.defaultCharset().equals(Charset.forName("UTF-8")))
 			return in;
 		return new String(in.getBytes(Charset.forName("UTF-8")), Charset.defaultCharset());
@@ -43,7 +50,7 @@ public class Normalizer {
 	/**
 	 * Костыль для зависимости hunspell от умолчальной кодировки 1251 под виндой
 	 */
-	public static String convertFromSystemDefaultToUTF8(String in){
+	public static String SystemDefault_UTF8(String in){
 		if(Charset.defaultCharset().equals(Charset.forName("UTF-8")))
 			return in;
 		return new String(in.getBytes(Charset.defaultCharset()), Charset.forName("UTF-8"));

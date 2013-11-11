@@ -5,7 +5,11 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TestTokenizer.class, TestNormalizer.class })
+@SuiteClasses({
+	TokenizerTest.class,
+	NormalizerTest.class,
+	DictionaryBuilderTest.class
+})
 public class AllTests {
 
 }

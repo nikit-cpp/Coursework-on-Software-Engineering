@@ -25,11 +25,11 @@ import view.ViewProxy;
 public class MainWindow {
 
 	protected Shell shell;
-	private Text txtSplitPublicString;
-	private Table table;
-	private ViewProxy ob;
-	private Text txtAsdfgh;
-	private Table table_1;
+	protected Text txtSplitPublicString;
+	protected Table table;
+	protected ViewProxy ob;
+	protected Text txtAsdfgh;
+	protected Table table_1;
 
 	/**
 	 * Launch the application.
@@ -51,7 +51,7 @@ public class MainWindow {
 		Display display = Display.getDefault();
 		createContents();
 		
-		ob = new ViewProxy(txtSplitPublicString, table);
+		ob = new ViewProxy(this);
 		
 		shell.open();
 		shell.layout();
@@ -193,7 +193,7 @@ public class MainWindow {
 		btnNewButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				ob.msgMouseUp();
+				ob.msgRubricate();
 			}
 		});
 		btnNewButton.setText("\u041E\u0431\u0440\u0430\u0431\u043E\u0442\u0430\u0442\u044C");

@@ -4,14 +4,16 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import model.*;
+import lexer.Tag;
+import lexer.Token;
+import lexer.Tokenizer;
 
 import org.junit.Before;
 import org.junit.Test;
 
-public class TestTokenizer {
+public class TokenizerTest {
 	
-	Model model;
+	Tokenizer tokenizer;
 	ArrayList<Token> at = new ArrayList<Token>();
 	ArrayList<String> as = new ArrayList<String>();
 	
@@ -22,19 +24,19 @@ public class TestTokenizer {
 	
 	@Before
 	public void setUp(){
-		model = new Model();
+		tokenizer = new Tokenizer();
 		at.clear();
 		as.clear();
 	}
 
 	@Test
 	public void testNull() {
-		model.tokenize(null);
+		tokenizer.tokenize(null);
 	}
 	
 	@Test
 	public void testBrackets() {
-		at = model.tokenize("public String(ololo) split");
+		at = tokenizer.tokenize("public String(ololo) split");
 		assertEquals(4, at.size());
 		generateStringsList();
 		assertArrayEquals(as.toArray(), new String[]{"public", "String", "ololo", "split"} );
@@ -42,7 +44,7 @@ public class TestTokenizer {
 	
 	@Test
 	public void testSquareBrackets() {
-		at = model.tokenize("public String[ololo] split");
+		at = tokenizer.tokenize("public String[ololo] split");
 		assertEquals(4, at.size());
 		generateStringsList();
 		assertArrayEquals(as.toArray(), new String[]{"public", "String", "ololo", "split"} );
@@ -50,7 +52,7 @@ public class TestTokenizer {
 	
 	@Test
 	public void testCurveBrackets() {
-		at = model.tokenize("public String { ololo } split");
+		at = tokenizer.tokenize("public String { ololo } split");
 		assertEquals(4, at.size());
 		generateStringsList();
 		assertArrayEquals(as.toArray(), new String[]{"public", "String", "ololo", "split"} );
@@ -58,14 +60,32 @@ public class TestTokenizer {
 	
 	@Test
 	public void testDot() {
-		at = model.tokenize("public String { ololo  split.");
+		at = tokenizer.tokenize("public String { ololo  split.");
 		assertEquals(5, at.size());
 		assertEquals(at.get(4), new Token(".", Tag.DOT));
 	}
 	
 	@Test
+	public void testSingleDot() {
+		at = tokenizer.tokenize(".");
+		assertEquals(1, at.size());
+		assertEquals(at.get(0), new Token(".", Tag.DOT));
+	}
+	
+	@Test
 	public void testWordDot() {
-		at = model.tokenize("давно.");
+		at = tokenizer.tokenize("давно.");
+		System.out.println(at);
+		assertEquals(2, at.size());
+		generateStringsList();
+		assertArrayEquals(new String[]{"давно", "."},  as.toArray());
+		assertEquals(at.get(1), new Token(".", Tag.DOT));
+	}
+	
+	@Test
+	public void testWordDotQ() {
+		at = tokenizer.tokenize("давно.,");
+		System.out.println(at);
 		assertEquals(2, at.size());
 		generateStringsList();
 		assertArrayEquals(new String[]{"давно", "."},  as.toArray());
@@ -74,7 +94,7 @@ public class TestTokenizer {
 	
 	@Test
 	public void testWordQuestion() {
-		at = model.tokenize("давно?");
+		at = tokenizer.tokenize("давно?");
 		assertEquals(2, at.size());
 		generateStringsList();
 		assertArrayEquals(new String[]{"давно", "?"},  as.toArray());
@@ -82,7 +102,7 @@ public class TestTokenizer {
 	
 	@Test
 	public void testColon() {
-		at = model.tokenize("public String ololo:split");
+		at = tokenizer.tokenize("public String ololo:split");
 		assertEquals(4, at.size());
 		generateStringsList();
 		assertArrayEquals(as.toArray(), new String[]{"public", "String", "ololo", "split"} );
@@ -90,7 +110,7 @@ public class TestTokenizer {
 		
 	@Test
 	public void testQuote() {
-		at = model.tokenize("public String \"ololo\"split");
+		at = tokenizer.tokenize("public String \"ololo\"split");
 		assertEquals(4, at.size());
 		generateStringsList();
 		assertArrayEquals(as.toArray(), new String[]{"public", "String", "ololo", "split"} );

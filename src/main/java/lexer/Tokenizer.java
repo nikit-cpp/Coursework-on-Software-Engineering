@@ -1,18 +1,22 @@
-package model;
+package lexer;
 
 import java.util.ArrayList;
 
+/**
+ * Разбивает строку на токены.
+ * TODO Реализовать с помощью antlr.
+ */
 public class Tokenizer {
-	/**
-	 * Разбивает строку на токены
-	 * @param input
-	 * @return
-	 */
+	
+	public Tokenizer(){}
+	
 	public ArrayList<Token> tokenize(String input){
 		if(input==null) return null;
 		ArrayList<Token> retArr = new ArrayList<Token>();
-		// TODO сделать метод add()
+
 		String[] ab = input.split("\\s|,|\\(|\\)|\\[|\\]|\\}|\\{|:|\\\"");
+		//String[] ab = input.split("\\W|\\d|^\\.");
+		//String[] ab = input.split("[^\\.\\W]");
 		for (String s : ab)
 			if(s!=null && !s.isEmpty()){
 				if(s.length()==1)
@@ -25,6 +29,7 @@ public class Tokenizer {
 					}else
 						retArr.add(new Token(s, Tag.WORD));
 				}
+				//retArr.add(new Token(s, Tag.WORD));
 			}
 		return retArr;
 	}
