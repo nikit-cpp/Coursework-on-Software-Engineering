@@ -15,9 +15,8 @@ public class ThematicDicManager {
 		thematicDicts.add(new ThematicDic("информатика", true));
 	}
 
-	public void turn() {
-		// TODO Auto-generated method stub
-		
+	public void turn(boolean b, int index) {
+		thematicDicts.get(index).setEnabled(b);
 	}
 
 	public ArrayList<ThematicDic> getThematicDicts() {

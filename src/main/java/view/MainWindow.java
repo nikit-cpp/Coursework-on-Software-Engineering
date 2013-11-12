@@ -32,7 +32,7 @@ public class MainWindow {
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
-	protected ViewProxy ob;
+	protected ViewProxy viewProxy;
 	protected Text txtOutput;
 	protected Table tableThematicDicts;
 
@@ -56,7 +56,7 @@ public class MainWindow {
 		Display display = Display.getDefault();
 		createContents();
 		
-		ob = new ViewProxy(this);
+		viewProxy = new ViewProxy(this);
 		
 		shell.open();
 		shell.layout();
@@ -179,6 +179,12 @@ public class MainWindow {
 		groupThematicDicts.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		tableThematicDicts = new Table(groupThematicDicts, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION);
+		tableThematicDicts.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent arg0) {
+				viewProxy.msgDicts();
+			}
+		});
 		tableThematicDicts.setLinesVisible(true);
 		tableThematicDicts.setHeaderVisible(true);
 		
@@ -209,7 +215,7 @@ public class MainWindow {
 		btnReferate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				ob.msgReferate();
+				viewProxy.msgReferate();
 			}
 		});
 		btnReferate.setText("Реферирование");
@@ -218,7 +224,7 @@ public class MainWindow {
 		btnRubricate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
-				ob.msgRubricate();
+				viewProxy.msgRubricate();
 			}
 		});
 		FormData fd_btnRubricate = new FormData();
@@ -238,7 +244,7 @@ public class MainWindow {
 	        String[] filterExt = { "*.txt", "*.doc", ".rtf", "*.*" };
 	        fd.setFilterExtensions(filterExt);
 	        String selected = fd.open();
-	        ob.openFile(selected);
+	        viewProxy.openFile(selected);
 	        System.out.println(selected);
 	      }
 

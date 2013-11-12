@@ -40,10 +40,10 @@ public class ViewProxy{
 	
 	protected void initThematicDicTable(Table table, ArrayList<ThematicDic> arrayList) {
 	    tableThematicDicts.removeAll();
-	    for (ThematicDic item : arrayList) {
+	    for (ThematicDic dic : arrayList) {
 	        TableItem ti = new TableItem(table, SWT.NONE);
-	        ti.setText(item.toString());
-	        ti.setChecked(item.getEnabled());
+	        ti.setText(dic.toString());
+	        ti.setChecked(dic.getEnabled());
 	    }
 	}
 	
@@ -69,13 +69,21 @@ public class ViewProxy{
 		for(TableItem i : tableThematicDicts.getItems()){
 			logln(i+String.valueOf(i.getChecked()));
 		}
-		
-		engine.turnThematicDictionaries();
 	}
 	
 	public void msgReferate() {				
 		String s = engine.referate(txtInput.getText());
 		txtOutput.setText(s);
+	}
+	
+	public void msgDicts(){
+		int i=0;
+		
+		for(TableItem tableItem : tableThematicDicts.getItems()){
+			//engine.getThematicDicts().get(i).setEnabled(tableItem.getChecked());
+			engine.turnThematicDictionary(tableItem.getChecked(), i);
+			i++;
+		}
 	}
 	
 	StringBuilder sb=new StringBuilder();

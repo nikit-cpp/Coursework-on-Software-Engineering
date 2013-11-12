@@ -65,8 +65,8 @@ public class Engine {
 		return p;
 	}
 
-	public void turnThematicDictionaries(){
-		tdm.turn();
+	public void turnThematicDictionary(boolean b, int index){
+		tdm.turn(b, index);
 	}
 	
 	public String referate(String string){
