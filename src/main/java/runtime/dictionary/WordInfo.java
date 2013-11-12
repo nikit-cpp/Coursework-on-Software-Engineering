@@ -1,12 +1,13 @@
 package runtime.dictionary;
 
 import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * Информация о слове, или value в паре key:value.
  * {@code String s} - ссылка на key.
  * @author Ник
- *
+ * TODO Будет заменен таблицами sqlite.
  */
 public class WordInfo{
 	private final String s;
@@ -71,5 +72,19 @@ public class WordInfo{
 
 	public int getCount() {
 		return count;
+	}
+
+	public String getRelated() {
+		StringBuilder sb = new StringBuilder();
+		
+		Iterator<String> it = related.iterator();
+		for (int i=0; it.hasNext(); i++) {
+			String s = it.next();
+			if(i>0)
+				sb.append(", ");
+			sb.append(s);
+		}
+				
+		return sb.toString();
 	}
 }

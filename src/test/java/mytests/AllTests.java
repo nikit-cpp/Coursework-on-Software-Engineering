@@ -8,7 +8,9 @@ import org.junit.runners.Suite.SuiteClasses;
 @SuiteClasses({
 	TokenizerTest.class,
 	NormalizerTest.class,
-	DictionaryBuilderTest.class
+	DictionaryBuilderTest.class,
+	ThematicDicTest.class,
+	СalcProbabilityforDicTest.class
 })
 public class AllTests {
 

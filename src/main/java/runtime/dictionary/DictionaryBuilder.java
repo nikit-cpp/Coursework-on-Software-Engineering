@@ -12,7 +12,7 @@ public class DictionaryBuilder {
 	private Normalizer normalizer = new Normalizer();
 	
 	/**
-	 * Строит предложение - предложения понадобятся для задачи-максимума.
+	 * Строит словарь слово:стем (m:n)
 	 */
 	public DictionaryContainer buildSentence(String in){
 		DictionaryContainer sentence = new DictionaryContainer();

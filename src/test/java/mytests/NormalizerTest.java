@@ -3,16 +3,15 @@ package mytests;
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.hasItem;
 import normalizer.Normalizer;
-
-import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 public class NormalizerTest {
 	
-	Normalizer normalizer;
+	static Normalizer normalizer;
 		
-	@Before
-	public void setUp(){
+	@BeforeClass
+	public static void setUp(){
 		normalizer = new Normalizer();
 	}
 
@@ -26,4 +25,9 @@ public class NormalizerTest {
 		assertThat(normalizer.normalize("атомов"), hasItem("атом"));
 	}
 
+	@Test
+	public void testRisk() {
+		assertThat(normalizer.normalize("риски"), hasItem("риск"));
+		assertThat(normalizer.normalize("риски"), hasItem("риска"));
+	}
 }

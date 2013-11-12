@@ -36,4 +36,19 @@ public class DictionaryBuilderTest {
 		assertEquals(4, stems.iterator().next().getCount());
 	}
 
+	@Test
+	public void testRisk() {
+		DictionaryContainer dc = sentenceBuilder.buildSentence("риски");
+		dc.print();
+		
+		Collection<WordInfo> words = dc.getWords();
+		assertEquals(1, words.size());
+		assertThat(words, hasItem(new WordInfo("риски")));
+		assertEquals(2, words.iterator().next().getCount());
+		
+		Collection<WordInfo> stems = dc.getStems();
+		assertEquals(2, stems.size());
+		assertThat(stems, hasItem(new WordInfo("риск")));
+		assertThat(stems, hasItem(new WordInfo("риска")));
+	}
 }
