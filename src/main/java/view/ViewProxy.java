@@ -83,4 +83,8 @@ public class ViewProxy{
 		sb.append(s+"\n");
 		txtOutput.setText(sb.toString());
 	}
+
+	public void openFile(String selected) {
+		
+	}
 }

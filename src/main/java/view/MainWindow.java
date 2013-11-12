@@ -8,6 +8,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.events.SelectionListener;
+import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Composite;
@@ -20,7 +22,9 @@ import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Group;
+
 import view.ViewProxy;
+
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class MainWindow {
@@ -82,10 +86,14 @@ public class MainWindow {
 		menuFileCascade.setMenu(menuFile);
 		
 		MenuItem itemOpen = new MenuItem(menuFile, SWT.NONE);
+		itemOpen.addSelectionListener(new Open());
 		itemOpen.setText("\u041E\u0442\u043A\u0440\u044B\u0442\u044C");
 		
-		MenuItem mntmNewItem = new MenuItem(menuFile, SWT.NONE);
-		mntmNewItem.setText("New Item");
+		MenuItem itemSaveInput = new MenuItem(menuFile, SWT.NONE);
+		itemSaveInput.setText("Сохранить входной");
+		
+		MenuItem itemSaveOutput = new MenuItem(menuFile, SWT.NONE);
+		itemSaveOutput.setText("Сохранить результат");
 		
 		MenuItem menuDictCascade = new MenuItem(menu, SWT.CASCADE);
 		menuDictCascade.setText("\u0421\u043B\u043E\u0432\u0430\u0440\u0438");
@@ -96,14 +104,14 @@ public class MainWindow {
 		MenuItem menuItem_3 = new MenuItem(menuDict, SWT.NONE);
 		menuItem_3.setText("\u0423\u043F\u0440\u0430\u0432\u043B\u0435\u043D\u0438\u0435");
 		
-		MenuItem menuItem_1 = new MenuItem(menu, SWT.NONE);
-		menuItem_1.addSelectionListener(new SelectionAdapter() {
+		MenuItem menuItemExit = new MenuItem(menu, SWT.NONE);
+		menuItemExit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				System.exit(0);
 			}
 		});
-		menuItem_1.setText("\u0412\u044B\u0445\u043E\u0434");
+		menuItemExit.setText("\u0412\u044B\u0445\u043E\u0434");
 		
 		Composite composite = new Composite(shell, SWT.NONE);
 		composite.setLayout(new FormLayout());
@@ -219,6 +227,37 @@ public class MainWindow {
 		fd_btnRubricate.right = new FormAttachment(btnReferate, -6);
 		btnRubricate.setLayoutData(fd_btnRubricate);
 		btnRubricate.setText("Рубрикация");
+	}
 
+	// http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/FileDialogExample.htm
+	class Open implements SelectionListener {
+	      public void widgetSelected(SelectionEvent event) {
+	        FileDialog fd = new FileDialog(shell, SWT.OPEN);
+	        fd.setText("Open");
+	        fd.setFilterPath("C:/");
+	        String[] filterExt = { "*.txt", "*.doc", ".rtf", "*.*" };
+	        fd.setFilterExtensions(filterExt);
+	        String selected = fd.open();
+	        ob.openFile(selected);
+	        System.out.println(selected);
+	      }
+
+	      public void widgetDefaultSelected(SelectionEvent event) {
+	      }
+	    }
+
+	class Save implements SelectionListener {
+	      public void widgetSelected(SelectionEvent event) {
+	        FileDialog fd = new FileDialog(shell, SWT.SAVE);
+	        fd.setText("Save");
+	        fd.setFilterPath("C:/");
+	        String[] filterExt = { "*.txt", "*.doc", ".rtf", "*.*" };
+	        fd.setFilterExtensions(filterExt);
+	        String selected = fd.open();
+	        System.out.println(selected);
+	      }
+
+	      public void widgetDefaultSelected(SelectionEvent event) {
+	      }
 	}
 }

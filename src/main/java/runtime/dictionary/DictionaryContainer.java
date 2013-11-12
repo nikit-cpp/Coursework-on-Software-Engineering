@@ -25,6 +25,10 @@ public class DictionaryContainer {
 		addWord(stem, stems, original);
 	}
 	
+	public void addSingleStem(String stem) {
+		addWord(stem, stems, null);
+	}
+	
 	private void addWord(String what, HashMap<String, WordInfo> map, String related){
 		WordInfo wordInfo = map.get(what);
 		if (wordInfo==null){ // добавляем слово, которого нет - счётчик=1
@@ -62,6 +66,4 @@ public class DictionaryContainer {
 		}
 		System.out.println("end\n");
 	}
-	
-	
 }

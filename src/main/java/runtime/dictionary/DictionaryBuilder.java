@@ -1,6 +1,7 @@
 package runtime.dictionary;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import normalizer.Normalizer;
 import lexer.Token;
@@ -22,8 +23,13 @@ public class DictionaryBuilder {
 		
 		for(Token t : tokens){
 			String word = t.value;
-			for(String stem : normalizer.normalize(word)){
-				sentence.addWord(word, stem);
+			List<String> stems = normalizer.normalize(word);
+			if(stems.size()==0){
+				sentence.addSingleStem(word);
+			}else{
+				for(String stem : stems){
+					sentence.addWord(word, stem);
+				}
 			}
 		}
 		

@@ -29,6 +29,7 @@ public class WordInfo{
 	}
 	
 	public void addRelated(String string){
+		if(string==null) return;
 		related.add(string);
 	}
 	
@@ -75,6 +76,9 @@ public class WordInfo{
 	}
 
 	public String getRelated() {
+		if(related.size()==0) return "";
+		//if(related.size()==1 && related.iterator().next() == null) return "";
+		
 		StringBuilder sb = new StringBuilder();
 		
 		Iterator<String> it = related.iterator();
