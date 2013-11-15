@@ -1,9 +1,6 @@
 package view;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.*;
@@ -11,19 +8,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import main.*;
+import options.OptId;
+import options.Options;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.graphics.Path;
 import org.eclipse.swt.widgets.*;
 
 import runtime.dictionary.WordInfo;
 import thematic.dictionary.ThematicDic;
+import view.listeners.Open;
 
 public class ViewProxy{
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
+	private Shell shell;
+	private Options options;
 	
 	private Engine engine = new Engine();
 	
@@ -32,6 +33,8 @@ public class ViewProxy{
 		this.tableWords=w.tableWords;
 		this.txtOutput=w.txtOutput;
 		this.tableThematicDicts = w.tableThematicDicts;
+		this.shell=w.shell;
+		options=Options.getInstance();
 		
 		initialize();
 	}
@@ -40,7 +43,7 @@ public class ViewProxy{
 	 *  Инициализация окна
 	 */
 	private void initialize(){
-		
+		Open.staticInit(shell, this);
 		txtOutput.setText("");
 		
 		initThematicDicTable(tableThematicDicts, engine.getThematicDicts());
@@ -102,43 +105,29 @@ public class ViewProxy{
 
 	public void openFile(String selected) {
 		StringBuilder sb = new StringBuilder();
-		
-		
-		Charset charset = Charset.forName("cp1251"); // TODO получение как опцию
+				
+		Charset charset = Charset.forName(options.getString(OptId.CHARSET));
 		// TODO Работа с BOM для UTF-8 : http://commons.apache.org/proper/commons-io/javadocs/api-release/index.html?org/apache/commons/io/package-summary.html
-		System.out.println("sys def charset "+charset);
+		
 		java.nio.file.Path file = Paths.get(selected);
 		try (BufferedReader reader = Files.newBufferedReader(file, charset)) {
 		    String line = null;
 		    boolean firstline=true;
 		    while ((line = reader.readLine()) != null) {
-		        //System.out.println(line);
-		    	if(!firstline)sb.append('\n');
+		    	if(!firstline) 
+		    		sb.append('\n');
 		    	sb.append(line);
 		    	firstline=false;
 		    }
 		} catch (IOException x) {
 		    System.err.format("IOException: %s%n", x);
 		}
-		/**/
-
-		/*// 1. Чтение ввода по строкам:
-		BufferedReader in;
-		try {
-			in = new BufferedReader(
-				new FileReader(selected));
-			String s;
-			while((s = in.readLine())!= null)
-			sb.append(s);
-			in.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			
-		}
-		*/
+		
 		this.txtInput.setText(sb.toString());
+	}
+
+	public void saveFile(String selected) {
+		// TODO Auto-generated method stub
+		
 	}
 }

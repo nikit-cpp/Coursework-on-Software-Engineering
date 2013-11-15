@@ -47,6 +47,7 @@ public final class Options {
 	private Options() {
 		this.add(OptId.DIC_PATH, new Option("resources/ru_RU.dic"));	
 		this.add(OptId.AFF_PATH, new Option("resources/ru_RU.aff"));
+		this.add(OptId.CHARSET, new Option("cp1251"));
 	}
 
 	// Добавление опций
