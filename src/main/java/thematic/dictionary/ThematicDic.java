@@ -8,6 +8,7 @@ public class ThematicDic implements Selectable{
 	private boolean isEnabled;
 	private final String name;
 	private HashMap<String, Double> dic;
+	private double probability;
 	
 	public ThematicDic(String name, boolean isEnabled) {
 		this.name=name;
@@ -50,5 +51,15 @@ public class ThematicDic implements Selectable{
 
 	public int getSize() {
 		return dic.size();
+	}
+	
+	public void setProbability(double p){
+		this.probability=p;
+	}
+	
+	public String getProbabilityString(){
+		if(isEnabled)
+			return String.valueOf(probability);
+		return "";
 	}
 }

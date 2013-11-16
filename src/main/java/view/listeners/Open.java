@@ -7,6 +7,12 @@ import org.eclipse.swt.widgets.FileDialog;
 
 // http://www.java2s.com/Code/Java/SWT-JFace-Eclipse/FileDialogExample.htm
 
+/**
+ * Показывает диалог открытия файла и если пользователь выбрал файл,
+ * вызывает {@code viewProxy.openFile()}
+ * @author Ник
+ *
+ */
 public class Open extends ListenersSuper implements SelectionListener {
     public void widgetSelected(SelectionEvent event) {
       FileDialog fd = new FileDialog(shell, SWT.OPEN);

@@ -131,7 +131,7 @@ public class MainWindow {
 		groupInText.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		txtInput = new Text(groupInText, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-		txtInput.setText("Каким образом ХР снижает перечисленные ранее риски?\r\nТочка точки точкой точками точка");
+		txtInput.setText("Каким образом XP снижает перечисленные ранее риски?\r\nТочка точки точкой точками точка");
 		
 		Group groupOutText = new Group(sashFormNorth, SWT.NONE);
 		groupOutText.setText("Логгер/Примерный смысл");
@@ -181,7 +181,7 @@ public class MainWindow {
 		tableThematicDicts.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
-				viewProxy.msgDicts();
+				viewProxy.msgTurnDicts();
 			}
 		});
 		tableThematicDicts.setLinesVisible(true);

@@ -12,7 +12,11 @@ public class ThematicDicManager {
 		thematicDicts.add(new ThematicDic("физика", true));
 		thematicDicts.add(new ThematicDic("алгебра", false));
 		thematicDicts.add(new ThematicDic("геометрия", true));
-		thematicDicts.add(new ThematicDic("информатика", true));
+		
+		ThematicDic informatica = new ThematicDic("информатика", true);
+		informatica.add("риск", 1);
+		informatica.add("XP", 1);
+		thematicDicts.add(informatica);
 	}
 
 	public void turn(boolean b, int index) {

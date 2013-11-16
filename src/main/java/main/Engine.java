@@ -27,7 +27,8 @@ public class Engine {
 		container = builder.buildSentence(text);
 		Collection<WordInfo> stems = container.getStems();
 		for(ThematicDic dic: tdm.getThematicDicts()){
-			double unitP = calcProbabilityforDic(dic, stems); // TODO придумать, куда записывать полученную вероятность
+			double unitP = calcProbabilityforDic(dic, stems);
+			dic.setProbability(unitP);
 		}
 		return stems;
 	}
