@@ -5,11 +5,11 @@ import java.util.List;
 
 import normalizer.Normalizer;
 import lexer.Token;
-import lexer.Tokenizer;
+import lexer.Lexer;
 
 public class DictionaryBuilder {
 	
-	private Tokenizer tokenizer = new Tokenizer();
+	private Lexer tokenizer = new Lexer();
 	private Normalizer normalizer = new Normalizer();
 	
 	/**
