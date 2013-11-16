@@ -6,18 +6,18 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
-import ui.view.ViewProxy;
+import ui.view.View;
 
 abstract public class OpenFileDialog {
 	static Shell shell;
-	static ViewProxy viewProxy;
+	static View view;
 	static Options options;
 	FileDialog fd;
 	String selected;
 
-	public static void staticInit(Shell _shell, ViewProxy _viewProxy) {
+	public static void staticInit(Shell _shell, View _view) {
 		shell = _shell;
-		viewProxy = _viewProxy;
+		view = _view;
 		options = Options.getInstance();
 	}
 

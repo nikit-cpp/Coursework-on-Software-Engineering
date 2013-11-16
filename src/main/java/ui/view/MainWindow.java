@@ -21,7 +21,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Group;
 
-import ui.view.ViewProxy;
+import ui.view.View;
 import ui.view.listeners.Open;
 
 import org.eclipse.wb.swt.SWTResourceManager;
@@ -31,7 +31,7 @@ public class MainWindow {
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
-	protected ViewProxy viewProxy;
+	protected View viewProxy;
 	protected Text txtOutput;
 	protected Table tableThematicDicts;
 
@@ -55,7 +55,7 @@ public class MainWindow {
 		Display display = Display.getDefault();
 		createContents();
 		
-		viewProxy = new ViewProxy(this);
+		viewProxy = new View(this);
 		
 		shell.open();
 		shell.layout();

@@ -19,7 +19,7 @@ public class Open extends OpenFileDialog implements SelectionListener {
 		openDialog();
 
 		if (checkPath(selected))
-			viewProxy.openFile(selected);
+			view.openFile(selected);
 	}
 
 	public void widgetDefaultSelected(SelectionEvent event) {

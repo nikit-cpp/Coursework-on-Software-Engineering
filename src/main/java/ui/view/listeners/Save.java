@@ -19,7 +19,7 @@ public class Save extends OpenFileDialog implements SelectionListener {
 		openDialog();
 
 		if (checkPath(selected))
-			viewProxy.saveFile(selected);
+			view.saveFile(selected);
 	}
 
 	public void widgetDefaultSelected(SelectionEvent event) {

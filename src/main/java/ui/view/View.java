@@ -12,7 +12,7 @@ import thematic.dictionary.ThematicDic;
 import ui.filemanager.FileReader;
 import ui.view.listeners.*;
 
-public class ViewProxy{
+public class View{
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
@@ -21,7 +21,7 @@ public class ViewProxy{
 	
 	private Engine engine = new Engine();
 	
-	public ViewProxy(MainWindow w) {
+	public View(MainWindow w) {
 		this.txtInput=w.txtInput;
 		this.tableWords=w.tableWords;
 		this.txtOutput=w.txtOutput;
@@ -123,7 +123,7 @@ public class ViewProxy{
 	public void openFile(String selected) {		
 		txtInput.setText(FileReader.readTextFromFileToString(selected));
 		
-		if(Options.getInstance().getBoolean(OptId.AUTO_RUBRICATE))
+		if(Options.getInstance().getBoolean(OptId.RUBRICATE_ON_FILEOPEN))
 			msgRubricate();
 	}
 
