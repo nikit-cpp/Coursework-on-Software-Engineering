@@ -109,6 +109,10 @@
 
 			<!-- Скачиваем русский словарь с помощью maven-download-plugin
 			https://github.com/maven-download-plugin/maven-download-plugin
+			
+			Страницы словаря в интернетах:
+			https://sites.google.com/site/dictru/
+			http://code.google.com/p/hunspell-ru/
 			-->
 			<plugin>
 				<groupId>com.googlecode.maven-download-plugin</groupId>
@@ -123,10 +127,10 @@
 							<goal>wget</goal>
 						</goals>
 						<configuration>
-							<url>http://hunspell-ru.googlecode.com/files/ru_RU_UTF-8_20120501.zip</url>
+							<url>https://bitbucket.org/Shaman_Alex/russian-dictionary-hunspell/downloads/ru_RU_UTF-8_20131101.zip</url>
 							<unpack>true</unpack>
 							<outputDirectory>${basedir}/resources</outputDirectory>
-							<md5>6b29df84526b8f4759fcda1519f86b04</md5>
+							<md5>6c1307dd71fc3edf3c1d9c3510b6211c</md5>
 						</configuration>
 					</execution>
 				</executions>

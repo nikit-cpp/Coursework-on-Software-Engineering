@@ -11,15 +11,16 @@ import options.Options;
 import com.atlascopco.hunspell.Hunspell;
 
 public class Normalizer {
-	private Hunspell hunspell;
 	private Options options;
+	private ArrayList<Hunspell> normalizeDicts;
 		
 	public Normalizer() {
 		this.options = Options.getInstance();
 		final String dicPath = new File(options.getString(OptId.DIC_PATH)).getAbsolutePath();
 		final String affPath = new File(options.getString(OptId.AFF_PATH)).getAbsolutePath();
 		
-		hunspell = new Hunspell(dicPath, affPath);
+		normalizeDicts = new ArrayList<Hunspell>();
+		normalizeDicts.add(new Hunspell(dicPath, affPath));
 	}
 
 	/**
@@ -28,12 +29,18 @@ public class Normalizer {
 	 * @return
 	 */
 	public List<String> normalize(String word){
-		word = UTF8_SystemDefault(word);
-		List<String> stemList = hunspell.stem(word);
-		
 		List<String> out=new ArrayList<String>();
-		for(String st : stemList)
-			out.add(SystemDefault_UTF8(st));
+		
+		for(Hunspell hunspell : normalizeDicts){
+			word = UTF8_SystemDefault(word);
+			List<String> stemList = hunspell.stem(word);
+						
+			for(String st : stemList){
+				if(!out.contains(st)){
+					out.add(SystemDefault_UTF8(st));
+				}
+			}
+		}
 		
 		return out;
 	}
