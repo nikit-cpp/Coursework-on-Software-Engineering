@@ -48,17 +48,14 @@ public class Engine {
 	 */
 	public double calcProbabilityforDic(ThematicDic dic, Collection<WordInfo> stems) {
 		double p = 0;
-		int size = stems.size();
+		int size = 0;
 		
 		for(WordInfo word : stems){
 			String s = word.getString();
 			int count = word.getCount();
 			p += (dic.getProbability(s) * count);
 			
-			if(count>1){
-				size-=1;
-				size+=count;
-			}
+			size+=count;
 		}
 		p /= size;
 		

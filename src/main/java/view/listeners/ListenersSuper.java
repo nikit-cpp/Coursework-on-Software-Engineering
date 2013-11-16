@@ -18,7 +18,7 @@ abstract class ListenersSuper {
 	}
 	
 	boolean checkPath(String path){
-		if(path==null || path=="")
+		if(path==null || path.equals(""))
 			return false;
 		return true;
 	}
