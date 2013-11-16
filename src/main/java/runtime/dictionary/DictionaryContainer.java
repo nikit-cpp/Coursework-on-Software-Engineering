@@ -19,20 +19,21 @@ public class DictionaryContainer {
 	 * Добавляет слова в данный контейнер, увеличивая счётчик.
 	 * @param original
 	 * @param stem
+	 * @param num 
 	 */
-	public void addWord(String original, String stem){
-		addWord(original, words, stem);
-		addWord(stem, stems, original);
+	public void addWord(String original, String stem, int num){
+		addWord(original, words, stem, num);
+		addWord(stem, stems, original, num);
 	}
 	
-	public void addSingleStem(String stem) {
-		addWord(stem, stems, null);
+	public void addSingleStem(String stem, int num) {
+		addWord(stem, stems, null, num);
 	}
 	
-	private void addWord(String what, HashMap<String, WordInfo> map, String related){
+	private void addWord(String what, HashMap<String, WordInfo> map, String related, int num){
 		WordInfo wordInfo = map.get(what);
 		if (wordInfo==null){ // добавляем слово, которого нет - счётчик=1
-			wordInfo=new WordInfo(what); // count==1	
+			wordInfo=new WordInfo(what, num); // count==1	
 		}else{ // добавляем слово, которое уже есть - инкрементируем счётчик
 			map.remove(what);
 			wordInfo.incrementCount();

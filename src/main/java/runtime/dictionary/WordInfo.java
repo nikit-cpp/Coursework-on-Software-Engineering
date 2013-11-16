@@ -13,9 +13,18 @@ public class WordInfo{
 	private final String s;
 	private int count;
 	private HashSet<String> related;
+	private int num; // Порядковый номер слова
 	
 	public WordInfo(String s) {
 		this.s=s;
+		this.num=0;
+		count=1;
+		related = new HashSet<String>();
+	}
+	
+	public WordInfo(String s, int num) {
+		this.s=s;
+		this.num=num;
 		count=1;
 		related = new HashSet<String>();
 	}
@@ -90,5 +99,9 @@ public class WordInfo{
 		}
 				
 		return sb.toString();
+	}
+	
+	public int getNum(){
+		return num;
 	}
 }

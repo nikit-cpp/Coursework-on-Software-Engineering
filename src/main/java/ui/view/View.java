@@ -84,8 +84,9 @@ public class View{
 	        String word = item.getString();
 	        String related = item.getRelated();
 	        String count = String.valueOf(item.getCount());
+	        String num = String.valueOf(item.getNum());
 	        
-	        String[] row = {word, related, count};
+	        String[] row = {num, word, related, count };
 	        tableItem.setText(row);
 	    }
 		
