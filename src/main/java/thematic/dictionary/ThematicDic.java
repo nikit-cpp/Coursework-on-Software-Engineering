@@ -41,7 +41,7 @@ public class ThematicDic implements Selectable{
 	@Override
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled=isEnabled;
-		System.out.println(toString() + " "+isEnabled);
+		//System.out.println(toString() + " "+isEnabled);
 	}
 
 	public void add(String string, double probability) {

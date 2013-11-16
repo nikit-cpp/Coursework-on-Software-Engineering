@@ -1,18 +1,16 @@
-package view;
+package ui.view;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.*;
-import java.util.Collection;
 import main.*;
 import options.OptId;
 import options.Options;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
+
 import runtime.dictionary.WordInfo;
 import thematic.dictionary.ThematicDic;
-import view.listeners.Open;
+import ui.filemanager.FileReader;
+import ui.view.listeners.*;
 
 public class ViewProxy{
 	private Text txtInput;
@@ -20,7 +18,6 @@ public class ViewProxy{
 	private Text txtOutput;
 	private Table tableThematicDicts;
 	private Shell shell;
-	private Options options;
 	
 	private Engine engine = new Engine();
 	
@@ -30,7 +27,6 @@ public class ViewProxy{
 		this.txtOutput=w.txtOutput;
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
-		options=Options.getInstance();
 		
 		initialize();
 	}
@@ -39,17 +35,17 @@ public class ViewProxy{
 	 *  Инициализация окна
 	 */
 	private void initialize(){
-		Open.staticInit(shell, this);
+		OpenFileDialog.staticInit(shell, this);
 		txtOutput.setText("");
 		
-		initThematicDicTable();
+		createThematicDicTable();
 	}
 	
 	/**
-	 * Создаёт таблицу словарей на основе их списка,
+	 * Удаляет старую и создаёт таблицу словарей на основе их списка,
 	 * полученного с помощью engine.getThematicDicts()
 	 */
-	protected void initThematicDicTable() {
+	protected void createThematicDicTable() {
 	    tableThematicDicts.removeAll();
 	    for (ThematicDic dic : engine.getThematicDicts()) {
 	        TableItem ti = new TableItem(tableThematicDicts, SWT.NONE);
@@ -76,10 +72,14 @@ public class ViewProxy{
 		}
 	}
 	
-	private void initWordsTable(Table table, Collection<WordInfo> arrayList) {
+	/**
+	 * Удаляет старую и создаёт таблицу слов на основе их списка,
+	 * полученного с помощью engine.getThematicDicts()
+	 */
+	private void createWordsTable() {
 		tableWords.removeAll();
-		for (WordInfo item : arrayList) {
-	        TableItem tableItem = new TableItem(table, SWT.NONE);
+		for (WordInfo item : engine.getStems()) {
+	        TableItem tableItem = new TableItem(tableWords, SWT.NONE);
 	        
 	        String word = item.getString();
 	        String related = item.getRelated();
@@ -94,55 +94,37 @@ public class ViewProxy{
 	/**
 	 * Обрабатывает нажатие кнопки "Рубрикация"
 	 */
-	public void msgRubricate() {				
-		initWordsTable(tableWords, engine.rubricate(txtInput.getText()));
-		
-		initThematicDicTable();
-		
-		// TODO Уже не помню зачем, убрать всё тело метода, что ниже данного комментария.
-		for(TableItem i : tableThematicDicts.getItems()){
-			logln(i+String.valueOf(i.getChecked()));
-		}
+	public void msgRubricate() {
+		engine.rubricate(txtInput.getText());
+		createWordsTable();
+		createThematicDicTable();
 	}
 	
+	/**
+	 * Обрабатывает нажатие кнопки "Реферирование"
+	 */
 	public void msgReferate() {				
 		String s = engine.referate(txtInput.getText());
 		txtOutput.setText(s);
 	}
 
-
+	/*
 	StringBuilder sb=new StringBuilder();
 	private void logln(String s){
 		sb.append(s+"\n");
 		txtOutput.setText(sb.toString());
 	}
+	*/
 	
 	/**
-	 * Открывает файл и выводит его содержимое в {@code txtInput},
-	 * после чего закрывает файл.
+	 * Заполняет {@code txtInput} содержимым файла.
 	 * @param selected путь к файлу
 	 */
-	public void openFile(String selected) {
-		StringBuilder sb = new StringBuilder();
-				
-		Charset charset = Charset.forName(options.getString(OptId.CHARSET));
-		// TODO Работа с BOM для UTF-8 : http://commons.apache.org/proper/commons-io/javadocs/api-release/index.html?org/apache/commons/io/package-summary.html
+	public void openFile(String selected) {		
+		txtInput.setText(FileReader.readTextFromFileToString(selected));
 		
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(selected), charset)) {
-		    String line = null;
-		    boolean firstline=true;
-		    while ((line = reader.readLine()) != null) {
-		    	if(!firstline) 
-		    		sb.append('\n');
-		    	sb.append(line);
-		    	firstline=false;
-		    }
-		    reader.close();
-		} catch (IOException x) {
-		    System.err.format("IOException: %s%n", x);
-		}
-		
-		this.txtInput.setText(sb.toString());
+		if(Options.getInstance().getBoolean(OptId.AUTO_RUBRICATE))
+			msgRubricate();
 	}
 
 	public void saveFile(String selected) {

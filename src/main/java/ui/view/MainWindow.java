@@ -1,4 +1,4 @@
-package view;
+package ui.view;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
@@ -21,8 +21,8 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Group;
 
-import view.ViewProxy;
-import view.listeners.Open;
+import ui.view.ViewProxy;
+import ui.view.listeners.Open;
 
 import org.eclipse.wb.swt.SWTResourceManager;
 

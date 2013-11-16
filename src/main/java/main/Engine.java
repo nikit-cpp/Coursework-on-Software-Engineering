@@ -23,14 +23,13 @@ public class Engine {
 		tdm = new ThematicDicManager();
 	}
 	
-	public Collection<WordInfo> rubricate(String text){
+	public void rubricate(String text){
 		container = builder.buildSentence(text);
 		Collection<WordInfo> stems = container.getStems();
 		for(ThematicDic dic: tdm.getThematicDicts()){
 			double unitP = calcProbabilityforDic(dic, stems);
 			dic.setProbability(unitP);
 		}
-		return stems;
 	}
 	
 	public Collection<WordInfo> getStems(){

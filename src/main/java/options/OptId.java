@@ -1,5 +1,5 @@
 package options;
 
 public enum OptId {
-	DIC_PATH, AFF_PATH, CHARSET;
+	DIC_PATH, AFF_PATH, CHARSET, AUTO_RUBRICATE;
 }
