@@ -6,7 +6,7 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({
-	TokenizerTest.class,
+	LexerTest.class,
 	NormalizerTest.class,
 	DictionaryBuilderTest.class,
 	ThematicDicTest.class,
