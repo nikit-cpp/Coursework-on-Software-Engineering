@@ -1,12 +1,12 @@
 package normalizer;
 
-import java.io.File;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
 import options.OptId;
 import options.Options;
+import ui.filemanager.FileChecker;
 
 import com.atlascopco.hunspell.Hunspell;
 
@@ -16,8 +16,8 @@ public class Normalizer {
 		
 	public Normalizer() {
 		this.options = Options.getInstance();
-		final String dicPath = new File(options.getString(OptId.DIC_PATH)).getAbsolutePath();
-		final String affPath = new File(options.getString(OptId.AFF_PATH)).getAbsolutePath();
+		final String dicPath = FileChecker.getCheckedExistsAbsolutePath(options.getString(OptId.DIC_PATH));
+		final String affPath = FileChecker.getCheckedExistsAbsolutePath(options.getString(OptId.AFF_PATH));
 		
 		normalizeDicts = new ArrayList<Hunspell>();
 		normalizeDicts.add(new Hunspell(dicPath, affPath));

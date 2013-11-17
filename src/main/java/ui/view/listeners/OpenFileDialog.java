@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.Shell;
 import ui.view.View;
 
 abstract public class OpenFileDialog {
-	static Shell shell;
+	protected static Shell shell;
 	static View view;
 	static Options options;
 	FileDialog fd;

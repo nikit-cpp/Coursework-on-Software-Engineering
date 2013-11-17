@@ -19,7 +19,7 @@ public class View{
 	private Table tableThematicDicts;
 	private Shell shell;
 	
-	private Engine engine = new Engine();
+	private Engine engine;
 	
 	public View(MainWindow w) {
 		this.txtInput=w.txtInput;
@@ -28,6 +28,9 @@ public class View{
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
 		
+		OpenFileDialog.staticInit(shell, this);
+		engine = new Engine();
+		
 		initialize();
 	}
 	
@@ -35,7 +38,6 @@ public class View{
 	 *  Инициализация окна
 	 */
 	private void initialize(){
-		OpenFileDialog.staticInit(shell, this);
 		txtOutput.setText("");
 		
 		createThematicDicTable();
