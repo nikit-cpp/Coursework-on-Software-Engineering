@@ -58,11 +58,11 @@
 	</pluginRepositories>
 
 	<build>
-		<resources>
+		<!--resources>
 			<resource>
 				<directory>resources</directory>
 			</resource>
-		</resources>
+		</resources-->
 
 		<!-- Приказываем одной странной подсистеме m2e не мешать исполнению плагина 
 			maven-download-plugin во время фазы generate-resources, подробнее:
