@@ -12,10 +12,13 @@ import javax.swing.JButton;
 import javax.swing.BoxLayout;
 import javax.swing.border.TitledBorder;
 import javax.swing.border.EtchedBorder;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JMenu;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class MainWindow2 extends JFrame {
-
-	private JPanel contentPane;
 
 	/**
 	 * Launch the application.
@@ -83,15 +86,33 @@ public class MainWindow2 extends JFrame {
 		JPanel panel_4 = new JPanel();
 	
 		
-		JButton btnNewButton_1 = new JButton("New button");
+		JButton btnNewButton_1 = new JButton("Рубрикация");
 		
-		JButton btnNewButton = new JButton("New button");
+		JButton btnNewButton = new JButton("Реферирование");
 		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.X_AXIS));
+		
+		Component horizontalGlue = Box.createHorizontalGlue();
+		panel_4.add(horizontalGlue);
 		panel_4.add(btnNewButton_1);
 		panel_4.add(btnNewButton);
 		
 		getContentPane().add(splitPane, BorderLayout.CENTER);
 		getContentPane().add(panel_4, BorderLayout.SOUTH);
+		
+		JMenuBar menuBar = new JMenuBar();
+		setJMenuBar(menuBar);
+		
+		JMenu mnNewMenu = new JMenu("Файл");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem menuItem = new JMenuItem("Открыть входной");
+		mnNewMenu.add(menuItem);
+		
+		JMenu menu_1 = new JMenu("Словари");
+		menuBar.add(menu_1);
+		
+		JMenu menu = new JMenu("Выход");
+		menuBar.add(menu);
 	}
 
 }
