@@ -3,7 +3,7 @@
 * [системные требования](#req)
 * [подготовка](#preparing) Eclipse Standart (впрочем, оно также подходит для версии Eclipse for Java developers, ибо тех Maven- и WindowBuilder-плагинов, что там стоят, недостаточно) к импорту данного Maven-проекта
 * собственно [импорт](#import) и сборка данного проекта
-* сборка для [разных](#crossbuilding) машин
+* сборка для разных [платформ](#crossbuilding)
 * возникшие в процессе и решённые [проблемы](#troubles)
 * [ссылки](#links) различной степени полезности
 
@@ -92,15 +92,17 @@
 ![](http://img-fotki.yandex.ru/get/9584/165433899.0/0_e6b10_f93495bb_orig)  
 Если на значке проекта по-прежнему остаётся восклицательный знак или красный крест, то [обновляем](#mavenupd) проект.
 
-#<a name="crossbuilding"></a>d.Сборка для разных машин
+#<a name="crossbuilding"></a>d.Сборка для разных платформ
 
-Предположим, у вас машина `win x86` и вы собираетесь сделать билд для `win x86_64`.  
-Из-за того что у профилей есть тег `<activation>` при попытке сборки с указанием профиля `mvn package -P winprofile64` в результирующий jar добавятся библиотеки SWT для win x86, а плагин manen-assembly-plugin не произведёт замену, из-за того что содержащиеся в архиве org.eclipse.swt.win32.win32.**x86_64**-4.3.jar файлы `swt-xulrunner-win32-4332.dll, ...` имеют идентичные названия с уже добавленными файлами для org.eclipse.swt.win32.win32.**x86**-4.3.jar.  
+Предположим, у вас платформа `win x86` и вы собираетесь сделать билд для `win x86_64`.  
+При попытке сборки с указанием профиля `mvn package -P winprofile64` в результирующий jar добавятся библиотеки SWT для win x86 (т. к. профиль winprofile32 активировался сам из-за тега `<activation>`), а плагин manen-assembly-plugin не произведёт замену, из-за того что содержащиеся в архиве org.eclipse.swt.win32.win32.**x86_64**-4.3.jar файлы `swt-xulrunner-win32-4332.dll, ...` имеют идентичные названия с уже добавленными файлами для org.eclipse.swt.win32.win32.**x86**-4.3.jar.  
 
-Решение: [принудительно деактивировать профиль `winprofile32`](http://maven.apache.org/guides/introduction/introduction-to-profiles.html#Deactivating_a_profile) : `mvn package -P winprofile64,!winprofile32`  
+Решение:  
+Нужно [принудительно деактивировать](http://maven.apache.org/guides/introduction/introduction-to-profiles.html#Deactivating_a_profile) профиль вашей платформы, в нашем случае это `winprofile32` :  
+`mvn package -P winprofile64,!winprofile32`  
 ![](http://img-fotki.yandex.ru/get/9584/165433899.0/0_e8b37_ed3bdd95_orig)
 
-#<a name="troubles"></a>e.Известные проблемы
+#<a name="troubles"></a>f.Известные проблемы
 ###1. Ругается на наличие BOM: `illegal character: \65279`
 Проблема проявилась на Linux Mint amd64, но не проявилась на Windows x86.  
 [Решение:](http://stackoverflow.com/questions/1068650/using-awk-to-remove-the-byte-order-mark)  
