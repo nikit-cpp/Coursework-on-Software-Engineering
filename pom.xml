@@ -5,17 +5,15 @@
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 
-	<!-- Один из способов устранить ошибку незапуска тестов Hunspell(TestNormalizer) из-под Maven
-	"UTF-8 encoding error. Missing continuation byte in 0. character position:"
-	"асептический"
-	"This UTF-8 encoding can't convert to UTF-16:"
-	"асептический"
-	
-	- сделать проект системно-зависимым, т. е. закомментировать кодировку UTF-8 :-->
+	<!-- Один из способов устранить ошибку незапуска тестов Hunspell(TestNormalizer) 
+		из-под Maven "UTF-8 encoding error. Missing continuation byte in 0. character 
+		position:" "асептический" "This UTF-8 encoding can't convert to UTF-16:" 
+		"асептический" - сделать проект системно-зависимым, т. е. закомментировать 
+		кодировку UTF-8 : -->
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
- 
+
 	<dependencies>
 		<dependency>
 			<groupId>com.atlascopco</groupId>
@@ -58,16 +56,11 @@
 	</pluginRepositories>
 
 	<build>
-		<!--resources>
-			<resource>
-				<directory>resources</directory>
-			</resource>
-		</resources-->
+		<!--resources> <resource> <directory>resources</directory> </resource> 
+			</resources -->
 
 		<!-- Приказываем одной странной подсистеме m2e не мешать исполнению плагина 
-			maven-download-plugin во время фазы generate-resources, подробнее:
-			http://wiki.eclipse.org/M2E_plugin_execution_not_covered#ignore_plugin_goal
-		-->
+			maven-download-plugin во время фазы generate-resources, подробнее: http://wiki.eclipse.org/M2E_plugin_execution_not_covered#ignore_plugin_goal -->
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -90,27 +83,6 @@
 										<ignore />
 									</action>
 								</pluginExecution>
-								<!--pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>
-											org.apache.maven.plugins
-										</groupId>
-										<artifactId>
-											maven-dependency-plugin
-										</artifactId>
-										<versionRange>
-											[2.1,)
-										</versionRange>
-										<goals>
-											<goal>
-												copy-dependencies
-											</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore></ignore>
-									</action>
-								</pluginExecution-->
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -128,13 +100,8 @@
 				</configuration>
 			</plugin>
 
-			<!-- Скачиваем русский словарь с помощью maven-download-plugin
-			https://github.com/maven-download-plugin/maven-download-plugin
-			
-			Страницы словаря в интернетах:
-			https://sites.google.com/site/dictru/
-			http://code.google.com/p/hunspell-ru/
-			-->
+			<!-- Скачиваем русский словарь с помощью maven-download-plugin https://github.com/maven-download-plugin/maven-download-plugin 
+				Страницы словаря в интернетах: https://sites.google.com/site/dictru/ http://code.google.com/p/hunspell-ru/ -->
 			<plugin>
 				<groupId>com.googlecode.maven-download-plugin</groupId>
 				<artifactId>maven-download-plugin</artifactId>
@@ -156,7 +123,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<artifactId>maven-clean-plugin</artifactId>
 				<version>2.4.1</version>
@@ -172,80 +139,40 @@
 					</filesets>
 				</configuration>
 			</plugin>
-			
-			<!--plugin> 
-    <groupId>org.apache.maven.plugins</groupId> 
-    <artifactId>maven-dependency-plugin</artifactId> 
-    <configuration> 
-        <outputDirectory>${project.build.directory}/lib/</outputDirectory> 
-        <overWriteReleases>false</overWriteReleases> 
-        <overWriteSnapshots>false</overWriteSnapshots> 
-        <overWriteIfNewer>true</overWriteIfNewer>
-    </configuration> 
-    <executions> 
-        <execution> 
-            <id>copy-dependencies</id> 
-            <phase>package</phase> 
-            <goals> 
-                <goal>copy-dependencies</goal> 
-            </goals> 
-        </execution> 
-    </executions> 
-</plugin-->
 
-<!--plugin>
-    <groupId>org.apache.maven.plugins</groupId>
-    <artifactId>maven-jar-plugin</artifactId>
-    <configuration>
-        <archive>
-        <index>true</index>>
-            <manifest>
-                <addClasspath>true</addClasspath>
-                <classpathPrefix>lib/</classpathPrefix>
-                <classpathLayoutType>simple</classpathLayoutType>
-                <mainClass>main.ui.view.MainWindow</mainClass>
-            </manifest>
-            <manifestEntries>
-                <Version>${buildNumber}</Version>
-            </manifestEntries>
-        </archive>
-    </configuration>
-</plugin-->
+			<!-- Здесь AssemblyPlugin -->
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<descriptors>
+						<descriptor>${basedir}/assembly2.xml</descriptor>
+					</descriptors>
+					<archive>
+						<manifest>
+							<mainClass>ui.view.MainWindow</mainClass>
+						</manifest>
+					</archive>
 
-	<!-- Здесь AssemblyPlugin -->
-	<plugin>
-  <artifactId>maven-assembly-plugin</artifactId>
-  <version>2.2.1</version>
-  <executions>
-    <execution>
-      <id>make-assembly</id>
-      <phase>package</phase>
-      <goals>
-        <goal>single</goal>
-      </goals>
-    </execution>
-  </executions>
-  <configuration>
-  	<descriptors>
-      <descriptor>${basedir}/assembly2.xml</descriptor>
-    </descriptors>
-    <archive>
-      <manifest>
-        <mainClass>ui.view.MainWindow</mainClass>
-      </manifest>
-    </archive>
-    
-    <!-- Не раскомментировать при создании своих assembly-файлов -->
-    <!--descriptorRefs>
-      <descriptorRef>megajar</descriptorRef>
-    </descriptorRefs-->
-  </configuration>
-</plugin>
-			
+					<!-- Не раскомментировать при создании своих assembly-descriptor-файлов -->
+					<!--descriptorRefs> <descriptorRef>megajar</descriptorRef> </descriptorRefs -->
+				</configuration>
+			</plugin>
+
 		</plugins>
 	</build>
 
-	<!-- В связи с системо-зависимостью SWT необходимо создать профили для каждой системы -->
+	<!-- В связи с системо-зависимостью SWT необходимо создать профили для каждой 
+		системы -->
 	<profiles>
 		<profile>
 			<id>winprofile32</id>
