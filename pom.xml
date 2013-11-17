@@ -58,6 +58,8 @@
 	<build>
 		<!--resources> <resource> <directory>resources</directory> </resource> 
 			</resources -->
+			
+		<finalName>${project.artifactId}-${lane}</finalName>
 
 		<!-- Приказываем одной странной подсистеме m2e не мешать исполнению плагина 
 			maven-download-plugin во время фазы generate-resources, подробнее: http://wiki.eclipse.org/M2E_plugin_execution_not_covered#ignore_plugin_goal -->
@@ -170,7 +172,7 @@
 
 		</plugins>
 	</build>
-
+	
 	<!-- В связи с системо-зависимостью SWT необходимо создать профили для каждой 
 		системы -->
 	<profiles>
@@ -189,6 +191,9 @@
 					<version>[4.3,)</version>
 				</dependency>
 			</dependencies>
+			<properties>
+            	<lane>win32</lane>
+        	</properties>
 		</profile>
 		<profile>
 			<id>winprofile64</id>
@@ -205,6 +210,9 @@
 					<version>[4.3,)</version>
 				</dependency>
 			</dependencies>
+			<properties>
+            	<lane>win64</lane>
+        	</properties>
 		</profile>
 		<profile>
 			<id>linuxprofile32</id>
@@ -221,6 +229,9 @@
 					<version>[4.3,)</version>
 				</dependency>
 			</dependencies>
+			<properties>
+            	<lane>linux32</lane>
+        	</properties>
 		</profile>
 		<profile>
 			<id>linuxprofile64</id>
@@ -237,6 +248,9 @@
 					<version>[4.3,)</version>
 				</dependency>
 			</dependencies>
+			<properties>
+            	<lane>linux64</lane>
+        	</properties>
 		</profile>
 	</profiles>
 
