@@ -58,7 +58,7 @@
 	<build>
 		<!--resources> <resource> <directory>resources</directory> </resource> 
 			</resources -->
-			
+
 		<finalName>${project.artifactId}-${lane}</finalName>
 
 		<!-- Приказываем одной странной подсистеме m2e не мешать исполнению плагина 
@@ -170,9 +170,27 @@
 				</configuration>
 			</plugin>
 
+			<!-- Запрещаем работу maven-jar-plugin, т. к. он создаёт левые jar
+			http://stackoverflow.com/questions/2188746/what-is-the-best-way-to-avoid-maven-jar -->
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>2.3.2</version>
+				<executions>
+					<execution>
+						<id>default-jar</id>
+						<phase>never</phase>
+						<configuration>
+							<finalName>unwanted</finalName>
+							<classifier>unwanted</classifier>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+
 		</plugins>
 	</build>
-	
+
 	<!-- В связи с системо-зависимостью SWT необходимо создать профили для каждой 
 		системы -->
 	<profiles>
@@ -192,8 +210,8 @@
 				</dependency>
 			</dependencies>
 			<properties>
-            	<lane>win32</lane>
-        	</properties>
+				<lane>win32</lane>
+			</properties>
 		</profile>
 		<profile>
 			<id>winprofile64</id>
@@ -211,8 +229,8 @@
 				</dependency>
 			</dependencies>
 			<properties>
-            	<lane>win64</lane>
-        	</properties>
+				<lane>win64</lane>
+			</properties>
 		</profile>
 		<profile>
 			<id>linuxprofile32</id>
@@ -230,8 +248,8 @@
 				</dependency>
 			</dependencies>
 			<properties>
-            	<lane>linux32</lane>
-        	</properties>
+				<lane>linux32</lane>
+			</properties>
 		</profile>
 		<profile>
 			<id>linuxprofile64</id>
@@ -249,8 +267,8 @@
 				</dependency>
 			</dependencies>
 			<properties>
-            	<lane>linux64</lane>
-        	</properties>
+				<lane>linux64</lane>
+			</properties>
 		</profile>
 	</profiles>
 
