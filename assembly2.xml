@@ -22,6 +22,12 @@
       <outputDirectory>/</outputDirectory>
       <unpack>true</unpack>
       <scope>runtime</scope>
+      
+      <!-- Эти 2 зависимости зависят друг от друга, поэтому исключать их надо вместе -->
+      <excludes>
+        <exclude>junit:junit</exclude>
+        <exclude>com.google.android.tools</exclude>
+      </excludes>
     </dependencySet>
   </dependencySets>
 </assembly>
