@@ -12,7 +12,7 @@ import java.util.Map.Entry;
  *
  */
 public class DictionaryContainer {
-	private HashMap<String, WordInfo> words = new HashMap<String, WordInfo>();
+	private HashMap<String, WordInfo> words = new HashMap<String, WordInfo>(); // не нужно
 	private HashMap<String, WordInfo> stems = new HashMap<String, WordInfo>();
 	
 	/**

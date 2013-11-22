@@ -63,6 +63,7 @@ public class Engine {
 	}
 
 	public void turnThematicDictionary(boolean b, int index){
+		//System.out.println("turnThematicDictionary(): turning "+index+" to "+b);
 		tdm.turn(b, index);
 	}
 	

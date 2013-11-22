@@ -1,4 +1,6 @@
 package ui.view;
+import ui.view.SortListenerFactory;
+
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
@@ -191,15 +193,17 @@ public class MainWindow {
 		tableThematicDicts.setLinesVisible(true);
 		tableThematicDicts.setHeaderVisible(true);
 		
-		TableColumn tableColumn_2 = new TableColumn(tableThematicDicts, SWT.NONE);
-		tableColumn_2.setWidth(131);
-		tableColumn_2.setText("\u0421\u043B\u043E\u0432\u0430\u0440\u044C");
-		tableColumn_2.setMoveable(true);
+		TableColumn colDicName = new TableColumn(tableThematicDicts, SWT.NONE);
+		colDicName.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.STRING_COMPARATOR));
+		colDicName.setWidth(131);
+		colDicName.setText("Словарь");
+		colDicName.setMoveable(true);
 		
-		TableColumn tableColumn_3 = new TableColumn(tableThematicDicts, SWT.NONE);
-		tableColumn_3.setWidth(99);
-		tableColumn_3.setText("\u0421\u043E\u0432\u043F\u0430\u0434\u0435\u043D\u0438\u0435");
-		tableColumn_3.setMoveable(true);
+		TableColumn colProbability = new TableColumn(tableThematicDicts, SWT.NONE);
+		colProbability.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.DOUBLE_COMPARATOR));
+		colProbability.setWidth(99);
+		colProbability.setText("Совпадение");
+		colProbability.setMoveable(true);
 		
 		TableItem tableItem_1 = new TableItem(tableThematicDicts, 0);
 		tableItem_1.setText(new String[] {"физика", "сов-падение"});

@@ -49,15 +49,20 @@ public class View{
 	 */
 	protected void createThematicDicTable() {
 	    tableThematicDicts.removeAll();
+		//clearTable(tableThematicDicts);
+		
+	    int i=0;
 	    for (ThematicDic dic : engine.getThematicDicts()) {
-	        TableItem ti = new TableItem(tableThematicDicts, SWT.NONE);
+	    	WrappedTableItem wti = new WrappedTableItem(tableThematicDicts, SWT.NONE);
+	    	wti.arrListPos=i;
 	        
 	        String dicName = dic.toString();
 	        String probabilitty = dic.getProbabilityString();
 	        String[] row = {dicName, probabilitty};
 	        
-	        ti.setText(row);
-	        ti.setChecked(dic.getEnabled());
+	        wti.setText(row);
+	        wti.setChecked(dic.getEnabled());
+	        i++;
 	    }
 	}
 	
@@ -65,12 +70,9 @@ public class View{
 	 * В(ы)ключает словари в соответствии с таблицей.
 	 */
 	public void msgTurnDicts(){
-		int i=0;
-		
 		for(TableItem tableItem : tableThematicDicts.getItems()){
-			//engine.getThematicDicts().get(i).setEnabled(tableItem.getChecked());
-			engine.turnThematicDictionary(tableItem.getChecked(), i);
-			i++;
+			WrappedTableItem w = (WrappedTableItem) tableItem;
+			engine.turnThematicDictionary(tableItem.getChecked(), w.arrListPos);
 		}
 	}
 	
@@ -133,5 +135,11 @@ public class View{
 	public void saveFile(String selected) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void clearTable(Table table){
+		while ( table.getColumnCount() > 0 ) {
+		    table.getColumns()[ 0 ].dispose();
+		}
 	}
 }
