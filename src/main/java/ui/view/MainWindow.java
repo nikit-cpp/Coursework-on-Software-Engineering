@@ -27,12 +27,14 @@ import ui.view.View;
 import ui.view.listeners.Open;
 
 import org.eclipse.wb.swt.SWTResourceManager;
+import org.eclipse.swt.custom.TableTree;
 
 public class MainWindow {
 
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
+	protected TableTree tableTreeWords;
 	protected View viewProxy;
 	protected Text txtOutput;
 	protected Table tableThematicDicts;
@@ -150,11 +152,15 @@ public class MainWindow {
 		groupFoundedWords.setText("\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0441\u043B\u043E\u0432\u0430");
 		groupFoundedWords.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		tableWords = new Table(groupFoundedWords, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION);
+		tableTreeWords = new TableTree(groupFoundedWords, SWT.BORDER | SWT.FULL_SELECTION);
+		
+		tableWords = //new TableTree(groupFoundedWords, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION);
+				tableTreeWords.getTable();
 		tableWords.setHeaderVisible(true);
 		tableWords.setLinesVisible(true);
 		
 		TableColumn colNumber = new TableColumn(tableWords, SWT.NONE);
+		colNumber.setMoveable(true);
 		colNumber.setWidth(47);
 		colNumber.setText("#");
 		

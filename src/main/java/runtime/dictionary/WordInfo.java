@@ -102,6 +102,10 @@ public class WordInfo implements Rowable{
 		return sb.toString();
 	}
 	
+	public Iterator<String> getRelatedIterator(){
+		return related.iterator();
+	}
+	
 	public int getNum(){
 		return num;
 	}

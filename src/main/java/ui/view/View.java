@@ -1,10 +1,14 @@
 package ui.view;
 
+import java.util.Iterator;
+
 import main.*;
 import options.OptId;
 import options.Options;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableTree;
+import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.widgets.*;
 
 import runtime.dictionary.WordInfo;
@@ -15,6 +19,7 @@ import ui.view.listeners.*;
 public class View{
 	private Text txtInput;
 	private Table tableWords;
+	private TableTree tableTreeWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
 	private Shell shell;
@@ -24,6 +29,7 @@ public class View{
 	public View(MainWindow w) {
 		this.txtInput=w.txtInput;
 		this.tableWords=w.tableWords;
+		this.tableTreeWords=w.tableTreeWords;
 		this.txtOutput=w.txtOutput;
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
@@ -78,11 +84,20 @@ public class View{
 	 * полученного с помощью engine.getThematicDicts()
 	 */
 	private void createWordsTable() {
+		tableTreeWords.removeAll();
 		tableWords.removeAll();
 		for (WordInfo wordInfo : engine.getStems()) {
-	        TableItem tableItem = new TableItem(tableWords, SWT.NONE);
+	        TableTreeItem parent = new TableTreeItem(tableTreeWords, SWT.NONE);
+	        parent.setText(0, String.valueOf(wordInfo.getNum()));
+	        parent.setText(1, wordInfo.getString());
+	        parent.setText(3, String.valueOf(wordInfo.getCount()));
 	        
-	        tableItem.setText(wordInfo.getRow());
+	        Iterator<String> it = wordInfo.getRelatedIterator();
+			for (int i=0; it.hasNext(); i++) {
+				String s = it.next();
+				TableTreeItem child = new TableTreeItem(parent, SWT.NONE);
+				child.setText(2, s);
+			}
 	    }
 		
 	}
