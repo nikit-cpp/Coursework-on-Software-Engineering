@@ -28,7 +28,7 @@ import ui.view.listeners.SortListenerFactory;
 import org.eclipse.wb.swt.SWTResourceManager;
 
 public class MainWindow {
-
+	private Display display;
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
@@ -53,7 +53,7 @@ public class MainWindow {
 	 * Open the window.
 	 */
 	public void open() {
-		Display display = Display.getDefault();
+		display = Display.getDefault();
 		createContents();
 		
 		viewProxy = new View(this);
@@ -95,14 +95,20 @@ public class MainWindow {
 		MenuItem itemSaveOutput = new MenuItem(menuFile, SWT.NONE);
 		itemSaveOutput.setText("Сохранить результат");
 		
-		MenuItem menuDictCascade = new MenuItem(menu, SWT.CASCADE);
-		menuDictCascade.setText("\u0421\u043B\u043E\u0432\u0430\u0440\u0438");
+		MenuItem menuWinCascade = new MenuItem(menu, SWT.CASCADE);
+		menuWinCascade.setText("Окна");
 		
-		Menu menuDict = new Menu(menuDictCascade);
-		menuDictCascade.setMenu(menuDict);
+		Menu menuWin = new Menu(menuWinCascade);
+		menuWinCascade.setMenu(menuWin);
 		
-		MenuItem menuItem_3 = new MenuItem(menuDict, SWT.NONE);
-		menuItem_3.setText("Управление");
+		MenuItem menuItemThematicDicts = new MenuItem(menuWin, SWT.NONE);
+		menuItemThematicDicts.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new ThematicDictionaries(display);
+			}
+		});
+		menuItemThematicDicts.setText("Тематические словари");
 		
 		MenuItem menuItemExit = new MenuItem(menu, SWT.NONE);
 		menuItemExit.addSelectionListener(new SelectionAdapter() {
