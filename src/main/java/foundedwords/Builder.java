@@ -1,4 +1,4 @@
-package runtime.dictionary;
+package foundedwords;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import normalizer.Normalizer;
 import lexer.Token;
 import lexer.Lexer;
 
-public class DictionaryBuilder {
+public class Builder {
 	
 	private Lexer tokenizer = new Lexer();
 	private Normalizer normalizer = new Normalizer();
@@ -15,8 +15,8 @@ public class DictionaryBuilder {
 	/**
 	 * Строит словарь слово:стем (m:n)
 	 */
-	public DictionaryContainer buildSentence(String in){
-		DictionaryContainer sentence = new DictionaryContainer();
+	public WordsMap buildSentence(String in){
+		WordsMap sentence = new WordsMap();
 		
 		// Разбиваем строку на токены
 		ArrayList<Token> tokens = tokenizer.tokenize(in);

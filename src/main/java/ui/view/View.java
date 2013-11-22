@@ -7,8 +7,8 @@ import options.Options;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.*;
 
-import runtime.dictionary.WordInfo;
-import thematic.dictionary.ThematicDic;
+import foundedwords.WordInfo;
+import thematicdictionary.ThematicDic;
 import ui.filemanager.FileReader;
 import ui.view.listeners.*;
 

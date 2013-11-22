@@ -30,5 +30,5 @@ public class WrappedTableItem extends TableItem{
 	 * Изначальная позиция в ArrayList для корректного доступа 
 	 * к элементам ArrayList после сортировки
 	 */
-	int arrListPos;
+	public int arrListPos;
 }

@@ -1,4 +1,4 @@
-package runtime.dictionary;
+package foundedwords;
 
 import java.util.HashSet;
 import java.util.Iterator;

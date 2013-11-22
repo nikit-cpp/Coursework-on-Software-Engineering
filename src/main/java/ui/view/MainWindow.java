@@ -1,6 +1,4 @@
 package ui.view;
-import ui.view.SortListenerFactory;
-
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.SWT;
@@ -25,6 +23,7 @@ import org.eclipse.swt.widgets.Group;
 
 import ui.view.View;
 import ui.view.listeners.Open;
+import ui.view.listeners.SortListenerFactory;
 
 import org.eclipse.wb.swt.SWTResourceManager;
 

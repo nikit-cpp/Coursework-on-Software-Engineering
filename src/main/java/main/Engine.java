@@ -3,23 +3,23 @@ package main;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import runtime.dictionary.DictionaryBuilder;
-import runtime.dictionary.DictionaryContainer;
-import runtime.dictionary.WordInfo;
-import thematic.dictionary.ThematicDic;
-import thematic.dictionary.ThematicDicManager;
+import foundedwords.Builder;
+import foundedwords.WordInfo;
+import foundedwords.WordsMap;
+import thematicdictionary.ThematicDic;
+import thematicdictionary.ThematicDicManager;
 
 public class Engine {
-	private DictionaryBuilder builder;
+	private Builder builder;
 	private ThematicDicManager tdm;
 	//private Collection<WordInfo> words;
 	//private Collection<WordInfo> stems;
-	private DictionaryContainer container;
+	private WordsMap container;
 	/**
 	 * Конструктор
 	 */
 	public Engine() {
-		builder = new DictionaryBuilder();
+		builder = new Builder();
 		tdm = new ThematicDicManager();
 	}
 	

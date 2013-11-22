@@ -1,4 +1,4 @@
-package thematic.dictionary;
+package thematicdictionary;
 
 import java.util.ArrayList;
 

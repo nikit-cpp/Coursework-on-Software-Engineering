@@ -3,21 +3,20 @@ package mytests;
 import static org.junit.Assert.*;
 import main.Engine;
 
-import org.junit.BeforeClass;
 import org.junit.*;
 
-import runtime.dictionary.DictionaryBuilder;
-import thematic.dictionary.*;
+import foundedwords.Builder;
+import thematicdictionary.*;
 
 public class СalcProbabilityforDicTest {
 	static Engine engine;
 	static ThematicDic megaDic;
-	static DictionaryBuilder builder;
+	static Builder builder;
 	
 	@BeforeClass
 	public static void setUp(){
 		engine = new Engine();
-		builder = new DictionaryBuilder();
+		builder = new Builder();
 		
 		megaDic = new ThematicDic("megaDic", true);
 		

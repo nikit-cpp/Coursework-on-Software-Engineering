@@ -1,4 +1,4 @@
-package runtime.dictionary;
+package foundedwords;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,7 +10,7 @@ import java.util.Map.Entry;
  * @author Ник
  *
  */
-public class DictionaryContainer {
+public class WordsMap {
 	private HashMap<String, WordInfo> words = new HashMap<String, WordInfo>(); // не нужно
 	private HashMap<String, WordInfo> stems = new HashMap<String, WordInfo>();
 	

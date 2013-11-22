@@ -7,21 +7,21 @@ import java.util.Collection;
 
 import org.junit.*;
 
-import runtime.dictionary.DictionaryBuilder;
-import runtime.dictionary.DictionaryContainer;
-import runtime.dictionary.WordInfo;
+import foundedwords.Builder;
+import foundedwords.WordInfo;
+import foundedwords.WordsMap;
 
 public class DictionaryBuilderTest {
-	static DictionaryBuilder sentenceBuilder;
+	static Builder sentenceBuilder;
 	
 	@BeforeClass
 	public static void setUp(){
-		sentenceBuilder = new DictionaryBuilder();
+		sentenceBuilder = new Builder();
 	}
 	
 	@Test
 	public void testOlolo() {
-		DictionaryContainer dc = sentenceBuilder.buildSentence("Точками точкой точкой точки");
+		WordsMap dc = sentenceBuilder.buildSentence("Точками точкой точкой точки");
 		dc.print();
 		
 		Collection<WordInfo> words = dc.getWords();
@@ -38,7 +38,7 @@ public class DictionaryBuilderTest {
 
 	@Test
 	public void testRisk() {
-		DictionaryContainer dc = sentenceBuilder.buildSentence("риски");
+		WordsMap dc = sentenceBuilder.buildSentence("риски");
 		dc.print();
 		
 		Collection<WordInfo> words = dc.getWords();

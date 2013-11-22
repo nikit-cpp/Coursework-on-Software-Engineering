@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import thematic.dictionary.ThematicDic;
+import thematicdictionary.ThematicDic;
 
 public class ThematicDicTest {
 	static ThematicDic td;

@@ -1,4 +1,4 @@
-package ui.view;
+package ui.view.listeners;
 
 import java.text.Collator;
 import java.text.DateFormat;
@@ -15,6 +15,8 @@ import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.TableItem;
+
+import ui.view.WrappedTableItem;
 
 //this is the ListenerFactory implementation
 
