@@ -150,18 +150,21 @@ public class MainWindow {
 		groupFoundedWords.setText("\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0441\u043B\u043E\u0432\u0430");
 		groupFoundedWords.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
-		tableWords = new Table(groupFoundedWords, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION);
+		tableWords = new Table(groupFoundedWords, SWT.BORDER | SWT.FULL_SELECTION);
 		tableWords.setHeaderVisible(true);
 		tableWords.setLinesVisible(true);
 		
 		TableColumn colNumber = new TableColumn(tableWords, SWT.NONE);
+		colNumber.setMoveable(true);
 		colNumber.setWidth(47);
 		colNumber.setText("#");
+		colNumber.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.INT_COMPARATOR));
 		
 		TableColumn colWord = new TableColumn(tableWords, SWT.NONE);
 		colWord.setMoveable(true);
 		colWord.setWidth(121);
 		colWord.setText("Слово");
+		colWord.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.STRING_COMPARATOR));
 		
 		TableColumn colRelated = new TableColumn(tableWords, SWT.NONE);
 		colRelated.setMoveable(true);
@@ -172,6 +175,7 @@ public class MainWindow {
 		colCount.setMoveable(true);
 		colCount.setWidth(40);
 		colCount.setText("Количество");
+		colCount.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.INT_COMPARATOR));
 		
 		TableItem tableItem_2 = new TableItem(tableWords, SWT.NONE);
 		tableItem_2.setText("Слово");

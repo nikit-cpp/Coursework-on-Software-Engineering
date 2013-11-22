@@ -227,12 +227,19 @@ public class SortListenerFactory implements Listener
      
      for (int i = 0;i<items.length;i++)
      {   
-    	 WrappedTableItem item = new WrappedTableItem(table,SWT.NONE,i);
-         WrappedTableItem oldWrappedItem = (WrappedTableItem) items[i];
-         item.setText(getData(items[i]));
-         item.setChecked(items[i].getChecked());
-         item.arrListPos=oldWrappedItem.arrListPos;
-         items[i].dispose();
+    	 if(items[i] instanceof WrappedTableItem){
+	    	 WrappedTableItem item = new WrappedTableItem(table,SWT.NONE,i);
+	         WrappedTableItem oldWrappedItem = (WrappedTableItem) items[i];
+	         item.setText(getData(items[i]));
+	         item.setChecked(items[i].getChecked());
+	         item.arrListPos=oldWrappedItem.arrListPos;
+	         items[i].dispose();
+    	 }else{
+    		 TableItem item = new TableItem(table,SWT.NONE,i);
+             item.setText(getData(items[i]));
+             item.setChecked(items[i].getChecked());
+             items[i].dispose();
+    	 }
      }
           
      table.setRedraw(true);     
