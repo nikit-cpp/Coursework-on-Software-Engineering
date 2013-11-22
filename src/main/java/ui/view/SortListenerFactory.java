@@ -220,8 +220,13 @@ public class SortListenerFactory implements Listener
      table.setRedraw(false);
      
      TableItem[] items = table.getItems();
-              
-     Arrays.sort(items,currentComparator);
+     
+     // TODO подумать и сделать лучше
+     try{
+    	 Arrays.sort(items,currentComparator);
+     }catch(NumberFormatException ex){
+    	 ex.printStackTrace();
+     }
      
      table.setItemCount(items.length);
      

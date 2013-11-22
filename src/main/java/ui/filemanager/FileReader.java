@@ -20,7 +20,8 @@ public class FileReader {
 		StringBuilder sb = new StringBuilder();
 				
 		Charset charset = Charset.forName(Options.getInstance().getString(OptId.CHARSET));
-		// TODO Работа с BOM для UTF-8 : http://commons.apache.org/proper/commons-io/javadocs/api-release/index.html?org/apache/commons/io/package-summary.html
+		// TODO сделать работу с BOM для UTF-8 с помощью apache commons io
+		// http://commons.apache.org/proper/commons-io/javadocs/api-release/index.html?org/apache/commons/io/package-summary.html
 		
 		try (BufferedReader reader = Files.newBufferedReader(Paths.get(selected), charset)) {
 		    String line = null;

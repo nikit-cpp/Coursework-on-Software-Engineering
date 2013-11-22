@@ -23,11 +23,6 @@ public class ThematicDicManager {
 		thematicDicts.get(index).setEnabled(b);
 	}
 	
-	// TODO сортировка списка словарей
-	public void sort(){
-		
-	}
-
 	public ArrayList<ThematicDic> getThematicDicts() {
 		return thematicDicts;
 	}
