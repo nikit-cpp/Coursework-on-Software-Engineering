@@ -154,24 +154,24 @@ public class MainWindow {
 		tableWords.setHeaderVisible(true);
 		tableWords.setLinesVisible(true);
 		
-		TableColumn tableColumn_5 = new TableColumn(tableWords, SWT.NONE);
-		tableColumn_5.setWidth(47);
-		tableColumn_5.setText("#");
+		TableColumn colNumber = new TableColumn(tableWords, SWT.NONE);
+		colNumber.setWidth(47);
+		colNumber.setText("#");
 		
-		TableColumn tableColumn = new TableColumn(tableWords, SWT.NONE);
-		tableColumn.setMoveable(true);
-		tableColumn.setWidth(121);
-		tableColumn.setText("\u0421\u043B\u043E\u0432\u043E");
+		TableColumn colWord = new TableColumn(tableWords, SWT.NONE);
+		colWord.setMoveable(true);
+		colWord.setWidth(121);
+		colWord.setText("Слово");
 		
-		TableColumn tableColumn_4 = new TableColumn(tableWords, SWT.NONE);
-		tableColumn_4.setMoveable(true);
-		tableColumn_4.setWidth(96);
-		tableColumn_4.setText("Связанные");
+		TableColumn colRelated = new TableColumn(tableWords, SWT.NONE);
+		colRelated.setMoveable(true);
+		colRelated.setWidth(96);
+		colRelated.setText("Связанные");
 		
-		TableColumn tableColumn_1 = new TableColumn(tableWords, SWT.NONE);
-		tableColumn_1.setMoveable(true);
-		tableColumn_1.setWidth(40);
-		tableColumn_1.setText("\u041A\u043E\u043B\u0438\u0447\u0435\u0441\u0442\u0432\u043E");
+		TableColumn colCount = new TableColumn(tableWords, SWT.NONE);
+		colCount.setMoveable(true);
+		colCount.setWidth(40);
+		colCount.setText("Количество");
 		
 		TableItem tableItem_2 = new TableItem(tableWords, SWT.NONE);
 		tableItem_2.setText("Слово");

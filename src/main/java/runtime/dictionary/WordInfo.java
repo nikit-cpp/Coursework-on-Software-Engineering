@@ -9,7 +9,6 @@ import main.Rowable;
  * Информация о слове, или value в паре key:value.
  * {@code String s} - ссылка на key.
  * @author Ник
- * TODO Будет заменен таблицами sqlite.
  */
 public class WordInfo implements Rowable{
 	private final String s;
