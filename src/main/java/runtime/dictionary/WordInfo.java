@@ -3,13 +3,15 @@ package runtime.dictionary;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import main.Rowable;
+
 /**
  * Информация о слове, или value в паре key:value.
  * {@code String s} - ссылка на key.
  * @author Ник
  * TODO Будет заменен таблицами sqlite.
  */
-public class WordInfo{
+public class WordInfo implements Rowable{
 	private final String s;
 	private int count;
 	private HashSet<String> related;
@@ -103,5 +105,16 @@ public class WordInfo{
 	
 	public int getNum(){
 		return num;
+	}
+
+	@Override
+	public String[] getRow() {
+		String word = getString();
+        String related = getRelated();
+        String count = String.valueOf(getCount());
+        String num = String.valueOf(getNum());
+        
+        String[] row = {num, word, related, count };
+		return row;
 	}
 }

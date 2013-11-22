@@ -56,11 +56,8 @@ public class View{
 	    	WrappedTableItem wti = new WrappedTableItem(tableThematicDicts, SWT.NONE);
 	    	wti.arrListPos=i;
 	        
-	        String dicName = dic.toString();
-	        String probabilitty = dic.getProbabilityString();
-	        String[] row = {dicName, probabilitty};
+	        wti.setText(dic.getRow());
 	        
-	        wti.setText(row);
 	        wti.setChecked(dic.getEnabled());
 	        i++;
 	    }
@@ -82,16 +79,10 @@ public class View{
 	 */
 	private void createWordsTable() {
 		tableWords.removeAll();
-		for (WordInfo item : engine.getStems()) {
+		for (WordInfo wordInfo : engine.getStems()) {
 	        TableItem tableItem = new TableItem(tableWords, SWT.NONE);
 	        
-	        String word = item.getString();
-	        String related = item.getRelated();
-	        String count = String.valueOf(item.getCount());
-	        String num = String.valueOf(item.getNum());
-	        
-	        String[] row = {num, word, related, count };
-	        tableItem.setText(row);
+	        tableItem.setText(wordInfo.getRow());
 	    }
 		
 	}

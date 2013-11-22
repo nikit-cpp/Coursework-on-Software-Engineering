@@ -2,9 +2,9 @@ package thematic.dictionary;
 
 import java.util.HashMap;
 
-import main.Selectable;
+import main.Rowable;
 
-public class ThematicDic implements Selectable{
+public class ThematicDic implements Rowable{
 	private boolean isEnabled;
 	private final String name;
 	private HashMap<String, Double> dic;
@@ -33,12 +33,10 @@ public class ThematicDic implements Selectable{
 		return d;
 	}
 	
-	@Override
 	public boolean getEnabled() {
 		return isEnabled;
 	}
 
-	@Override
 	public void setEnabled(boolean isEnabled) {
 		this.isEnabled=isEnabled;
 		//System.out.println(toString() + " "+isEnabled);
@@ -61,5 +59,13 @@ public class ThematicDic implements Selectable{
 		if(isEnabled)
 			return String.valueOf(probability);
 		return "";
+	}
+	
+	public String[] getRow() {
+		String dicName = toString();
+        String probabilitty = getProbabilityString();
+        String[] row = {dicName, probabilitty};
+		
+		return row;
 	}
 }

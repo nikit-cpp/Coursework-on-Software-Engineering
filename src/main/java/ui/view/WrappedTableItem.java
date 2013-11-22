@@ -20,7 +20,15 @@ public class WrappedTableItem extends TableItem{
 		
 	}
 	
+	/***
+	 * В SWT наследование запрещено, но в нашем случае наследование - самый простой
+	 * способ хранения изначальной позиции.
+	 */
 	protected void checkSubclass(){}
 	
+	/**
+	 * Изначальная позиция в ArrayList для корректного доступа 
+	 * к элементам ArrayList после сортировки
+	 */
 	int arrListPos;
 }
