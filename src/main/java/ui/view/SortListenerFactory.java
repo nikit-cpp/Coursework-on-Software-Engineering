@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.custom.TableTreeItem;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
@@ -227,12 +228,19 @@ public class SortListenerFactory implements Listener
      
      for (int i = 0;i<items.length;i++)
      {   
-    	 WrappedTableItem item = new WrappedTableItem(table,SWT.NONE,i);
-         WrappedTableItem oldWrappedItem = (WrappedTableItem) items[i];
-         item.setText(getData(items[i]));
-         item.setChecked(items[i].getChecked());
-         item.arrListPos=oldWrappedItem.arrListPos;
-         items[i].dispose();
+    	 if(items[i] instanceof WrappedTableItem){
+	         WrappedTableItem item = new WrappedTableItem(table,SWT.NONE,i);
+	         WrappedTableItem oldWrappedItem = (WrappedTableItem) items[i];
+	         item.setText(getData(items[i]));
+	         item.setChecked(items[i].getChecked());
+	         item.arrListPos=oldWrappedItem.arrListPos;
+	         items[i].dispose();
+         }else{
+        	 TableItem item = new TableItem(table,SWT.NONE,i);
+	         item.setText(getData(items[i]));
+	         item.setChecked(items[i].getChecked());
+	         items[i].dispose();
+         }
      }
           
      table.setRedraw(true);     

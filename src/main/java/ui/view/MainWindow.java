@@ -165,6 +165,7 @@ public class MainWindow {
 		colWord.setText("Слово");
 		
 		TableColumn colNumber = new TableColumn(tableWords, SWT.NONE);
+		colNumber.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.INT_COMPARATOR));
 		colNumber.setMoveable(true);
 		colNumber.setWidth(47);
 		colNumber.setText("#");
