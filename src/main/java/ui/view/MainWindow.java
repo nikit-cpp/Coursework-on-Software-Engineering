@@ -158,21 +158,21 @@ public class MainWindow {
 				tableTreeWords.getTable();
 		tableWords.setHeaderVisible(true);
 		tableWords.setLinesVisible(true);
+				
+		TableColumn colWord = new TableColumn(tableWords, SWT.NONE);
+		colWord.setMoveable(true);
+		colWord.setWidth(121);
+		colWord.setText("Слово");
 		
 		TableColumn colNumber = new TableColumn(tableWords, SWT.NONE);
 		colNumber.setMoveable(true);
 		colNumber.setWidth(47);
 		colNumber.setText("#");
 		
-		TableColumn colWord = new TableColumn(tableWords, SWT.NONE);
-		colWord.setMoveable(true);
-		colWord.setWidth(121);
-		colWord.setText("Слово");
-		
-		TableColumn colRelated = new TableColumn(tableWords, SWT.NONE);
-		colRelated.setMoveable(true);
-		colRelated.setWidth(96);
-		colRelated.setText("Связанные");
+		//TableColumn colRelated = new TableColumn(tableWords, SWT.NONE);
+		//colRelated.setMoveable(true);
+		//colRelated.setWidth(96);
+		//colRelated.setText("Связанные");
 		
 		TableColumn colCount = new TableColumn(tableWords, SWT.NONE);
 		colCount.setMoveable(true);

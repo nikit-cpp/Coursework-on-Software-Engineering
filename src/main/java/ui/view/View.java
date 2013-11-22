@@ -88,16 +88,17 @@ public class View{
 		tableWords.removeAll();
 		for (WordInfo wordInfo : engine.getStems()) {
 	        TableTreeItem parent = new TableTreeItem(tableTreeWords, SWT.NONE);
-	        parent.setText(0, String.valueOf(wordInfo.getNum()));
-	        parent.setText(1, wordInfo.getString());
-	        parent.setText(3, String.valueOf(wordInfo.getCount()));
+	        parent.setText(1, String.valueOf(wordInfo.getNum()));
+	        parent.setText(0, wordInfo.getString());
+	        parent.setText(2, String.valueOf(wordInfo.getCount()));
 	        
 	        Iterator<String> it = wordInfo.getRelatedIterator();
 			for (int i=0; it.hasNext(); i++) {
 				String s = it.next();
 				TableTreeItem child = new TableTreeItem(parent, SWT.NONE);
-				child.setText(2, s);
+				child.setText(0, s);
 			}
+			//parent.setExpanded(true);
 	    }
 		
 	}
