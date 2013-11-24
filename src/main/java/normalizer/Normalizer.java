@@ -1,6 +1,15 @@
 package normalizer;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +25,9 @@ public class Normalizer {
 		
 	public Normalizer() {
 		this.options = Options.getInstance();
-		final String dicPath = FileChecker.getCheckedExistsAbsolutePath(options.getString(OptId.DIC_PATH));
-		final String affPath = FileChecker.getCheckedExistsAbsolutePath(options.getString(OptId.AFF_PATH));
+		
+		final String dicPath = FileChecker.getCheckedExistsAbsolutePath(options.getString(OptId.DIC_PATH), this);
+		final String affPath = FileChecker.getCheckedExistsAbsolutePath(options.getString(OptId.AFF_PATH), this);
 		
 		normalizeDicts = new ArrayList<Hunspell>();
 		normalizeDicts.add(new Hunspell(dicPath, affPath));
