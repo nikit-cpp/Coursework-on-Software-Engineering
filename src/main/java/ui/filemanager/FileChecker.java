@@ -28,29 +28,30 @@ public class FileChecker extends OpenFileDialog{
 	        mb.setMessage("Не найден словарь "+relPath+" ("+absPath+").\nРаспаковать словарь из jar по требуему пути?");
 	        int val = mb.open();
 	        if(val==SWT.YES){
+	        	// При чтении ресурса из jar в начале обязательно д. б. слэш 
 	        	InputStream in = obj.getClass().getResourceAsStream("/"+relPath);
 				try {
 					File f = new File(absPath);
 					f.getParentFile().mkdirs(); 
 					f.createNewFile();
 
-				    DataOutputStream out2 = new DataOutputStream((new FileOutputStream(absPath)));
-				    /* Буферами читать файл быстрее, но нужно решить проблему когда в буфер считывается < байт чем его длина -
-					 * тогда в нём на оставшихся местах остаётся старая информация, за счёто чего в файл записывается
-					 * новая вместе со старой - файл повреждается.
+				    DataOutputStream out = new DataOutputStream((new FileOutputStream(absPath)));
+				    /* Буферами читать файл быстрее */
 				    byte[] buf = new byte[1024];
-				    while ((in.read(buf)) > 0) {
-				    	out2.write(buf);
-				    	out2.flush();
-				    }*/
-				    // побайтово гораздо медленнее, чем буферами
+				    int len;
+				    while ((len=in.read(buf)) > 0) {
+				    	out.write(buf, 0, len);
+				    	out.flush();
+				    }
+				    /* побайтово гораздо медленнее, чем буферами
 				    int b;
 				    while((b = in.read())!=-1)
 				    {
 				    	out2.writeByte(b);
 				    	out2.flush();
-				    }
-					out2.close();
+				    }*/
+					out.close();
+					in.close();
 			    } catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
