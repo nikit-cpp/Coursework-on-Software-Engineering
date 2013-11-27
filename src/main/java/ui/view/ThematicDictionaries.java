@@ -2,32 +2,27 @@
 
 package ui.view;
 
+import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.List;
 import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.layout.FillLayout;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class ThematicDictionaries {
 	private Display display;
 	protected Shell shell;
-	private Table table;
-
-	/**
-	 * Launch the application.
-	 * @param args
-	 */
-	/*public static void main(String[] args) {
-		try {
-			ThematicDictionaries window = new ThematicDictionaries();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}*/
+	protected Table tableDicts;
+	protected View view;
+	protected Table tableWords;
 	
 	public ThematicDictionaries(Display display){
 		this.display=display;
@@ -38,33 +33,38 @@ public class ThematicDictionaries {
 	 * Open the window.
 	 */
 	public void open() {
-		//Display display = Display.getDefault();
 		createContents();
+		
+		view = new View(this);
+		
 		shell.open();
 		shell.layout();
-		/*while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
-			}
-		}*/
 	}
 
 	/**
 	 * Create contents of the window.
 	 */
 	protected void createContents() {
-		shell = new Shell(display, SWT.CLOSE);
+		shell = new Shell(display, SWT.CLOSE | SWT.MIN | SWT.MAX | SWT.RESIZE);
 		shell.setSize(450, 300);
 		shell.setText("Тематические словари");
+		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		SashForm sashForm = new SashForm(shell, SWT.NONE);
-		sashForm.setBounds(10, 88, 367, 128);
 		
-		List list = new List(sashForm, SWT.BORDER);
+		tableDicts = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
+		tableDicts.addSelectionListener(new SelectionAdapter() {
+		      public void widgetSelected(SelectionEvent e) {
+		    	  //System.out.println(tableDicts.getSelectionIndex());
+		    	  view.createContainsWordsTable(tableDicts.getSelectionIndex());
+		      }
+		});
+		tableDicts.setHeaderVisible(true);
+		tableDicts.setLinesVisible(true);
 		
-		table = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
-		table.setHeaderVisible(true);
-		table.setLinesVisible(true);
+		tableWords = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
+		tableWords.setHeaderVisible(true);
+		tableWords.setLinesVisible(true);
 		sashForm.setWeights(new int[] {1, 1});
 		
 		shell.addListener(SWT.Close, new Listener()

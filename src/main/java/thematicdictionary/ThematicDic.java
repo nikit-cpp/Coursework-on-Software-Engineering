@@ -68,4 +68,8 @@ public class ThematicDic implements Rowable{
 		
 		return row;
 	}
+
+	public HashMap<String, Double> getWords() {
+		return dic;
+	}
 }

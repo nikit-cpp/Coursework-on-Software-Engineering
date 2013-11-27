@@ -32,7 +32,7 @@ public class MainWindow {
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
-	protected View viewProxy;
+	protected View view;
 	protected Text txtOutput;
 	protected Table tableThematicDicts;
 
@@ -56,7 +56,7 @@ public class MainWindow {
 		display = Display.getDefault();
 		createContents();
 		
-		viewProxy = new View(this);
+		view = new View(this);
 		
 		shell.open();
 		shell.layout();
@@ -196,7 +196,7 @@ public class MainWindow {
 		tableThematicDicts.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
-				viewProxy.msgTurnDicts();
+				view.msgTurnDicts();
 			}
 		});
 		tableThematicDicts.setLinesVisible(true);
@@ -231,7 +231,7 @@ public class MainWindow {
 		btnReferate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent e) {
-				viewProxy.msgReferate();
+				view.msgReferate();
 			}
 		});
 		btnReferate.setText("Реферирование");
@@ -240,7 +240,7 @@ public class MainWindow {
 		btnRubricate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
-				viewProxy.msgRubricate();
+				view.msgRubricate();
 			}
 		});
 		FormData fd_btnRubricate = new FormData();

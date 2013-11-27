@@ -1,5 +1,7 @@
 package ui.view;
 
+import java.util.HashMap;
+
 import main.*;
 import options.OptId;
 import options.Options;
@@ -12,15 +14,20 @@ import thematicdictionary.ThematicDic;
 import ui.filemanager.FileReader;
 import ui.view.listeners.*;
 
-public class View{
+public class View{		
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
+	private Table tableContainsWords;
 	private Shell shell;
 	
 	private Engine engine;
 	
+	/**
+	 * Этот конструктор используется вместе с MainWindow
+	 * @param w
+	 */
 	public View(MainWindow w) {
 		this.txtInput=w.txtInput;
 		this.tableWords=w.tableWords;
@@ -28,17 +35,28 @@ public class View{
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
 		
-		OpenFileDialog.staticInit(shell, this);
-		engine = new Engine();
+		initialize();
+		
+		txtOutput.setText("");
+	}
+	
+	/**
+	 * Этот корнструктор используется вместе с ThematicDictionaries
+	 * @param w
+	 */
+	public View(ThematicDictionaries w) {
+		this.tableThematicDicts=w.tableDicts;
+		this.tableContainsWords=w.tableWords;
 		
 		initialize();
 	}
-	
+
 	/**
 	 *  Инициализация окна
 	 */
 	private void initialize(){
-		txtOutput.setText("");
+		OpenFileDialog.staticInit(shell, this);
+		engine = Engine.getInstance();
 		
 		createThematicDicTable();
 	}
@@ -131,6 +149,17 @@ public class View{
 	private void clearTable(Table table){
 		while ( table.getColumnCount() > 0 ) {
 		    table.getColumns()[ 0 ].dispose();
+		}
+	}
+
+	public void createContainsWordsTable(int selectedIndex) {
+		HashMap<String, Double> dic = engine.getThematicDicts().get(selectedIndex).getWords();
+		
+		for(String word : dic.keySet()) {
+			double probability = dic.get(word);
+			String[] row = {word, String.valueOf(probability)};	
+			TableItem tableItem = new TableItem(tableContainsWords, SWT.NONE);
+	        tableItem.setText(row);
 		}
 	}
 }

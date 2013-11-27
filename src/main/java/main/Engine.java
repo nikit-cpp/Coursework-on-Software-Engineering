@@ -15,10 +15,23 @@ public class Engine {
 	//private Collection<WordInfo> words;
 	//private Collection<WordInfo> stems;
 	private WordsMap container;
+	
+	// Синглтон
+    private static Engine instance;
+ 
+    public static Engine getInstance()
+    {
+        if (instance == null)
+        {
+            instance = new Engine();
+        }
+        return instance;
+    }
+	
 	/**
 	 * Конструктор
 	 */
-	public Engine() {
+	private Engine() {
 		builder = new Builder();
 		tdm = new ThematicDicManager();
 	}
