@@ -1,10 +1,11 @@
 package thematicdictionary;
 
 import java.util.HashMap;
+import java.util.Iterator;
 
 import main.Rowable;
 
-public class ThematicDic implements Rowable{
+public class ThematicDic implements Rowable, Iterable<String[]>{
 	private boolean isEnabled;
 	private final String name;
 	private HashMap<String, Double> dic;
@@ -69,7 +70,28 @@ public class ThematicDic implements Rowable{
 		return row;
 	}
 
-	public HashMap<String, Double> getWords() {
-		return dic;
+	/**
+	 * Возвращает массив строк, которые образуют 1 строку таблицы
+	 */
+	@Override
+	public Iterator<String[]> iterator() {
+		return new Iterator<String[]>() {
+			Iterator<String> keyIterator = dic.keySet().iterator();
+			public boolean hasNext() {
+				return keyIterator.hasNext();
+			}
+
+			public String[] next() {
+				String key = keyIterator.next();
+				String[] row = {key, String.valueOf(dic.get(key))};
+				return row;
+			}
+
+			public void remove() { // He реализован
+				throw new UnsupportedOperationException();
+			}
+		};
 	}
+	
+	
 }

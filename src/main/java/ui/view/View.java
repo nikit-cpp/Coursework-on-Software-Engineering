@@ -154,12 +154,10 @@ public class View{
 
 	public void createContainsWordsTable(int selectedIndex) {
 		tableContainsWords.removeAll();
-		// TODO Iterator
-		HashMap<String, Double> dic = engine.getThematicDicts().get(selectedIndex).getWords();
 		
-		for(String word : dic.keySet()) {
-			double probability = dic.get(word);
-			String[] row = {word, String.valueOf(probability)};	
+		// Пулучаем табличную строку из словаря ThematicDic с номером selectedIndex в цикле,
+		// т. к. он реализует интерфейс Iterable<String[]>
+		for(String[] row : engine.getThematicDicts().get(selectedIndex)){
 			TableItem tableItem = new TableItem(tableContainsWords, SWT.NONE);
 	        tableItem.setText(row);
 		}
