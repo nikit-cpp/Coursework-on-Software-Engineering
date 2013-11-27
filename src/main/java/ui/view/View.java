@@ -153,6 +153,8 @@ public class View{
 	}
 
 	public void createContainsWordsTable(int selectedIndex) {
+		tableContainsWords.removeAll();
+		// TODO Iterator
 		HashMap<String, Double> dic = engine.getThematicDicts().get(selectedIndex).getWords();
 		
 		for(String word : dic.keySet()) {

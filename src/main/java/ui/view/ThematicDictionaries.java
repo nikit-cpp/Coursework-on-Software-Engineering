@@ -16,6 +16,7 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.TableColumn;
 
 public class ThematicDictionaries {
 	private Display display;
@@ -23,6 +24,9 @@ public class ThematicDictionaries {
 	protected Table tableDicts;
 	protected View view;
 	protected Table tableWords;
+	private TableColumn tableColumn;
+	private TableColumn tableColumn_1;
+	private TableColumn tableColumn_2;
 	
 	public ThematicDictionaries(Display display){
 		this.display=display;
@@ -62,9 +66,21 @@ public class ThematicDictionaries {
 		tableDicts.setHeaderVisible(true);
 		tableDicts.setLinesVisible(true);
 		
+		tableColumn = new TableColumn(tableDicts, SWT.NONE);
+		tableColumn.setWidth(100);
+		tableColumn.setText("Словари");
+		
 		tableWords = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		tableWords.setHeaderVisible(true);
 		tableWords.setLinesVisible(true);
+		
+		tableColumn_1 = new TableColumn(tableWords, SWT.NONE);
+		tableColumn_1.setWidth(100);
+		tableColumn_1.setText("Слово");
+		
+		tableColumn_2 = new TableColumn(tableWords, SWT.NONE);
+		tableColumn_2.setWidth(100);
+		tableColumn_2.setText("Вероятность");
 		sashForm.setWeights(new int[] {1, 1});
 		
 		shell.addListener(SWT.Close, new Listener()

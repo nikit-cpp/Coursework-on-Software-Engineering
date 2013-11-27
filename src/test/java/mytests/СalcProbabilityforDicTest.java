@@ -15,7 +15,7 @@ public class СalcProbabilityforDicTest {
 	
 	@BeforeClass
 	public static void setUp(){
-		engine = new Engine();
+		engine = Engine.getInstance();
 		builder = new Builder();
 		
 		megaDic = new ThematicDic("megaDic", true);
