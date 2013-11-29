@@ -92,6 +92,10 @@ public class ThematicDic implements Rowable, Iterable<String[]>{
 			}
 		};
 	}
+
+	public String getName() {
+		return name;
+	}
 	
 	
 }
