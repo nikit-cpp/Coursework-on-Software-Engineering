@@ -1,17 +1,19 @@
 package thematicdictionary;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import main.Rowable;
 
-public class ThematicDic implements Rowable, Iterable<String[]>{
+public class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 	private boolean isEnabled;
 	private final String name;
 	private HashMap<String, Double> dic;
 	private double probability;
 	
 	public ThematicDic(String name, boolean isEnabled) {
+		// TODO save-dic запись в manager->path файла с именем name
 		this.name=name;
 		this.isEnabled=isEnabled;
 		dic = new HashMap<String, Double>();
@@ -45,6 +47,7 @@ public class ThematicDic implements Rowable, Iterable<String[]>{
 
 	public void add(String string, double probability) {
 		if (probability>1.0 || probability<0.0) throw new IllegalArgumentException("Вероятность может быть только 0.0...1.0");
+		// TODO save-dic flush() файла с именем name
 		dic.put(string, probability);
 	}
 
@@ -95,7 +98,5 @@ public class ThematicDic implements Rowable, Iterable<String[]>{
 
 	public String getName() {
 		return name;
-	}
-	
-	
+	}	
 }

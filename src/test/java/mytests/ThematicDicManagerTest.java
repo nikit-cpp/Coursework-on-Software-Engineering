@@ -31,7 +31,9 @@ public class ThematicDicManagerTest {
 		tdm.add(informatica);
 		
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
-		//tdm = new ThematicDicManager("testtdm/");
+		tdm = new ThematicDicManager("testtdm/");
+		tdm.load();
+
 		assertThat(tdm.getThematicDicts().size(), is(4));
 		
 		assertThat(tdm.get(0).getName(), is("ФизикаСловарьТест"));
@@ -42,6 +44,11 @@ public class ThematicDicManagerTest {
 		assertThat(tdm.get(2).getEnabled(), is(false));
 		assertThat(tdm.get(3).getName(), is("информатика2"));
 		assertThat(tdm.get(3).getEnabled(), is(true));
+		
+		assertThat(tdm.get(3).getName(), is("информатика2"));
+		assertThat(tdm.get(3).getEnabled(), is(true));
+		
+		assertThat(tdm.get(3).getProbability("риск"), is(1.0));
 	}
 
 }
