@@ -2,7 +2,6 @@ package thematicdictionary;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -15,17 +14,6 @@ public class ThematicDicManager {
 	
 	public ThematicDicManager(/*tring path*/){
 		thematicDicts = new ArrayList<ThematicDic>();
-		
-		/* TODO заглушечное заполнение
-		thematicDicts.add(new ThematicDic("физика", true));
-		thematicDicts.add(new ThematicDic("алгебра", false));
-		thematicDicts.add(new ThematicDic("геометрия", true));
-		
-		ThematicDic informatica = new ThematicDic("информатика", true);
-		informatica.add("риск", 1);
-		informatica.add("XP", 1);
-		thematicDicts.add(informatica);
-		*/
 		// TODO save-dic импортировать в ArrayList словари из path
 		load();
 	}
@@ -94,5 +82,6 @@ public class ThematicDicManager {
 
 	public void deleteWord(String word, int dicIndex) {
 		thematicDicts.get(dicIndex).delete(word);
+		save();
 	}
 }

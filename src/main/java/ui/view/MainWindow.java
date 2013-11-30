@@ -111,7 +111,7 @@ public class MainWindow {
 		menuItemThematicDicts.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new ThematicDictionaries(display);
+				new ThematicDictsWindow(display);
 			}
 		});
 		menuItemThematicDicts.setText("Тематические словари");

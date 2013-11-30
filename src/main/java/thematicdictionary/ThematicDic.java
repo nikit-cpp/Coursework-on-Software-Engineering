@@ -7,6 +7,7 @@ import java.util.Iterator;
 import main.Rowable;
 
 public class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
+	private static final long serialVersionUID = 1L;
 	private boolean isEnabled;
 	private final String name;
 	private HashMap<String, Double> dic;

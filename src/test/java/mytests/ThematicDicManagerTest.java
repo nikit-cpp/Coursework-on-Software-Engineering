@@ -34,7 +34,6 @@ public class ThematicDicManagerTest {
 		
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
 		tdm = new ThematicDicManager();
-		//tdm.load();
 
 		assertThat(tdm.getThematicDicts().size(), is(4));
 		
@@ -51,6 +50,17 @@ public class ThematicDicManagerTest {
 		assertThat(tdm.get(3).getEnabled(), is(true));
 		
 		assertThat(tdm.get(3).getProbability("риск"), is(1.0));
+		
+		// Удаление слова
+		final String ololo = "ололо";
+		final int eco=2;
+		tdm.addWord(eco, ololo, 0.123);
+		tdm.deleteWord(ololo, eco);
+		
+		// Создаём новый объект, который должен считать сохранённые на диск файлы
+		tdm = new ThematicDicManager();
+		// нулевая вероятность - признак отсутствия слова
+		assertThat(tdm.get(eco).getProbability(ololo), is(0.0));
 	}
 
 }

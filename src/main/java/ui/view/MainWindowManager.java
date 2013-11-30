@@ -1,19 +1,13 @@
 package ui.view;
 
-import java.util.ArrayList;
-
-import main.Engine;
 import options.OptId;
 import options.Options;
 
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
-
-import thematicdictionary.ThematicDic;
 import ui.filemanager.FileReader;
 import ui.view.listeners.OpenFileDialog;
 import foundedwords.WordInfo;
@@ -23,16 +17,15 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	private Table tableWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
-	private Table tableContainsWords;
 	private Shell shell;
-	
-	private Engine engine;
-	
+		
 	/**
 	 * Этот конструктор используется вместе с MainWindow
 	 * @param w
 	 */
 	public MainWindowManager(MainWindow w) {
+		super();
+		
 		this.txtInput=w.txtInput;
 		this.tableWords=w.tableWords;
 		this.txtOutput=w.txtOutput;
@@ -40,38 +33,9 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 		this.shell=w.shell;
 		
 		OpenFileDialog.staticInit(shell, this);
-		initialize();
 		
 		txtOutput.setText("");
-		addToUpdateable();
-	}
-
-	/**
-	 *  Общая инициализация
-	 */
-	private void initialize(){
-		engine = Engine.getInstance();
-		createThematicDicTable();
-	}
-	
-	/**
-	 * Удаляет старую и создаёт таблицу словарей на основе их списка,
-	 * полученного с помощью engine.getThematicDicts()
-	 */
-	protected void createThematicDicTable() {
-	    tableThematicDicts.removeAll();
-		//clearTable(tableThematicDicts);
-		
-	    int i=0;
-	    for (ThematicDic dic : engine.getThematicDicts()) {
-	    	WrappedTableItem wti = new WrappedTableItem(tableThematicDicts, SWT.NONE);
-	    	wti.arrListPos=i;
-	        
-	        wti.setText(dic.getRow());
-	        
-	        wti.setChecked(dic.getEnabled());
-	        i++;
-	    }
+		super.createThematicDicTable(tableThematicDicts);
 	}
 	
 	/**
@@ -104,7 +68,7 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	public void msgRubricate() {
 		engine.rubricate(txtInput.getText());
 		createWordsTable();
-		createThematicDicTable();
+		super.createThematicDicTable(tableThematicDicts);
 	}
 	
 	/**
@@ -131,12 +95,6 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 		
 	}
 	
-	private void clearTable(Table table){
-		while ( table.getColumnCount() > 0 ) {
-		    table.getColumns()[ 0 ].dispose();
-		}
-	}
-
 	@Override
 	public void updateContainingWords() {		
 	}

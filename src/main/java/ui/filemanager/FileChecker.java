@@ -9,11 +9,12 @@ import java.io.InputStream;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 
 import ui.view.listeners.OpenFileDialog;
 
 public class FileChecker extends OpenFileDialog{
-	public static String getCheckedExistsAbsolutePath(String relPath, Object obj){
+	public static String getCheckedExistsAbsolutePath(String relPath/*, Object obj*/){
 		final File checkableFile = new File(relPath);
 		final String absPath = checkableFile.getAbsolutePath();
 		if(!checkableFile.exists()){
@@ -23,13 +24,17 @@ public class FileChecker extends OpenFileDialog{
 	        //style |= SWT.OK;
 	        style |= SWT.YES | SWT.NO;
 			// Display the message box
+	        Shell shell = new Shell();
 	        MessageBox mb = new MessageBox(shell, style);
 	        mb.setText("Опаньки");
 	        mb.setMessage("Не найден словарь "+relPath+" ("+absPath+").\nРаспаковать словарь из jar по требуему пути?");
 	        int val = mb.open();
 	        if(val==SWT.YES){
 	        	// При чтении ресурса из jar в начале обязательно д. б. слэш 
-	        	InputStream in = obj.getClass().getResourceAsStream("/"+relPath);
+	        	final String jarpath = "/"+relPath;
+	        	InputStream in = /*obj.*/shell.getClass().getResourceAsStream(jarpath);
+	        	if(in==null)
+	        		System.err.println("not founded "+jarpath+" in jar!");
 				try {
 					File f = new File(absPath);
 					f.getParentFile().mkdirs(); 
@@ -56,6 +61,8 @@ public class FileChecker extends OpenFileDialog{
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
+				}finally{
+					shell.dispose();
 				}
 	        }
 		}

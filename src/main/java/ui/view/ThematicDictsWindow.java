@@ -2,35 +2,31 @@
 
 package ui.view;
 
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.layout.FillLayout;
-import org.eclipse.swt.events.MouseAdapter;
-import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
 
-public class ThematicDictionaries {
+public class ThematicDictsWindow {
 	private Display display;
 	protected Shell shell;
 	protected Table tableDicts;
-	protected ThematicDictionariesManager view;
+	protected ThematicDictsWindowManager view;
 	protected Table tableWords;
 	private TableColumn tableColumn;
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
 	
-	public ThematicDictionaries(Display display){
+	public ThematicDictsWindow(Display display){
 		this.display=display;
 		open();
 	}
@@ -41,7 +37,7 @@ public class ThematicDictionaries {
 	public void open() {
 		createContents();
 		
-		view = new ThematicDictionariesManager(this);
+		view = new ThematicDictsWindowManager(this);
 		
 		shell.open();
 		shell.layout();
@@ -58,6 +54,7 @@ public class ThematicDictionaries {
 		shell.addListener(SWT.Close, new Listener() {
 		      public void handleEvent(Event event) {
 		        view.delFromUpdateable();
+		        shell.dispose();
 		      }
 		});
 		
@@ -111,15 +108,5 @@ public class ThematicDictionaries {
 		    });
 		
 		sashForm.setWeights(new int[] {1, 1});
-		
-		shell.addListener(SWT.Close, new Listener()
-        {
-           //@Override
-           public void handleEvent(Event event)
-           {
-              //System.out.println("Child Shell handling Close event, about to dispose this Shell");
-              shell.dispose();
-           }
-        });
 	}
 }

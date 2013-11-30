@@ -1,84 +1,24 @@
 package ui.view;
 
-import java.util.ArrayList;
-
-import main.Engine;
-import options.OptId;
-import options.Options;
-
-import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.widgets.Text;
 
-import thematicdictionary.ThematicDic;
-import ui.filemanager.FileReader;
-import ui.view.listeners.OpenFileDialog;
-import foundedwords.WordInfo;
-
 public class AddWordManager extends ViewSuper /*implements Updateable*/ {
-	private Text txtInput;
-	private Table tableWords;
-	private Text txtOutput;
 	private Table tableThematicDicts;
-	private Table tableContainsWords;
-	private Shell shell;
-	
-	private Engine engine;
-	
-	protected Text txtProbability;
-	protected Text textAddableWord;
-	protected Button btnAdd;
+	private Text txtProbability;
+	private Text textAddableWord;
+	private Button btnAdd;
 	
 	public AddWordManager(AddWord addWord) {
+		super();
+		
 		this.tableThematicDicts=addWord.tableDicts;
 		this.btnAdd=addWord.btnAdd;
 		this.txtProbability=addWord.textProbability;
 		this.textAddableWord=addWord.textAddableWord;
-		initialize();
-		addToUpdateable();
+		super.createThematicDicTable(tableThematicDicts);
 	}
-
-	/**
-	 *  Общая инициализация
-	 */
-	private void initialize(){
-		engine = Engine.getInstance();
-		createThematicDicTable();
-	}
-	
-	/**
-	 * Удаляет старую и создаёт таблицу словарей на основе их списка,
-	 * полученного с помощью engine.getThematicDicts()
-	 */
-	protected void createThematicDicTable() {
-	    tableThematicDicts.removeAll();
-		//clearTable(tableThematicDicts);
-		
-	    int i=0;
-	    for (ThematicDic dic : engine.getThematicDicts()) {
-	    	WrappedTableItem wti = new WrappedTableItem(tableThematicDicts, SWT.NONE);
-	    	wti.arrListPos=i;
-	        
-	        wti.setText(dic.getRow());
-	        
-	        wti.setChecked(dic.getEnabled());
-	        i++;
-	    }
-	}
-	
-	/**
-	 * В(ы)ключает словари в соответствии с таблицей.
-	 */
-	public void msgTurnDicts(){
-		for(TableItem tableItem : tableThematicDicts.getItems()){
-			WrappedTableItem w = (WrappedTableItem) tableItem;
-			engine.turnThematicDictionary(tableItem.getChecked(), w.arrListPos);
-		}
-	}
-	
 	
 	public void changeEnabledAddButton(){
 		if(tableThematicDicts.getSelectionCount() > 0 && textAddableWord.getText().length()>0){
