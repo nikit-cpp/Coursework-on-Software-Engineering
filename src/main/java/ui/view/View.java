@@ -1,5 +1,6 @@
 package ui.view;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import main.*;
@@ -21,7 +22,7 @@ public class View{
 	private Table tableThematicDicts;
 	private Table tableContainsWords;
 	private Shell shell;
-	//private 
+	private static ArrayList<Updateable> upds = new ArrayList<Updateable>();
 	
 	private Engine engine;
 	
