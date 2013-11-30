@@ -4,7 +4,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.List;
+import org.eclipse.swt.widgets.Listener;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.widgets.Button;
@@ -59,12 +62,18 @@ public class AddWord {
 		shell = new Shell(display, SWT.CLOSE);
 		shell.setSize(450, 300);
 		shell.setText("Добавление слова");
+		shell.addListener(SWT.Close, new Listener() {
+		      public void handleEvent(Event event) {
+		        view.delFromUpdateable();
+		      }
+		});
 		
 		btnAdd = new Button(shell, SWT.NONE);
 		btnAdd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
 				view.addWord();
+				ViewSuper.updateContainingWordsSuper();
 			}
 		});
 		btnAdd.setBounds(352, 234, 77, 26);

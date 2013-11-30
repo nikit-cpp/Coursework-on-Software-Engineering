@@ -7,7 +7,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
 import ui.view.MainWindowManager;
-import ui.view.View;
 
 abstract public class OpenFileDialog {
 	protected static Shell shell;

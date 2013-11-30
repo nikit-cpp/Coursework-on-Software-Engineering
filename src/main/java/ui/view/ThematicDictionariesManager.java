@@ -18,14 +18,13 @@ import ui.filemanager.FileReader;
 import ui.view.listeners.OpenFileDialog;
 import foundedwords.WordInfo;
 
-public class ThematicDictionariesManager extends View1 {
+public class ThematicDictionariesManager extends ViewSuper /*implements Updateable*/ {
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
 	private Table tableContainsWords;
 	private Shell shell;
-	private static ArrayList<Updateable> upds = new ArrayList<Updateable>();
 	
 	private Engine engine;
 		
@@ -38,6 +37,7 @@ public class ThematicDictionariesManager extends View1 {
 		this.tableContainsWords=w.tableWords;
 		
 		initialize();
+		addToUpdateable();
 	}
 
 	/**
@@ -93,5 +93,10 @@ public class ThematicDictionariesManager extends View1 {
 		final String dic = tableThematicDicts.getItem(dicIndex).getText();
 		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word);
 		engine.getTDM().deleteWord(word, dicIndex);
+	}
+
+	@Override
+	public void updateContainingWords() {
+		createContainsWordsTable(tableThematicDicts.getSelectionIndex());
 	}
 }

@@ -18,14 +18,13 @@ import ui.filemanager.FileReader;
 import ui.view.listeners.OpenFileDialog;
 import foundedwords.WordInfo;
 
-public class MainWindowManager extends View1 implements Updateable {
+public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
 	private Table tableContainsWords;
 	private Shell shell;
-	private static ArrayList<Updateable> upds = new ArrayList<Updateable>();
 	
 	private Engine engine;
 	
@@ -44,6 +43,7 @@ public class MainWindowManager extends View1 implements Updateable {
 		initialize();
 		
 		txtOutput.setText("");
+		addToUpdateable();
 	}
 
 	/**
@@ -135,5 +135,9 @@ public class MainWindowManager extends View1 implements Updateable {
 		while ( table.getColumnCount() > 0 ) {
 		    table.getColumns()[ 0 ].dispose();
 		}
+	}
+
+	@Override
+	public void updateContainingWords() {		
 	}
 }

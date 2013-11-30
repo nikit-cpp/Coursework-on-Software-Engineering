@@ -18,14 +18,13 @@ import ui.filemanager.FileReader;
 import ui.view.listeners.OpenFileDialog;
 import foundedwords.WordInfo;
 
-public class AddWordManager extends View1 {
+public class AddWordManager extends ViewSuper /*implements Updateable*/ {
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
 	private Table tableThematicDicts;
 	private Table tableContainsWords;
 	private Shell shell;
-	private static ArrayList<Updateable> upds = new ArrayList<Updateable>();
 	
 	private Engine engine;
 	
@@ -39,6 +38,7 @@ public class AddWordManager extends View1 {
 		this.txtProbability=addWord.textProbability;
 		this.textAddableWord=addWord.textAddableWord;
 		initialize();
+		addToUpdateable();
 	}
 
 	/**
@@ -99,5 +99,9 @@ public class AddWordManager extends View1 {
 
 	public void addWord() {
 		engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
+	}
+
+	@Override
+	public void updateContainingWords() {
 	}
 }

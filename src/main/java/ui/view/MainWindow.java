@@ -23,7 +23,6 @@ import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Group;
 
-import ui.view.View;
 import ui.view.listeners.Open;
 import ui.view.listeners.SortListenerFactory;
 
@@ -80,6 +79,11 @@ public class MainWindow {
 		
 		Menu menu = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(menu);
+		shell.addListener(SWT.Close, new Listener() {
+		      public void handleEvent(Event event) {
+		        view.delFromUpdateable();
+		      }
+		});
 		
 		MenuItem menuFileCascade = new MenuItem(menu, SWT.CASCADE);
 		menuFileCascade.setText("\u0424\u0430\u0439\u043B");

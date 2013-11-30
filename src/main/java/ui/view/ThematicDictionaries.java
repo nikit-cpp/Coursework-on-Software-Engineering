@@ -55,6 +55,11 @@ public class ThematicDictionaries {
 		shell.setSize(450, 300);
 		shell.setText("Тематические словари");
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
+		shell.addListener(SWT.Close, new Listener() {
+		      public void handleEvent(Event event) {
+		        view.delFromUpdateable();
+		      }
+		});
 		
 		SashForm sashForm = new SashForm(shell, SWT.NONE);
 		
@@ -62,7 +67,8 @@ public class ThematicDictionaries {
 		tableDicts.addSelectionListener(new SelectionAdapter() {
 		      public void widgetSelected(SelectionEvent e) {
 		    	  //System.out.println(tableDicts.getSelectionIndex());
-		    	  view.createContainsWordsTable(tableDicts.getSelectionIndex());
+		    	  //view.createContainsWordsTable(tableDicts.getSelectionIndex());
+		    	  view.updateContainingWords();
 		      }
 		});
 		tableDicts.setHeaderVisible(true);
@@ -96,6 +102,8 @@ public class ThematicDictionaries {
 			    	  final int dicIndex = tableDicts.getSelectionIndex();
 			    	  
 			    	  view.deleteWord(word, dicIndex);
+			    	  //view.updateContainingWords();
+			    	  ViewSuper.updateContainingWordsSuper();
 		    	  }catch(Exception e){
 		    		  e.printStackTrace();
 		    	  }
