@@ -195,4 +195,10 @@ public class View{
 	public void addWord() {
 		engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
 	}
+
+	public void deleteWord(String word, int dicIndex) {
+		final String dic = tableThematicDicts.getItem(dicIndex).getText();
+		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word);
+		engine.getTDM().deleteWord(word, dicIndex);
+	}
 }

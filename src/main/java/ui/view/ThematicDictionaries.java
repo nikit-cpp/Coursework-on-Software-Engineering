@@ -17,6 +17,8 @@ import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.swt.widgets.Menu;
+import org.eclipse.swt.widgets.MenuItem;
 
 public class ThematicDictionaries {
 	private Display display;
@@ -81,6 +83,25 @@ public class ThematicDictionaries {
 		tableColumn_2 = new TableColumn(tableWords, SWT.NONE);
 		tableColumn_2.setWidth(100);
 		tableColumn_2.setText("Вероятность");
+		
+		Menu menuWord = new Menu(tableWords);
+		tableWords.setMenu(menuWord);
+		
+		MenuItem menuItem = new MenuItem(menuWord, SWT.NONE);
+		menuItem.setText("Удалить");
+		menuItem.addListener(SWT.Selection, new Listener() {
+		      public void handleEvent(Event event) {
+		    	  try{
+			    	  final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(0);
+			    	  final int dicIndex = tableDicts.getSelectionIndex();
+			    	  
+			    	  view.deleteWord(word, dicIndex);
+		    	  }catch(Exception e){
+		    		  e.printStackTrace();
+		    	  }
+		      }
+		    });
+		
 		sashForm.setWeights(new int[] {1, 1});
 		
 		shell.addListener(SWT.Close, new Listener()

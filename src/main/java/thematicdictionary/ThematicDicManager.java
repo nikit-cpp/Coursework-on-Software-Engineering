@@ -91,4 +91,8 @@ public class ThematicDicManager {
 			e.printStackTrace();
 		}
 	}
+
+	public void deleteWord(String word, int dicIndex) {
+		thematicDicts.get(dicIndex).delete(word);
+	}
 }

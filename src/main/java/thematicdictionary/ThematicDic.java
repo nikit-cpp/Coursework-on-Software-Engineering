@@ -100,5 +100,9 @@ public class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 
 	public String getName() {
 		return name;
+	}
+
+	public void delete(String word) {
+		dic.remove(word);
 	}	
 }
