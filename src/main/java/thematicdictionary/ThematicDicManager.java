@@ -1,5 +1,6 @@
 package thematicdictionary;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -25,7 +26,7 @@ public class ThematicDicManager {
 		informatica.add("XP", 1);
 		thematicDicts.add(informatica);
 		*/
-		// TODO save-dic импортировать в аррэйлист словари из path
+		// TODO save-dic импортировать в ArrayList словари из path
 		load();
 	}
 
@@ -39,7 +40,6 @@ public class ThematicDicManager {
 	
 	public void add(String dicname, boolean isEnabled){
 		thematicDicts.add(new ThematicDic(dicname, isEnabled));
-		// save(); // TODO выяснить, надо ли?
 	}
 
 	public void add(ThematicDic dic) {
@@ -52,15 +52,23 @@ public class ThematicDicManager {
 	}
 	
 	public void addWord(int dicIndex, String word, double probability){
-		// TODO save-dic 
 		thematicDicts.get(dicIndex).add(word, probability);
 		save();
 	}
 
 	final String filename = "dicts.out";
+	
+	public void remove(){
+		File del = new File(filename);
+		if(del.exists())
+			del.delete();
+	}
+	
+	public void clear(){
+		thematicDicts.clear();
+	}
 
 	public void save(){
-		System.out.println("SAVE");
 		ObjectOutputStream out;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(filename));
@@ -68,23 +76,19 @@ public class ThematicDicManager {
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("SAVE ERROR");
 		}
 	}
 	
 	public void load(){
 		ObjectInputStream in;
-		System.out.println("LOAD");
 		try {
 			in = new ObjectInputStream(new FileInputStream(filename));
 			thematicDicts = (ArrayList<ThematicDic>) in.readObject();
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.out.println("LOAD ERROR");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			System.out.println("LOAD ERROR");
 		}
 	}
 }

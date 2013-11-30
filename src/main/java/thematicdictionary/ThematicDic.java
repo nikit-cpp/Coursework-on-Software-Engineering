@@ -13,7 +13,6 @@ public class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 	private double probability;
 	
 	public ThematicDic(String name, boolean isEnabled) {
-		// TODO save-dic запись в manager->path файла с именем name
 		this.name=name;
 		this.isEnabled=isEnabled;
 		dic = new HashMap<String, Double>();
@@ -47,7 +46,6 @@ public class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 
 	public void add(String string, double probability) {
 		checkProbability(probability);
-		// TODO save-dic flush() файла с именем name
 		dic.put(string, probability);
 	}
 	

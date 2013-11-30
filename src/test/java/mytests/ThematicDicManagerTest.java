@@ -18,13 +18,10 @@ public class ThematicDicManagerTest {
 	}*/
 
 	@Test
-	public void testAdd() {
-		// TODO тест не работает если запустить все тесты, но работает если запустить отдельно этот класс
-		File del = new File("dicts.out");
-		if(del.exists())
-			del.delete();
-		
+	public void testAdd() {		
 		tdm = new ThematicDicManager();
+		tdm.clear();
+		tdm.remove();
 		
 		tdm.add("ФизикаСловарьТест", true);
 		tdm.add("АлгебраСловарьТест", true);
