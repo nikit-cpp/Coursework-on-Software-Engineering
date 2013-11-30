@@ -4,13 +4,13 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-public class AddWordManager extends ViewSuper /*implements Updateable*/ {
+public class AddWordWindowManager extends ViewSuper /*implements Updateable*/ {
 	private Table tableThematicDicts;
 	private Text txtProbability;
 	private Text textAddableWord;
 	private Button btnAdd;
 	
-	public AddWordManager(AddWord addWord) {
+	public AddWordWindowManager(AddWordWindow addWord) {
 		super();
 		
 		this.tableThematicDicts=addWord.tableDicts;
@@ -43,5 +43,10 @@ public class AddWordManager extends ViewSuper /*implements Updateable*/ {
 
 	@Override
 	public void updateContainingWords() {
+	}
+
+	@Override
+	public void updateThematicDictsTable() {
+		super.createThematicDicTable(tableThematicDicts);
 	}
 }

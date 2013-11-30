@@ -121,7 +121,7 @@ public class MainWindow {
 		menuItemAddingWord.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				new AddWord(display, null);
+				new AddWordWindow(display, null);
 			}
 		});
 		
@@ -213,7 +213,7 @@ public class MainWindow {
 		        //System.out.println(tableWords.getSelectionIndex());
 		        final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(1);
 		        //System.out.println(word);
-		        new AddWord(display, word);
+		        new AddWordWindow(display, word);
 		      }
 		    });
 		

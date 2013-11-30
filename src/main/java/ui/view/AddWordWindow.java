@@ -16,7 +16,7 @@ import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 
-public class AddWord {
+public class AddWordWindow {
 	private Display display;
 	protected Shell shell;
 	protected Text textProbability;
@@ -25,9 +25,9 @@ public class AddWord {
 	protected Table tableDicts;
 	protected Button btnAdd;
 
-	protected AddWordManager view;
+	protected AddWordWindowManager view;
 	
-	public AddWord(Display display, String word) {
+	public AddWordWindow(Display display, String word) {
 		this.display=display;
 		this.addableWord=word;
 		open();
@@ -39,7 +39,7 @@ public class AddWord {
 	public void open() {
 		createContents();
 		
-		view = new AddWordManager(this);
+		view = new AddWordWindowManager(this);
 		
 		shell.open();
 		shell.layout();

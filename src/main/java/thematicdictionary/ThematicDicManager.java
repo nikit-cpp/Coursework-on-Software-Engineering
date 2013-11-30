@@ -20,6 +20,7 @@ public class ThematicDicManager {
 
 	public void turn(boolean b, int index) {
 		thematicDicts.get(index).setEnabled(b);
+		save();
 	}
 	
 	public ArrayList<ThematicDic> getThematicDicts() {
@@ -28,6 +29,7 @@ public class ThematicDicManager {
 	
 	public void add(String dicname, boolean isEnabled){
 		thematicDicts.add(new ThematicDic(dicname, isEnabled));
+		save();
 	}
 
 	public void add(ThematicDic dic) {
@@ -46,12 +48,18 @@ public class ThematicDicManager {
 
 	final String filename = "dicts.out";
 	
+	/**
+	 * Удаление файла
+	 */
 	public void remove(){
 		File del = new File(filename);
 		if(del.exists())
 			del.delete();
 	}
 	
+	/**
+	 * Очистка ArrayList
+	 */
 	public void clear(){
 		thematicDicts.clear();
 	}
@@ -67,6 +75,7 @@ public class ThematicDicManager {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void load(){
 		ObjectInputStream in;
 		try {
@@ -82,6 +91,12 @@ public class ThematicDicManager {
 
 	public void deleteWord(String word, int dicIndex) {
 		thematicDicts.get(dicIndex).delete(word);
+		save();
+	}
+
+	public void deleteDic(int dicIndex) {
+		// TODO выяснить, удаляются ли слова при удалении содержащего их словаря
+		thematicDicts.remove(dicIndex);
 		save();
 	}
 }

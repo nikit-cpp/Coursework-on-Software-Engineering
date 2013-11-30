@@ -42,4 +42,13 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	public void updateContainingWords() {
 		createContainsWordsTable(tableThematicDicts.getSelectionIndex());
 	}
+
+	@Override
+	public void updateThematicDictsTable() {
+		super.createThematicDicTable(tableThematicDicts);
+	}
+
+	public void deleteDic(int dicIndex) {
+		engine.getTDM().deleteDic(dicIndex);
+	}
 }

@@ -98,4 +98,9 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	@Override
 	public void updateContainingWords() {		
 	}
+
+	@Override
+	public void updateThematicDictsTable() {
+		super.createThematicDicTable(tableThematicDicts);
+	}
 }

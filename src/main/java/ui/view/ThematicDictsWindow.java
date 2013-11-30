@@ -75,6 +75,32 @@ public class ThematicDictsWindow {
 		tableColumn.setWidth(100);
 		tableColumn.setText("Словари");
 		
+		Menu menuDicts = new Menu(tableDicts);
+		tableDicts.setMenu(menuDicts);
+		
+		MenuItem mntmAddDic = new MenuItem(menuDicts, SWT.NONE);
+		mntmAddDic.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				new AddDicWindow(display);
+			}
+		});
+		mntmAddDic.setText("Добавить словарь");
+		
+		MenuItem mntmDelDic = new MenuItem(menuDicts, SWT.NONE);
+		mntmDelDic.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				try{
+					final int dicIndex = tableDicts.getSelectionIndex();
+			    	  
+					view.deleteDic(dicIndex);
+					ViewSuper.updateThematicDictsTableSuper();;
+				}catch(Exception e){
+		    		  e.printStackTrace();
+				}
+			}
+		});
+		mntmDelDic.setText("Удалить словарь");
+		
 		tableWords = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		tableWords.setHeaderVisible(true);
 		tableWords.setLinesVisible(true);
@@ -90,9 +116,17 @@ public class ThematicDictsWindow {
 		Menu menuWord = new Menu(tableWords);
 		tableWords.setMenu(menuWord);
 		
-		MenuItem menuItem = new MenuItem(menuWord, SWT.NONE);
-		menuItem.setText("Удалить");
-		menuItem.addListener(SWT.Selection, new Listener() {
+		MenuItem menuItemAddWord = new MenuItem(menuWord, SWT.NONE);
+		menuItemAddWord.setText("Добавить");
+		menuItemAddWord.addListener(SWT.Selection, new Listener() {
+		      public void handleEvent(Event event) {
+		    	  new AddWordWindow(display, null); // TODO посылка аргумента - выбранного словаря
+		      }
+		});
+		
+		MenuItem menuItemDeleteWord = new MenuItem(menuWord, SWT.NONE);
+		menuItemDeleteWord.setText("Удалить");
+		menuItemDeleteWord.addListener(SWT.Selection, new Listener() {
 		      public void handleEvent(Event event) {
 		    	  try{
 			    	  final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(0);
