@@ -112,6 +112,15 @@ public class MainWindow {
 		});
 		menuItemThematicDicts.setText("Тематические словари");
 		
+		MenuItem menuItemAddingWord = new MenuItem(menuWin, SWT.NONE);
+		menuItemAddingWord.setText("Добавление слов");
+		menuItemAddingWord.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				new AddWord(display, null);
+			}
+		});
+		
 		MenuItem menuItemExit = new MenuItem(menu, SWT.NONE);
 		menuItemExit.addSelectionListener(new SelectionAdapter() {
 			@Override

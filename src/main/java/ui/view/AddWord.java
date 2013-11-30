@@ -103,7 +103,11 @@ public class AddWord {
 		textAddableWord = new Text(group_2, SWT.BORDER);
 		textAddableWord.setEditable(false);
 		textAddableWord.setBounds(10, 35, 194, 22);
-		textAddableWord.setText(addableWord);
+		if(addableWord==null){
+			textAddableWord.setEditable(true);
+		}else{
+			textAddableWord.setText(addableWord);
+		}
 		
 	}
 }
