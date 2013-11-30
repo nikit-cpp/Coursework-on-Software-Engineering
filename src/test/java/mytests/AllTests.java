@@ -10,7 +10,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	NormalizerTest.class,
 	DictionaryBuilderTest.class,
 	ThematicDicTest.class,
-	СalcProbabilityforDicTest.class
+	СalcProbabilityforDicTest.class,
+	ThematicDicManagerTest.class
 })
 public class AllTests {
 

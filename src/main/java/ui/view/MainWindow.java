@@ -8,6 +8,8 @@ import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Composite;
@@ -187,6 +189,20 @@ public class MainWindow {
 		
 		TableItem tableItem_3 = new TableItem(tableWords, SWT.NONE);
 		tableItem_3.setText("слово-2");
+		
+		Menu menuTableWords = new Menu(tableWords);
+		tableWords.setMenu(menuTableWords);
+		
+		MenuItem menuItem = new MenuItem(menuTableWords, SWT.NONE);
+		menuItem.setText("Добавить в словарь...");
+		menuItem.addListener(SWT.Selection, new Listener() {
+		      public void handleEvent(Event event) {
+		        //System.out.println(tableWords.getSelectionIndex());
+		        final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(1);
+		        //System.out.println(word);
+		        new AddWord(display, word);
+		      }
+		    });
 		
 		Group groupThematicDicts = new Group(sashFormSouth, SWT.NONE);
 		groupThematicDicts.setText("\u0421\u043B\u043E\u0432\u0430\u0440\u0438");

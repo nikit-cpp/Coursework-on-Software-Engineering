@@ -2,12 +2,12 @@ package mytests;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
-import org.junit.Test;
 
-import thematicdictionary.ThematicDic;
-import thematicdictionary.ThematicDicManager;
+import java.io.File;
+
+import org.junit.*;
+
+import thematicdictionary.*;
 
 public class ThematicDicManagerTest {
 	static ThematicDicManager tdm;
@@ -19,7 +19,10 @@ public class ThematicDicManagerTest {
 
 	@Test
 	public void testAdd() {
-		tdm = new ThematicDicManager("testtdm/");
+		// TODO тест не работает если запустить все тесты, но работает если запустить отдельно этот класс
+		File del = new File("dicts.out");
+		del.deleteOnExit();
+		tdm = new ThematicDicManager();
 		
 		tdm.add("ФизикаСловарьТест", true);
 		tdm.add("АлгебраСловарьТест", true);
@@ -31,8 +34,8 @@ public class ThematicDicManagerTest {
 		tdm.add(informatica);
 		
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
-		tdm = new ThematicDicManager("testtdm/");
-		tdm.load();
+		tdm = new ThematicDicManager();
+		//tdm.load();
 
 		assertThat(tdm.getThematicDicts().size(), is(4));
 		

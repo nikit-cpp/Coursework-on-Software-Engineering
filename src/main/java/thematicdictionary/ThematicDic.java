@@ -46,9 +46,13 @@ public class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 	}
 
 	public void add(String string, double probability) {
-		if (probability>1.0 || probability<0.0) throw new IllegalArgumentException("Вероятность может быть только 0.0...1.0");
+		checkProbability(probability);
 		// TODO save-dic flush() файла с именем name
 		dic.put(string, probability);
+	}
+	
+	public void checkProbability(double probability){
+		if (probability>1.0 || probability<0.0) throw new IllegalArgumentException("Вероятность может быть только 0.0...1.0");
 	}
 
 	public int getSize() {

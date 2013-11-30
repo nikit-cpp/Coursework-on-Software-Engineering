@@ -21,6 +21,7 @@ public class View{
 	private Table tableThematicDicts;
 	private Table tableContainsWords;
 	private Shell shell;
+	//private 
 	
 	private Engine engine;
 	
@@ -35,6 +36,7 @@ public class View{
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
 		
+		OpenFileDialog.staticInit(shell, this);
 		initialize();
 		
 		txtOutput.setText("");
@@ -50,14 +52,22 @@ public class View{
 		
 		initialize();
 	}
+	
+	protected Text txtProbability;
+	protected Button btnAdd;
+	
+	public View(AddWord addWord) {
+		this.tableThematicDicts=addWord.tableDicts;
+		this.btnAdd=addWord.btnAdd;
+		this.txtProbability=addWord.textProbability;
+		initialize();
+	}
 
 	/**
-	 *  Инициализация окна
+	 *  Общая инициализация
 	 */
 	private void initialize(){
-		OpenFileDialog.staticInit(shell, this);
 		engine = Engine.getInstance();
-		
 		createThematicDicTable();
 	}
 	
@@ -160,6 +170,22 @@ public class View{
 		for(String[] row : engine.getThematicDicts().get(selectedIndex)){
 			TableItem tableItem = new TableItem(tableContainsWords, SWT.NONE);
 	        tableItem.setText(row);
+		}
+	}
+	
+	public void changeEnabledAddButton(){
+		if(tableThematicDicts.getSelectionCount() > 0){
+			try{
+				double p = Double.parseDouble(txtProbability.getText());
+				// TODO убрать дублирование: засунуть в ThematicDic и побороть конфликт сериализации и static
+				if(p>1.0 || p<0.0)
+					btnAdd.setEnabled(true);
+			}catch(/*java.lang.NumberFormat*/Exception e){
+				System.err.println("Введённый текст невозможно распарсить как double.");
+				btnAdd.setEnabled(false);
+			}
+		}else{
+			btnAdd.setEnabled(false);
 		}
 	}
 }

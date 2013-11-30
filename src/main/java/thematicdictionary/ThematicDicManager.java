@@ -9,9 +9,10 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class ThematicDicManager {
+	static final long serialVersionUID = 100L;
 	private ArrayList<ThematicDic> thematicDicts;
 	
-	public ThematicDicManager(){
+	public ThematicDicManager(/*tring path*/){
 		thematicDicts = new ArrayList<ThematicDic>();
 		
 		/* TODO заглушечное заполнение
@@ -24,11 +25,8 @@ public class ThematicDicManager {
 		informatica.add("XP", 1);
 		thematicDicts.add(informatica);
 		*/
-	}
-
-	public ThematicDicManager(String path) {
 		// TODO save-dic импортировать в аррэйлист словари из path
-		thematicDicts = new ArrayList<ThematicDic>();
+		load();
 	}
 
 	public void turn(boolean b, int index) {
@@ -61,6 +59,7 @@ public class ThematicDicManager {
 	final String filename = "dicts.out";
 
 	public void save(){
+		System.out.println("SAVE");
 		ObjectOutputStream out;
 		try {
 			out = new ObjectOutputStream(new FileOutputStream(filename));
@@ -68,19 +67,23 @@ public class ThematicDicManager {
 			out.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("SAVE ERROR");
 		}
 	}
 	
 	public void load(){
 		ObjectInputStream in;
+		System.out.println("LOAD");
 		try {
 			in = new ObjectInputStream(new FileInputStream(filename));
 			thematicDicts = (ArrayList<ThematicDic>) in.readObject();
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.out.println("LOAD ERROR");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			System.out.println("LOAD ERROR");
 		}
 	}
 }
