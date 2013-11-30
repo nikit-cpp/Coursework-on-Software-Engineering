@@ -18,7 +18,7 @@ import ui.filemanager.FileReader;
 import ui.view.listeners.OpenFileDialog;
 import foundedwords.WordInfo;
 
-public class MainWindowManager extends View1 implements Updateable {
+public class ThematicDictionariesManager extends View1 {
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
@@ -28,22 +28,16 @@ public class MainWindowManager extends View1 implements Updateable {
 	private static ArrayList<Updateable> upds = new ArrayList<Updateable>();
 	
 	private Engine engine;
-	
+		
 	/**
-	 * Этот конструктор используется вместе с MainWindow
+	 * Этот корнструктор используется вместе с ThematicDictionaries
 	 * @param w
 	 */
-	public MainWindowManager(MainWindow w) {
-		this.txtInput=w.txtInput;
-		this.tableWords=w.tableWords;
-		this.txtOutput=w.txtOutput;
-		this.tableThematicDicts = w.tableThematicDicts;
-		this.shell=w.shell;
+	public ThematicDictionariesManager(ThematicDictionaries w) {
+		this.tableThematicDicts=w.tableDicts;
+		this.tableContainsWords=w.tableWords;
 		
-		OpenFileDialog.staticInit(shell, this);
 		initialize();
-		
-		txtOutput.setText("");
 	}
 
 	/**
@@ -84,56 +78,20 @@ public class MainWindowManager extends View1 implements Updateable {
 		}
 	}
 	
-	/**
-	 * Удаляет старую и создаёт таблицу слов на основе их списка,
-	 * полученного с помощью engine.getThematicDicts()
-	 */
-	private void createWordsTable() {
-		tableWords.removeAll();
-		for (WordInfo wordInfo : engine.getStems()) {
-	        TableItem tableItem = new TableItem(tableWords, SWT.NONE);
-	        
-	        tableItem.setText(wordInfo.getRow());
-	    }
+	public void createContainsWordsTable(int selectedIndex) {
+		tableContainsWords.removeAll();
 		
-	}
-	
-	/**
-	 * Обрабатывает нажатие кнопки "Рубрикация"
-	 */
-	public void msgRubricate() {
-		engine.rubricate(txtInput.getText());
-		createWordsTable();
-		createThematicDicTable();
-	}
-	
-	/**
-	 * Обрабатывает нажатие кнопки "Реферирование"
-	 */
-	public void msgReferate() {				
-		String s = engine.referate(txtInput.getText());
-		txtOutput.setText(s);
-	}
-
-	/**
-	 * Заполняет {@code txtInput} содержимым файла.
-	 * @param selected путь к файлу
-	 */
-	public void openFile(String selected) {		
-		txtInput.setText(FileReader.readTextFromFileToString(selected));
-		
-		if(Options.getInstance().getBoolean(OptId.RUBRICATE_ON_FILEOPEN))
-			msgRubricate();
-	}
-
-	public void saveFile(String selected) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private void clearTable(Table table){
-		while ( table.getColumnCount() > 0 ) {
-		    table.getColumns()[ 0 ].dispose();
+		// Получаем табличную строку из словаря ThematicDic с номером selectedIndex в цикле,
+		// т. к. он реализует интерфейс Iterable<String[]>
+		for(String[] row : engine.getThematicDicts().get(selectedIndex)){
+			TableItem tableItem = new TableItem(tableContainsWords, SWT.NONE);
+	        tableItem.setText(row);
 		}
+	}
+	
+	public void deleteWord(String word, int dicIndex) {
+		final String dic = tableThematicDicts.getItem(dicIndex).getText();
+		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word);
+		engine.getTDM().deleteWord(word, dicIndex);
 	}
 }

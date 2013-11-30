@@ -6,18 +6,19 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Shell;
 
+import ui.view.MainWindowManager;
 import ui.view.View;
 
 abstract public class OpenFileDialog {
 	protected static Shell shell;
-	static View view;
+	static MainWindowManager view;
 	static Options options;
 	FileDialog fd;
 	String selected;
 
-	public static void staticInit(Shell _shell, View _view) {
+	public static void staticInit(Shell _shell, MainWindowManager mainWindowManager) {
 		shell = _shell;
-		view = _view;
+		view = mainWindowManager;
 		options = Options.getInstance();
 	}
 

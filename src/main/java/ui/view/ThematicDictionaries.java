@@ -24,7 +24,7 @@ public class ThematicDictionaries {
 	private Display display;
 	protected Shell shell;
 	protected Table tableDicts;
-	protected View view;
+	protected ThematicDictionariesManager view;
 	protected Table tableWords;
 	private TableColumn tableColumn;
 	private TableColumn tableColumn_1;
@@ -41,7 +41,7 @@ public class ThematicDictionaries {
 	public void open() {
 		createContents();
 		
-		view = new View(this);
+		view = new ThematicDictionariesManager(this);
 		
 		shell.open();
 		shell.layout();

@@ -25,7 +25,7 @@ public class AddWord {
 	protected Table tableDicts;
 	protected Button btnAdd;
 
-	protected View view;
+	protected AddWordManager view;
 	
 	public AddWord(Display display, String word) {
 		this.display=display;
@@ -40,7 +40,7 @@ public class AddWord {
 		Display display = Display.getDefault();
 		createContents();
 		
-		view = new View(this);
+		view = new AddWordManager(this);
 		
 		shell.open();
 		shell.layout();

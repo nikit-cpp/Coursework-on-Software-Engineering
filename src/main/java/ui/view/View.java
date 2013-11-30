@@ -37,7 +37,7 @@ public class View{
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
 		
-		OpenFileDialog.staticInit(shell, this);
+		// TODO просто заткнул OpenFileDialog.staticInit(shell, this);
 		initialize();
 		
 		txtOutput.setText("");

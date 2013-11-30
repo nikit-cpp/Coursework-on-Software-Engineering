@@ -34,7 +34,7 @@ public class MainWindow {
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
-	protected View view;
+	protected MainWindowManager view;
 	protected Text txtOutput;
 	protected Table tableThematicDicts;
 
@@ -58,7 +58,7 @@ public class MainWindow {
 		display = Display.getDefault();
 		createContents();
 		
-		view = new View(this);
+		view = new MainWindowManager(this);
 		
 		shell.open();
 		shell.layout();

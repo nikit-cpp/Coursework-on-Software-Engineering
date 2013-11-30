@@ -18,7 +18,7 @@ import ui.filemanager.FileReader;
 import ui.view.listeners.OpenFileDialog;
 import foundedwords.WordInfo;
 
-public class MainWindowManager extends View1 implements Updateable {
+public class AddWordManager extends View1 {
 	private Text txtInput;
 	private Table tableWords;
 	private Text txtOutput;
@@ -29,21 +29,16 @@ public class MainWindowManager extends View1 implements Updateable {
 	
 	private Engine engine;
 	
-	/**
-	 * Этот конструктор используется вместе с MainWindow
-	 * @param w
-	 */
-	public MainWindowManager(MainWindow w) {
-		this.txtInput=w.txtInput;
-		this.tableWords=w.tableWords;
-		this.txtOutput=w.txtOutput;
-		this.tableThematicDicts = w.tableThematicDicts;
-		this.shell=w.shell;
-		
-		OpenFileDialog.staticInit(shell, this);
+	protected Text txtProbability;
+	protected Text textAddableWord;
+	protected Button btnAdd;
+	
+	public AddWordManager(AddWord addWord) {
+		this.tableThematicDicts=addWord.tableDicts;
+		this.btnAdd=addWord.btnAdd;
+		this.txtProbability=addWord.textProbability;
+		this.textAddableWord=addWord.textAddableWord;
 		initialize();
-		
-		txtOutput.setText("");
 	}
 
 	/**
@@ -84,56 +79,25 @@ public class MainWindowManager extends View1 implements Updateable {
 		}
 	}
 	
-	/**
-	 * Удаляет старую и создаёт таблицу слов на основе их списка,
-	 * полученного с помощью engine.getThematicDicts()
-	 */
-	private void createWordsTable() {
-		tableWords.removeAll();
-		for (WordInfo wordInfo : engine.getStems()) {
-	        TableItem tableItem = new TableItem(tableWords, SWT.NONE);
-	        
-	        tableItem.setText(wordInfo.getRow());
-	    }
-		
-	}
 	
-	/**
-	 * Обрабатывает нажатие кнопки "Рубрикация"
-	 */
-	public void msgRubricate() {
-		engine.rubricate(txtInput.getText());
-		createWordsTable();
-		createThematicDicTable();
-	}
-	
-	/**
-	 * Обрабатывает нажатие кнопки "Реферирование"
-	 */
-	public void msgReferate() {				
-		String s = engine.referate(txtInput.getText());
-		txtOutput.setText(s);
-	}
-
-	/**
-	 * Заполняет {@code txtInput} содержимым файла.
-	 * @param selected путь к файлу
-	 */
-	public void openFile(String selected) {		
-		txtInput.setText(FileReader.readTextFromFileToString(selected));
-		
-		if(Options.getInstance().getBoolean(OptId.RUBRICATE_ON_FILEOPEN))
-			msgRubricate();
-	}
-
-	public void saveFile(String selected) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	private void clearTable(Table table){
-		while ( table.getColumnCount() > 0 ) {
-		    table.getColumns()[ 0 ].dispose();
+	public void changeEnabledAddButton(){
+		if(tableThematicDicts.getSelectionCount() > 0 && textAddableWord.getText().length()>0){
+			try{
+				double p = Double.parseDouble(txtProbability.getText());
+				// TODO убрать дублирование: засунуть в ThematicDic и побороть конфликт сериализации и static
+				btnAdd.setEnabled(true);
+				if(p>1.0 || p<0.0)
+					btnAdd.setEnabled(false);
+			}catch(/*java.lang.NumberFormat*/Exception e){
+				System.err.println("Введённый текст невозможно распарсить как double.");
+				btnAdd.setEnabled(false);
+			}
+		}else{
+			btnAdd.setEnabled(false);
 		}
+	}
+
+	public void addWord() {
+		engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
 	}
 }
