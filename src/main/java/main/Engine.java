@@ -87,4 +87,8 @@ public class Engine {
 	public ArrayList<ThematicDic> getThematicDicts() {
 		return tdm.getThematicDicts();
 	}
+	
+	public ThematicDicManager getTDM(){
+		return this.tdm;
+	}
 }

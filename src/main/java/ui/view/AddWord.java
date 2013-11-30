@@ -13,12 +13,14 @@ import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.widgets.Group;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class AddWord {
 	private Display display;
 	protected Shell shell;
 	protected Text textProbability;
-	private Text textAddableWord;
+	protected Text textAddableWord;
 	private String addableWord;
 	protected Table tableDicts;
 	protected Button btnAdd;
@@ -59,6 +61,12 @@ public class AddWord {
 		shell.setText("Добавление слова");
 		
 		btnAdd = new Button(shell, SWT.NONE);
+		btnAdd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseDown(MouseEvent arg0) {
+				view.addWord();
+			}
+		});
 		btnAdd.setBounds(352, 234, 77, 26);
 		btnAdd.setText("Добавить");
 		btnAdd.setEnabled(false);
@@ -96,5 +104,6 @@ public class AddWord {
 		textAddableWord.setEditable(false);
 		textAddableWord.setBounds(10, 35, 194, 22);
 		textAddableWord.setText(addableWord);
+		
 	}
 }

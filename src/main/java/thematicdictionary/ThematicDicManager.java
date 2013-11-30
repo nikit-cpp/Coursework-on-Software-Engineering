@@ -39,6 +39,7 @@ public class ThematicDicManager {
 	
 	public void add(String dicname, boolean isEnabled){
 		thematicDicts.add(new ThematicDic(dicname, isEnabled));
+		// save(); // TODO выяснить, надо ли?
 	}
 
 	public void add(ThematicDic dic) {
