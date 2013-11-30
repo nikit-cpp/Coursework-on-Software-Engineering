@@ -21,7 +21,9 @@ public class ThematicDicManagerTest {
 	public void testAdd() {
 		// TODO тест не работает если запустить все тесты, но работает если запустить отдельно этот класс
 		File del = new File("dicts.out");
-		del.deleteOnExit();
+		if(del.exists())
+			del.delete();
+		
 		tdm = new ThematicDicManager();
 		
 		tdm.add("ФизикаСловарьТест", true);

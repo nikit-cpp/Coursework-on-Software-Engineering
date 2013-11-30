@@ -9,7 +9,7 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class ThematicDicManager {
-	static final long serialVersionUID = 100L;
+	static final long serialVersionUID = 1L;
 	private ArrayList<ThematicDic> thematicDicts;
 	
 	public ThematicDicManager(/*tring path*/){
