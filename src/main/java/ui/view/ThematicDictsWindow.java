@@ -93,7 +93,8 @@ public class ThematicDictsWindow {
 					final int dicIndex = tableDicts.getSelectionIndex();
 			    	  
 					view.deleteDic(dicIndex);
-					ViewSuper.updateThematicDictsTableSuper();;
+					ViewSuper.updateThematicDictsTableSuper();
+				}catch(ArrayIndexOutOfBoundsException e){
 				}catch(Exception e){
 		    		  e.printStackTrace();
 				}
@@ -135,6 +136,7 @@ public class ThematicDictsWindow {
 			    	  view.deleteWord(word, dicIndex);
 			    	  //view.updateContainingWords();
 			    	  ViewSuper.updateContainingWordsSuper();
+		    	  }catch(ArrayIndexOutOfBoundsException e){
 		    	  }catch(Exception e){
 		    		  e.printStackTrace();
 		    	  }

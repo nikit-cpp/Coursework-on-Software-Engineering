@@ -38,7 +38,11 @@ public class AddWordWindowManager extends ViewSuper /*implements Updateable*/ {
 	}
 
 	public void addWord() {
-		engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
+		try{
+			engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
+		}catch(ArrayIndexOutOfBoundsException e){
+			
+		}
 	}
 
 	@Override

@@ -210,10 +210,14 @@ public class MainWindow {
 		menuItem.setText("Добавить в словарь...");
 		menuItem.addListener(SWT.Selection, new Listener() {
 		      public void handleEvent(Event event) {
-		        //System.out.println(tableWords.getSelectionIndex());
-		        final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(1);
-		        //System.out.println(word);
-		        new AddWordWindow(display, word);
+		    	try{
+			        //System.out.println(tableWords.getSelectionIndex());
+			        final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(1);
+			        //System.out.println(word);
+			        new AddWordWindow(display, word);
+		    	}catch(ArrayIndexOutOfBoundsException e){
+		    		
+		    	}
 		      }
 		    });
 		
