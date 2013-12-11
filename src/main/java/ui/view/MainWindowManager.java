@@ -15,7 +15,6 @@ import foundedwords.WordInfo;
 public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	private Text txtInput;
 	private Table tableWords;
-	private Text txtOutput;
 	private Table tableThematicDicts;
 	private Shell shell;
 		
@@ -28,13 +27,11 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 		
 		this.txtInput=w.txtInput;
 		this.tableWords=w.tableWords;
-		this.txtOutput=w.txtOutput;
 		this.tableThematicDicts = w.tableThematicDicts;
 		this.shell=w.shell;
 		
 		OpenFileDialog.staticInit(shell, this);
 		
-		txtOutput.setText("");
 		super.createThematicDicTable(tableThematicDicts);
 	}
 	
@@ -71,14 +68,6 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 		super.createThematicDicTable(tableThematicDicts);
 	}
 	
-	/**
-	 * Обрабатывает нажатие кнопки "Реферирование"
-	 */
-	public void msgReferate() {				
-		String s = engine.referate(txtInput.getText());
-		txtOutput.setText(s);
-	}
-
 	/**
 	 * Заполняет {@code txtInput} содержимым файла.
 	 * @param selected путь к файлу

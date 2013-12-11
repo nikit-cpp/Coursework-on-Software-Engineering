@@ -26,15 +26,12 @@ import org.eclipse.swt.widgets.Group;
 import ui.view.listeners.Open;
 import ui.view.listeners.SortListenerFactory;
 
-import org.eclipse.wb.swt.SWTResourceManager;
-
 public class MainWindow {
 	private Display display;
 	protected Shell shell;
 	protected Text txtInput;
 	protected Table tableWords;
 	protected MainWindowManager view;
-	protected Text txtOutput;
 	protected Table tableThematicDicts;
 
 	/**
@@ -74,7 +71,7 @@ public class MainWindow {
 	protected void createContents() {
 		shell = new Shell();
 		shell.setSize(695, 554);
-		shell.setText("\u041A\u0443\u0440\u0441\u043E\u0432\u043E\u0439 \u043F\u0440\u043E\u0435\u043A\u0442");
+		shell.setText("Рубрикатор");
 		shell.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		Menu menu = new Menu(shell, SWT.BAR);
@@ -86,19 +83,21 @@ public class MainWindow {
 		});
 		
 		MenuItem menuFileCascade = new MenuItem(menu, SWT.CASCADE);
-		menuFileCascade.setText("\u0424\u0430\u0439\u043B");
+		menuFileCascade.setText("Файл");
 		
 		Menu menuFile = new Menu(menuFileCascade);
 		menuFileCascade.setMenu(menuFile);
 		
 		MenuItem itemOpen = new MenuItem(menuFile, SWT.NONE);
 		itemOpen.addSelectionListener(new Open());
-		itemOpen.setText("\u041E\u0442\u043A\u0440\u044B\u0442\u044C");
+		itemOpen.setText("Открыть");
 		
 		MenuItem itemSaveInput = new MenuItem(menuFile, SWT.NONE);
+		itemSaveInput.setEnabled(false);
 		itemSaveInput.setText("Сохранить входной");
 		
 		MenuItem itemSaveOutput = new MenuItem(menuFile, SWT.NONE);
+		itemSaveOutput.setEnabled(false);
 		itemSaveOutput.setText("Сохранить результат");
 		
 		MenuItem menuWinCascade = new MenuItem(menu, SWT.CASCADE);
@@ -142,32 +141,19 @@ public class MainWindow {
 		fd_sashForm.top = new FormAttachment(0, 10);
 		fd_sashForm.left = new FormAttachment(0, 10);
 		fd_sashForm.right = new FormAttachment(100);
-		Button btnReferate = new Button(composite, SWT.NONE);
-		fd_sashForm.bottom = new FormAttachment(btnReferate, -6);
 		sashForm.setLayoutData(fd_sashForm);
 		
-		SashForm sashFormNorth = new SashForm(sashForm, SWT.NONE);
-		
-		Group groupInText = new Group(sashFormNorth, SWT.NONE);
+		Group groupInText = new Group(sashForm, SWT.NONE);
 		groupInText.setText("Входной текст");
 		groupInText.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		txtInput = new Text(groupInText, SWT.BORDER | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-		txtInput.setText("Каким образом XP снижает перечисленные ранее риски?\r\nТочка точки точкой точками точка");
-		
-		Group groupOutText = new Group(sashFormNorth, SWT.NONE);
-		groupOutText.setText("Логгер/Примерный смысл");
-		groupOutText.setLayout(new FillLayout(SWT.HORIZONTAL));
-		
-		txtOutput = new Text(groupOutText, SWT.BORDER | SWT.READ_ONLY | SWT.WRAP | SWT.H_SCROLL | SWT.V_SCROLL | SWT.CANCEL | SWT.MULTI);
-		txtOutput.setBackground(SWTResourceManager.getColor(SWT.COLOR_WHITE));
-		txtOutput.setText("asdfgh");
-		sashFormNorth.setWeights(new int[] {333, 333});
+		txtInput.setText("Введите сюда текст,\r\nлибо откройте файл в кодировке cp1251");
 		
 		SashForm sashFormSouth = new SashForm(sashForm, SWT.NONE);
 		
 		Group groupFoundedWords = new Group(sashFormSouth, SWT.NONE);
-		groupFoundedWords.setText("\u041D\u0430\u0439\u0434\u0435\u043D\u043D\u044B\u0435 \u0441\u043B\u043E\u0432\u0430");
+		groupFoundedWords.setText("Найденные слова");
 		groupFoundedWords.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		tableWords = new Table(groupFoundedWords, SWT.BORDER | SWT.FULL_SELECTION);
@@ -222,7 +208,7 @@ public class MainWindow {
 		    });
 		
 		Group groupThematicDicts = new Group(sashFormSouth, SWT.NONE);
-		groupThematicDicts.setText("\u0421\u043B\u043E\u0432\u0430\u0440\u0438");
+		groupThematicDicts.setText("Тематические словари");
 		groupThematicDicts.setLayout(new FillLayout(SWT.HORIZONTAL));
 		
 		tableThematicDicts = new Table(groupThematicDicts, SWT.BORDER | SWT.CHECK | SWT.FULL_SELECTION);
@@ -254,22 +240,9 @@ public class MainWindow {
 		tableItem.setText("New TableItem");
 		sashFormSouth.setWeights(new int[] {1, 1});
 		sashForm.setWeights(new int[] {202, 202});
-		FormData fd_btnReferate = new FormData();
-		fd_btnReferate.left = new FormAttachment(100, -136);
-		fd_btnReferate.top = new FormAttachment(100, -26);
-		fd_btnReferate.bottom = new FormAttachment(100);
-		fd_btnReferate.right = new FormAttachment(100);
-		btnReferate.setLayoutData(fd_btnReferate);
-		
-		btnReferate.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseDown(MouseEvent e) {
-				view.msgReferate();
-			}
-		});
-		btnReferate.setText("Реферирование");
 		
 		Button btnRubricate = new Button(composite, SWT.NONE);
+		fd_sashForm.bottom = new FormAttachment(100, -32);
 		btnRubricate.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
@@ -277,9 +250,9 @@ public class MainWindow {
 			}
 		});
 		FormData fd_btnRubricate = new FormData();
-		fd_btnRubricate.left = new FormAttachment(btnReferate, -118, SWT.LEFT);
-		fd_btnRubricate.bottom = new FormAttachment(100);
-		fd_btnRubricate.right = new FormAttachment(btnReferate, -6);
+		fd_btnRubricate.right = new FormAttachment(sashForm, 0, SWT.RIGHT);
+		fd_btnRubricate.left = new FormAttachment(100, -122);
+		fd_btnRubricate.top = new FormAttachment(sashForm, 6);
 		btnRubricate.setLayoutData(fd_btnRubricate);
 		btnRubricate.setText("Рубрикация");
 	}
