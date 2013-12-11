@@ -24,11 +24,11 @@ public class AddDicWindowManager extends ViewSuper {
 	}
 
 	@Override
-	public void updateContainingWords() {		
+	public void updateContainingWordsImpl() {		
 	}
 
 	@Override
-	public void updateThematicDictsTable() {
+	public void updateThematicDictsTableImpl() {
 	}
 
 	public void changeEnabledAddButton() {

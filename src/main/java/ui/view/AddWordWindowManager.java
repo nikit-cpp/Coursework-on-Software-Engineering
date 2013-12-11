@@ -46,11 +46,11 @@ public class AddWordWindowManager extends ViewSuper /*implements Updateable*/ {
 	}
 
 	@Override
-	public void updateContainingWords() {
+	public void updateContainingWordsImpl() {
 	}
 
 	@Override
-	public void updateThematicDictsTable() {
+	public void updateThematicDictsTableImpl() {
 		super.createThematicDicTable(tableThematicDicts);
 	}
 }

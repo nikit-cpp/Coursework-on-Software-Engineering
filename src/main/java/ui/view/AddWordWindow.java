@@ -70,7 +70,7 @@ public class AddWordWindow {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
 				view.addWord();
-				ViewSuper.updateContainingWordsSuper();
+				ViewSuper.updateContainingWords();
 			}
 		});
 		btnAdd.setBounds(352, 234, 77, 26);

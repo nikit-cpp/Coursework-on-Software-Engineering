@@ -57,15 +57,15 @@ public abstract class ViewSuper implements Updateable {
 	/**
 	 * Обновляет список содержащихся в словаре слов
 	 * */
-	public static void updateContainingWordsSuper(){
+	public static void updateContainingWords(){
 		for(Updateable u : upds){
-			u.updateContainingWords();
+			u.updateContainingWordsImpl();
 		}
 	}
 
-	public static void updateThematicDictsTableSuper() {
+	public static void updateThematicDictsTable() {
 		for(Updateable u : upds){
-			u.updateThematicDictsTable();
+			u.updateThematicDictsTableImpl();
 		}
 	}
 }

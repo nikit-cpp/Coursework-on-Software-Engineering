@@ -39,7 +39,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	}
 
 	@Override
-	public void updateContainingWords() {
+	public void updateContainingWordsImpl() {
 		try{
 			createContainsWordsTable(tableThematicDicts.getSelectionIndex());
 		}catch(ArrayIndexOutOfBoundsException e){
@@ -47,7 +47,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	}
 
 	@Override
-	public void updateThematicDictsTable() {
+	public void updateThematicDictsTableImpl() {
 		super.createThematicDicTable(tableThematicDicts);
 	}
 

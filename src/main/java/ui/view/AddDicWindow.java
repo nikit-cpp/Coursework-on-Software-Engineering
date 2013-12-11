@@ -63,7 +63,7 @@ public class AddDicWindow {
 			@Override
 			public void mouseDown(MouseEvent arg0) {
 				view.addDic();
-				ViewSuper.updateThematicDictsTableSuper();
+				ViewSuper.updateThematicDictsTable();
 			}
 		});
 		btnAdd.setBounds(272, 83, 77, 26);

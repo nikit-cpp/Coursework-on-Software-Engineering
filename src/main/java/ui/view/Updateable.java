@@ -1,7 +1,7 @@
 package ui.view;
 
 public interface Updateable {
-	void updateContainingWords();
+	void updateContainingWordsImpl();
 
-	void updateThematicDictsTable();
+	void updateThematicDictsTableImpl();
 }

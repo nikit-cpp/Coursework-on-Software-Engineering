@@ -65,7 +65,7 @@ public class ThematicDictsWindow {
 		      public void widgetSelected(SelectionEvent e) {
 		    	  //System.out.println(tableDicts.getSelectionIndex());
 		    	  //view.createContainsWordsTable(tableDicts.getSelectionIndex());
-		    	  view.updateContainingWords();
+		    	  view.updateContainingWordsImpl();
 		      }
 		});
 		tableDicts.setHeaderVisible(true);
@@ -93,7 +93,7 @@ public class ThematicDictsWindow {
 					final int dicIndex = tableDicts.getSelectionIndex();
 			    	  
 					view.deleteDic(dicIndex);
-					ViewSuper.updateThematicDictsTableSuper();
+					ViewSuper.updateThematicDictsTable();
 				}catch(ArrayIndexOutOfBoundsException e){
 				}catch(Exception e){
 		    		  e.printStackTrace();
@@ -135,7 +135,7 @@ public class ThematicDictsWindow {
 			    	  
 			    	  view.deleteWord(word, dicIndex);
 			    	  //view.updateContainingWords();
-			    	  ViewSuper.updateContainingWordsSuper();
+			    	  ViewSuper.updateContainingWords();
 		    	  }catch(ArrayIndexOutOfBoundsException e){
 		    	  }catch(Exception e){
 		    		  e.printStackTrace();
