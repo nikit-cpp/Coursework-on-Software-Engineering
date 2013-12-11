@@ -18,7 +18,6 @@ import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.custom.SashForm;
 import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.widgets.TableItem;
 import org.eclipse.swt.events.MouseAdapter;
 import org.eclipse.swt.events.MouseEvent;
 import org.eclipse.swt.widgets.Group;
@@ -183,11 +182,13 @@ public class MainWindow {
 		colCount.setText("Количество");
 		colCount.addListener(SWT.Selection, SortListenerFactory.getListener(SortListenerFactory.INT_COMPARATOR));
 		
+		/*
 		TableItem tableItem_2 = new TableItem(tableWords, SWT.NONE);
 		tableItem_2.setText("Слово");
 		
 		TableItem tableItem_3 = new TableItem(tableWords, SWT.NONE);
 		tableItem_3.setText("слово-2");
+		*/
 		
 		Menu menuTableWords = new Menu(tableWords);
 		tableWords.setMenu(menuTableWords);
@@ -233,11 +234,14 @@ public class MainWindow {
 		colProbability.setText("Совпадение");
 		colProbability.setMoveable(true);
 		
+		/*
 		TableItem tableItem_1 = new TableItem(tableThematicDicts, 0);
 		tableItem_1.setText(new String[] {"физика", "сов-падение"});
 		
 		TableItem tableItem = new TableItem(tableThematicDicts, 0);
-		tableItem.setText("New TableItem");
+		tableItem.setText("электроника");
+		*/
+		
 		sashFormSouth.setWeights(new int[] {1, 1});
 		sashForm.setWeights(new int[] {202, 202});
 		
