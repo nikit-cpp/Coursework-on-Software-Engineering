@@ -163,7 +163,7 @@
 					</descriptors>
 					<archive>
 						<manifest>
-							<mainClass>ui.view.MainWindow</mainClass>
+							<mainClass>gui.MainWindow</mainClass>
 						</manifest>
 					</archive>
 
