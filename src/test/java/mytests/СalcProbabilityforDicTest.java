@@ -1,12 +1,12 @@
 package mytests;
 
 import static org.junit.Assert.*;
-import main.Engine;
 
 import org.junit.*;
 
-import foundedwords.Builder;
-import thematicdictionary.*;
+import engine.Engine;
+import engine.foundedwords.Builder;
+import engine.thematicdictionary.*;
 
 public class СalcProbabilityforDicTest {
 	static Engine engine;

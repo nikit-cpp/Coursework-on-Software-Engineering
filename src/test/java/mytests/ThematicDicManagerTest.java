@@ -7,7 +7,7 @@ import java.io.File;
 
 import org.junit.*;
 
-import thematicdictionary.*;
+import engine.thematicdictionary.*;
 
 public class ThematicDicManagerTest {
 	static ThematicDicManager tdm;

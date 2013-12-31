@@ -4,13 +4,13 @@ import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
-import lexer.Tag;
-import lexer.Token;
-import lexer.Lexer;
-
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import engine.lexer.Lexer;
+import engine.lexer.Tag;
+import engine.lexer.Token;
 
 public class LexerTest {
 	

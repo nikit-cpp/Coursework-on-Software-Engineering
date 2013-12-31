@@ -2,9 +2,11 @@ package mytests;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.hasItem;
-import normalizer.Normalizer;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import engine.normalizer.Normalizer;
 
 public class NormalizerTest {
 	

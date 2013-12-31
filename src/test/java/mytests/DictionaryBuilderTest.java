@@ -7,9 +7,9 @@ import java.util.Collection;
 
 import org.junit.*;
 
-import foundedwords.Builder;
-import foundedwords.WordInfo;
-import foundedwords.WordsMap;
+import engine.foundedwords.Builder;
+import engine.foundedwords.WordInfo;
+import engine.foundedwords.WordsMap;
 
 public class DictionaryBuilderTest {
 	static Builder sentenceBuilder;
