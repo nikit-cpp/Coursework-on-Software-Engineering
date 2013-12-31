@@ -9,7 +9,7 @@ import java.nio.file.Paths;
 import engine.options.OptId;
 import engine.options.Options;
 
-public class FileReader {
+public final class FileReader {
 	/**
 	 * Открывает файл и возвращает его содержимое в виде строки,
 	 * после чего закрывает файл.

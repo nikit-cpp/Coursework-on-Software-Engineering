@@ -4,23 +4,23 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
-public class AddWordWindowManager extends ViewSuper /*implements Updateable*/ {
-	private Table tableThematicDicts;
-	private Text txtProbability;
-	private Text textAddableWord;
-	private Button btnAdd;
+public class AddWordWindowManager extends ViewSuper {
+	private final Text txtProbability;
+	private final Text textAddableWord;
+	private final Button btnAdd;
 	
-	public AddWordWindowManager(AddWordWindow addWord) {
+	AddWordWindowManager(AddWordWindow addWord) {
 		super();
 		
 		this.tableThematicDicts=addWord.tableDicts;
 		this.btnAdd=addWord.btnAdd;
 		this.txtProbability=addWord.textProbability;
 		this.textAddableWord=addWord.textAddableWord;
+		
 		super.createThematicDicTable(tableThematicDicts);
 	}
 	
-	public void changeEnabledAddButton(){
+	void changeEnabledAddButton(){
 		if(tableThematicDicts.getSelectionCount() > 0 && textAddableWord.getText().length()>0){
 			try{
 				double p = Double.parseDouble(txtProbability.getText());
@@ -37,7 +37,7 @@ public class AddWordWindowManager extends ViewSuper /*implements Updateable*/ {
 		}
 	}
 
-	public void addWord() {
+	void addWord() {
 		try{
 			engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
 		}catch(ArrayIndexOutOfBoundsException e){

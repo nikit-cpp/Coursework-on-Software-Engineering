@@ -15,13 +15,14 @@ import org.eclipse.swt.events.MouseEvent;
 
 public class AddDicWindow {
 	private Display display;
-	protected Shell shell;
-	protected Text textAddableDic;
-	protected Button btnAdd;
-
-	protected AddDicWindowManager view;
+	Shell shell;
+	Text textAddableDic;
+	Button btnAdd;
 	
-	public AddDicWindow(Display display) {
+	AddDicWindowManager view;
+	
+	
+	AddDicWindow(Display display) {
 		this.display=display;
 		open();
 	}
@@ -29,7 +30,7 @@ public class AddDicWindow {
 	/**
 	 * Open the window.
 	 */
-	public void open() {
+	void open() {
 		createContents();
 		
 		view = new AddDicWindowManager(this);

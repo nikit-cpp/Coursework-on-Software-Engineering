@@ -18,16 +18,16 @@ import org.eclipse.swt.events.MouseEvent;
 
 public class AddWordWindow {
 	private Display display;
-	protected Shell shell;
-	protected Text textProbability;
-	protected Text textAddableWord;
+	Shell shell;
+	Text textProbability;
+	Text textAddableWord;
 	private String addableWord;
-	protected Table tableDicts;
-	protected Button btnAdd;
+	Table tableDicts;
+	Button btnAdd;
 
-	protected AddWordWindowManager view;
+	AddWordWindowManager view;
 	
-	public AddWordWindow(Display display, String word) {
+	AddWordWindow(Display display, String word) {
 		this.display=display;
 		this.addableWord=word;
 		open();
@@ -36,7 +36,7 @@ public class AddWordWindow {
 	/**
 	 * Open the window.
 	 */
-	public void open() {
+	void open() {
 		createContents();
 		
 		view = new AddWordWindowManager(this);

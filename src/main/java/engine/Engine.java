@@ -9,11 +9,9 @@ import engine.foundedwords.WordsMap;
 import engine.thematicdictionary.ThematicDic;
 import engine.thematicdictionary.ThematicDicManager;
 
-public class Engine {
-	private Builder builder;
-	private ThematicDicManager tdm;
-	//private Collection<WordInfo> words;
-	//private Collection<WordInfo> stems;
+public final class Engine {
+	private final Builder builder;
+	private final ThematicDicManager tdm;
 	private WordsMap container;
 	
 	// Синглтон
@@ -37,7 +35,7 @@ public class Engine {
 	}
 	
 	public void rubricate(String text){
-		container = builder.buildSentence(text);
+		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
 		for(ThematicDic dic: tdm.getThematicDicts()){
 			double unitP = calcProbabilityforDic(dic, stems);

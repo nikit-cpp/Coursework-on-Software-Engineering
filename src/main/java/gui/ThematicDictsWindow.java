@@ -18,15 +18,15 @@ import org.eclipse.swt.widgets.MenuItem;
 
 public class ThematicDictsWindow {
 	private Display display;
-	protected Shell shell;
-	protected Table tableDicts;
-	protected ThematicDictsWindowManager view;
-	protected Table tableWords;
+	Shell shell;
+	Table tableDicts;
+	ThematicDictsWindowManager view;
+	Table tableWords;
 	private TableColumn tableColumn;
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
 	
-	public ThematicDictsWindow(Display display){
+	ThematicDictsWindow(Display display){
 		this.display=display;
 		open();
 	}
@@ -34,7 +34,7 @@ public class ThematicDictsWindow {
 	/**
 	 * Open the window.
 	 */
-	public void open() {
+	void open() {
 		createContents();
 		
 		view = new ThematicDictsWindowManager(this);

@@ -16,7 +16,6 @@ public abstract class ViewSuper implements Updateable {
 	/**
 	 *  Общая инициализация
 	 */
-	/*protected void initialize()*/
 	public ViewSuper(){
 		engine = Engine.getInstance();
 		addToUpdateable();

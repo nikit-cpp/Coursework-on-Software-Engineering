@@ -13,7 +13,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 
-public class FileChecker extends OpenFileDialog{
+public final class FileChecker extends OpenFileDialog{
 	public static String getCheckedExistsAbsolutePath(String relPath/*, Object obj*/){
 		final File checkableFile = new File(relPath);
 		final String absPath = checkableFile.getAbsolutePath();

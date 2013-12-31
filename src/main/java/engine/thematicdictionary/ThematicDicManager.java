@@ -8,7 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class ThematicDicManager {
+public final class ThematicDicManager {
 	static final long serialVersionUID = 1L;
 	private ArrayList<ThematicDic> thematicDicts;
 	
@@ -52,9 +52,9 @@ public class ThematicDicManager {
 	 * Удаление файла
 	 */
 	public void remove(){
-		File del = new File(filename);
-		if(del.exists())
-			del.delete();
+		File file = new File(filename);
+		if(file.exists())
+			file.delete();
 	}
 	
 	/**

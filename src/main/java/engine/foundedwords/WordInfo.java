@@ -10,7 +10,7 @@ import engine.Rowable;
  * {@code String s} - ссылка на key.
  * @author Ник
  */
-public class WordInfo implements Rowable{
+public final class WordInfo implements Rowable{
 	private final String s;
 	private int count;
 	private HashSet<String> related;

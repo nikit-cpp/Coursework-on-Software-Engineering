@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Разбивает строку на токены.
  * TODO Реализовать с помощью antlr.
  */
-public class Lexer {
+public final class Lexer {
 	
 	public Lexer(){}
 	

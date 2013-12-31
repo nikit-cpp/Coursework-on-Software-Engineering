@@ -6,21 +6,19 @@ import org.eclipse.swt.widgets.Text;
 import engine.thematicdictionary.ThematicDicManager;
 
 public class AddDicWindowManager extends ViewSuper {
-	private Text name;
-	private Button btnAdd;
-	private ThematicDicManager tdm;
+	private final Text name;
+	private final Button btnAdd;
 	
-	public AddDicWindowManager(AddDicWindow addDicWindow) {
+	AddDicWindowManager(AddDicWindow addDicWindow) {
 		this.name=addDicWindow.textAddableDic;
 		btnAdd=addDicWindow.btnAdd;
-		tdm=engine.getTDM();
 	}
 
-	public void addDic() {
+	void addDic() {
 		final String dicname = name.getText();
 		System.out.println("добавляем словарь "+dicname);
 		
-		tdm.add(dicname, false);
+		engine.getTDM().add(dicname, false);
 	}
 
 	@Override
@@ -31,7 +29,7 @@ public class AddDicWindowManager extends ViewSuper {
 	public void updateThematicDictsTableImpl() {
 	}
 
-	public void changeEnabledAddButton() {
+	void changeEnabledAddButton() {
 		if(!name.getText().isEmpty())
 			btnAdd.setEnabled(true);
 		else

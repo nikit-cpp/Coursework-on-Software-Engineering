@@ -21,7 +21,7 @@ public class DictionaryBuilderTest {
 	
 	@Test
 	public void testOlolo() {
-		WordsMap dc = sentenceBuilder.buildSentence("Точками точкой точкой точки");
+		WordsMap dc = sentenceBuilder.buildMap("Точками точкой точкой точки");
 		dc.print();
 		
 		Collection<WordInfo> words = dc.getWords();
@@ -38,7 +38,7 @@ public class DictionaryBuilderTest {
 
 	@Test
 	public void testRisk() {
-		WordsMap dc = sentenceBuilder.buildSentence("риски");
+		WordsMap dc = sentenceBuilder.buildMap("риски");
 		dc.print();
 		
 		Collection<WordInfo> words = dc.getWords();

@@ -27,11 +27,11 @@ import org.eclipse.swt.widgets.Group;
 
 public class MainWindow {
 	private Display display;
-	protected Shell shell;
-	protected Text txtInput;
-	protected Table tableWords;
-	protected MainWindowManager view;
-	protected Table tableThematicDicts;
+	Shell shell;
+	Text txtInput;
+	Table tableWords;
+	MainWindowManager view;
+	Table tableThematicDicts;
 
 	/**
 	 * Launch the application.
@@ -49,7 +49,7 @@ public class MainWindow {
 	/**
 	 * Open the window.
 	 */
-	public void open() {
+	void open() {
 		display = Display.getDefault();
 		createContents();
 		

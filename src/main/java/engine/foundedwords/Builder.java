@@ -7,15 +7,15 @@ import engine.lexer.Lexer;
 import engine.lexer.Token;
 import engine.normalizer.Normalizer;
 
-public class Builder {
+public final class Builder {
 	
-	private Lexer tokenizer = new Lexer();
-	private Normalizer normalizer = new Normalizer();
+	private final Lexer tokenizer = new Lexer();
+	private final Normalizer normalizer = new Normalizer();
 	
 	/**
 	 * Строит словарь слово:стем (m:n)
 	 */
-	public WordsMap buildSentence(String in){
+	public WordsMap buildMap(String in){
 		WordsMap sentence = new WordsMap();
 		
 		// Разбиваем строку на токены

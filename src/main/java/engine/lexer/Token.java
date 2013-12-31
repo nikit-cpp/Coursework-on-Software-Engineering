@@ -1,6 +1,6 @@
 package engine.lexer;
 
-public class Token {
+public final class Token {
 	public final String value;
 	public final Tag tag;
 	

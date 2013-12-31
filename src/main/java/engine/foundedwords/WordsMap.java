@@ -10,9 +10,9 @@ import java.util.Map.Entry;
  * @author Ник
  *
  */
-public class WordsMap {
-	private HashMap<String, WordInfo> words = new HashMap<String, WordInfo>(); // не нужно
-	private HashMap<String, WordInfo> stems = new HashMap<String, WordInfo>();
+public final class WordsMap {
+	private final HashMap<String, WordInfo> words = new HashMap<String, WordInfo>(); // не нужно
+	private final HashMap<String, WordInfo> stems = new HashMap<String, WordInfo>();
 	
 	/**
 	 * Добавляет слова в данный контейнер, увеличивая счётчик.

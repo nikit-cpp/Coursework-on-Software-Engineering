@@ -13,16 +13,15 @@ import engine.options.Options;
 import gui.listeners.OpenFileDialog;
 
 public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
-	private Text txtInput;
-	private Table tableWords;
-	private Table tableThematicDicts;
-	private Shell shell;
+	private final Text txtInput;
+	private final Table tableWords;
+	private final Shell shell;
 		
 	/**
 	 * Этот конструктор используется вместе с MainWindow
 	 * @param w
 	 */
-	public MainWindowManager(MainWindow w) {
+	MainWindowManager(MainWindow w) {
 		super();
 		
 		this.txtInput=w.txtInput;
@@ -38,7 +37,7 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	/**
 	 * В(ы)ключает словари в соответствии с таблицей.
 	 */
-	public void msgTurnDicts(){
+	void msgTurnDicts(){
 		for(TableItem tableItem : tableThematicDicts.getItems()){
 			WrappedTableItem w = (WrappedTableItem) tableItem;
 			engine.turnThematicDictionary(tableItem.getChecked(), w.arrListPos);
@@ -62,7 +61,7 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	/**
 	 * Обрабатывает нажатие кнопки "Рубрикация"
 	 */
-	public void msgRubricate() {
+	void msgRubricate() {
 		engine.rubricate(txtInput.getText());
 		createWordsTable();
 		super.createThematicDicTable(tableThematicDicts);

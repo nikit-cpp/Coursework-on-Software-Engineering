@@ -10,9 +10,9 @@ import engine.filesystem.FileChecker;
 import engine.options.OptId;
 import engine.options.Options;
 
-public class Normalizer {
-	private Options options;
-	private ArrayList<Hunspell> normalizeDicts;
+public final class Normalizer {
+	private final Options options;
+	private final ArrayList<Hunspell> normalizeDicts;
 		
 	public Normalizer() {
 		this.options = Options.getInstance();

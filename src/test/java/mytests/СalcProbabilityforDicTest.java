@@ -30,7 +30,7 @@ public class СalcProbabilityforDicTest {
 	
 	@Test
 	public void test1() {
-		double p = engine.calcProbabilityforDic(megaDic, builder.buildSentence("начинает нас спасать от недобросовестных исполнителей").getStems());
+		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("начинает нас спасать от недобросовестных исполнителей").getStems());
 		assertEquals(true, p<=1.0);
 		System.out.println(p);
 		
@@ -41,7 +41,7 @@ public class СalcProbabilityforDicTest {
 	public void test2() {
 		megaDic.add("исполнитель", 1.0);
 		
-		double p = engine.calcProbabilityforDic(megaDic, builder.buildSentence("исполнителей исполнители").getStems());
+		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("исполнителей исполнители").getStems());
 		assertEquals(true, p<=1.0);
 		System.out.println(p);
 		
@@ -52,7 +52,7 @@ public class СalcProbabilityforDicTest {
 	public void test3() {
 		megaDic.add("образ", 0.5);
 		
-		double p = engine.calcProbabilityforDic(megaDic, builder.buildSentence("образом образ образы").getStems());
+		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("образом образ образы").getStems());
 		assertEquals(true, p<=1.0);
 		System.out.println(p);
 		
@@ -61,7 +61,7 @@ public class СalcProbabilityforDicTest {
 	
 	@Test
 	public void test4() {
-		double p = engine.calcProbabilityforDic(megaDic, builder.buildSentence("исполнителей исполнители образы").getStems());
+		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("исполнителей исполнители образы").getStems());
 		assertEquals(true, p<=1.0);
 		System.out.println(p);
 		
@@ -70,7 +70,7 @@ public class СalcProbabilityforDicTest {
 	
 	@Test
 	public void test5_withNonExisted() {
-		double p = engine.calcProbabilityforDic(megaDic, builder.buildSentence("исполнителей, исполнители образы несуществующееслово").getStems());
+		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("исполнителей, исполнители образы несуществующееслово").getStems());
 		assertEquals(true, p<=1.0);
 		System.out.println(p);
 		

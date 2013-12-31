@@ -3,7 +3,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 
-import engine.NonCriticalException;
 
 /**
  * Класс для хранения значения по умолчанию
@@ -65,7 +64,7 @@ public final class Options {
 		}
 		if (o.getClass() != defaultObj.getClass()) { // проверка типа
 			// System.err.println("Неверный класс "+o.getClass()+", требуется "+optsVals.get(id).getClass());
-			throw new NonCriticalException("Неверный класс " + o.getClass()
+			throw new Exception("Неверный класс " + o.getClass()
 					+ ", требуется " + optsVals.get(id).getClass());
 		}
 		// System.err.println("класс "+o.getClass().getName()+", перезаписал класс "+optsVals.get(id).getClass().getName());
