@@ -11,15 +11,16 @@
 		"асептический" - сделать проект системно-зависимым, т. е. закомментировать 
 		кодировку UTF-8 : -->
 	<properties>
+		<jdkVersion>1.7</jdkVersion>
+		<mainClass>gui.MainWindow</mainClass>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd--HH-mm</maven.build.timestamp.format>
-		<jarname>${project.artifactId}-${lane}</jarname>
-		<fulljarname>${jarname}-standalone</fulljarname>
-		<exeFileName>${fulljarname}</exeFileName>
+		<jarname>${project.artifactId}-${lane}--${timestamp}</jarname>
+		<standalonejarname>${jarname}-standalone</standalonejarname>
+		<exeFileName>${standalonejarname}</exeFileName>
 		<product.year>2014</product.year>
-		<jdkVersion>1.7</jdkVersion>
-		<mainClass>gui.MainWindow</mainClass>
+		<dictFolder>resources</dictFolder>
 	</properties>
 
 	<dependencies>
@@ -47,13 +48,6 @@
 			<id>swt-repo</id>
 			<url>https://swt-repo.googlecode.com/svn/repo/</url>
 		</repository>
-
-		<!-- launch4j -->
-		<!--repository>
-			<id>akathist-repository</id>
-			<name>Akathist Repository</name>
-			<url>http://www.9stmaryrd.com/maven</url>
-		</repository-->
 	</repositories>
 
 	<pluginRepositories>
@@ -68,13 +62,6 @@
 				<enabled>true</enabled>
 			</releases>
 		</pluginRepository>
-
-		<!-- launch4j -->
-		<!--pluginRepository>
-			<id>akathist-repository</id>
-			<name>Akathist Repository</name>
-			<url>http://www.9stmaryrd.com/maven</url>
-		</pluginRepository-->
 	</pluginRepositories>
 
 	<build>
@@ -141,7 +128,7 @@
 						<configuration>
 							<url>https://bitbucket.org/Shaman_Alex/russian-dictionary-hunspell/downloads/ru_RU_UTF-8_20131101.zip</url>
 							<unpack>true</unpack>
-							<outputDirectory>${basedir}/resources</outputDirectory>
+							<outputDirectory>${dictFolder}</outputDirectory>
 							<md5>6c1307dd71fc3edf3c1d9c3510b6211c</md5>
 						</configuration>
 					</execution>
@@ -154,7 +141,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>resources</directory>
+							<directory>${dictFolder}</directory>
 							<includes>
 								<include>**/*.*</include>
 							</includes>
@@ -206,9 +193,9 @@
 						<configuration>
 							<headerType>gui</headerType>
 							<outfile>target/${exeFileName}.exe</outfile>
-							<jar>target/${fulljarname}.jar</jar>
+							<jar>target/${standalonejarname}.jar</jar>
 							<errTitle>${product.title}</errTitle>
-							<icon>elephant-6-multi-size.ico</icon>
+							<icon>exeicon.ico</icon>
 							<classPath>
 								<mainClass>${mainClass}</mainClass>
 								<!-- Зависимости уже собрал assembly-plugin -->
