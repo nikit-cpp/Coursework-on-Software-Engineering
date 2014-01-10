@@ -19,6 +19,9 @@
   </fileSets>
   <dependencySets>
     <dependencySet>
+      <!-- http://stackoverflow.com/questions/6737221/maven-assembly-plugin-mojoexecutionexception-with-dependencyset-as-outputdirecto/12573755#12573755 -->
+	  <useProjectArtifact>false</useProjectArtifact>
+    
       <outputDirectory>/</outputDirectory>
       <unpack>true</unpack>
       <scope>runtime</scope>
