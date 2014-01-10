@@ -11,7 +11,7 @@
 		"асептический" - сделать проект системно-зависимым, т. е. закомментировать 
 		кодировку UTF-8 : -->
 	<properties>
-		<jdkVersion>1.7</jdkVersion>
+		<jdkVersion>1.6</jdkVersion>
 		<mainClass>gui.MainWindow</mainClass>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>

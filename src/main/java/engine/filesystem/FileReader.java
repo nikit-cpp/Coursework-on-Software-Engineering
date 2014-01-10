@@ -1,11 +1,10 @@
 package engine.filesystem;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-
 import engine.options.OptId;
 import engine.options.Options;
 
@@ -23,7 +22,9 @@ public final class FileReader {
 		// TODO сделать работу с BOM для UTF-8 с помощью apache commons io
 		// http://commons.apache.org/proper/commons-io/javadocs/api-release/index.html?org/apache/commons/io/package-summary.html
 		
-		try (BufferedReader reader = Files.newBufferedReader(Paths.get(selected), charset)) {
+		try {
+			BufferedReader reader = //Files.newBufferedReader(Paths.get(selected), charset);
+					new BufferedReader(new InputStreamReader(new FileInputStream(selected), charset));
 		    String line = null;
 		    boolean firstline=true;
 		    while ((line = reader.readLine()) != null) {
