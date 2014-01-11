@@ -291,7 +291,7 @@
 							<!--url >ftp://ftp-repository/public_html</url -->
 							<includes>*win32*.exe,*.jar</includes>
 							<excludes>pom.xml</excludes>
-							<url>ftp://31.170.165.158/public_html</url>
+							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
 							<!-- <toDir>${maven.build.timestamp}</toDir> -->
 							<!-- <toDir>latest</toDir> -->
