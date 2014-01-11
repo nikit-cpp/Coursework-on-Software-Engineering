@@ -26,9 +26,11 @@
       <unpack>true</unpack>
       <scope>runtime</scope>
       
-      <!-- Эти 2 зависимости зависят друг от друга, поэтому исключать их надо вместе -->
+      <!-- По чьей-то ошибке "com.google.android.tools"(dx-1.7.jar),
+      содержащий такие страшные слова как "junit" и "android"
+	  попадает в релиз, исправим её :) -->
       <excludes>
-        <exclude>junit:junit</exclude>
+        <!-- <exclude>junit:junit</exclude> -->
         <exclude>com.google.android.tools</exclude>
       </excludes>
     </dependencySet>
