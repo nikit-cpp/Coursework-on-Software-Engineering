@@ -234,6 +234,26 @@ f.Известные проблемы<a name="troubles"></a>
 2. **Перезапустите** Eclipse  
 
 
+10. git, запущенный maven-release-plugin'ом требует имя и email:
+----------------------------------------------------------------
+
+`[ERROR]`  
+`[ERROR] *** Please tell me who you are.`  
+`[ERROR]`   
+`[ERROR] Run`  
+`[ERROR]`   
+`[ERROR] git config --global user.email "you@example.com"`  
+`[ERROR] git config --global user.name "Your Name"`  
+`[ERROR]`   
+`[ERROR] to set your account's default identity.`  
+`[ERROR] Omit --global to set the identity only in this repository.`  
+`[ERROR]`  
+
+Решение:  
+1. ![Window -> Preferences -> Team -> Git -> Configuration -> System Settings -> Add Entry...](http://img-fotki.yandex.ru/get/9830/165433899.0/0_f1df2_90bbda76_orig)  
+2. ![Key: user.name, Value: your_name](http://img-fotki.yandex.ru/get/9061/165433899.0/0_f1df4_8444f0c5_orig)  
+3. ![Key: user.email, Value: your_email@gmail.com](http://img-fotki.yandex.ru/get/9747/165433899.0/0_f1df3_35372bf0_orig)  
+
 g.Полезные ссылки<a name="links"></a>
 ======================================
 
