@@ -406,7 +406,7 @@
 	
 	<scm>
 		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
-		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</url>
+		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
 		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
 	</scm>
 </project>
