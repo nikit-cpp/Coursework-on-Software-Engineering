@@ -410,8 +410,9 @@
 	</profiles>
 
 	<scm>
-		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
+		<connection>scm:git:git@github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
 		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
-		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
-	</scm>
+		<developerConnection>scm:git:git@github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
+	  <tag>0.1.x</tag>
+  </scm>
 </project>
