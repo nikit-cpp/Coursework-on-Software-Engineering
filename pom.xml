@@ -281,7 +281,7 @@
 				<executions>
 					<execution>
 						<id>upload-build</id>
-						<phase>deploy</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>upload</goal>
 						</goals>
@@ -297,6 +297,18 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			
+			 <plugin>
+			   <groupId>org.apache.maven.plugins</groupId>
+			   <artifactId>maven-release-plugin</artifactId>
+			   <configuration>
+			      <!-- <tagBase>svn://svn.zoo.com/zoo/tags</tagBase>
+			      <branchBase>svn://svn.zoo.com/zoo/branches</branchBase> -->
+			      <preparationGoals>clean install</preparationGoals>
+			      <goals>deploy</goals>
+			      <autoVersionSubmodules>true</autoVersionSubmodules>
+			   </configuration>
 			</plugin>
 
 		</plugins>
