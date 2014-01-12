@@ -7,36 +7,59 @@
 * возникшие в процессе и решённые [проблемы](#troubles)
 * [ссылки](#links) различной степени полезности
 
-#<a name="req"></a>a.Системные требования
+a.maven-цели
+============
+
+Некоторые плагины были отключены(напр.: maven-jar-plugin) и заменены, т. к. в нашем usecase они делали совсем не то, что нужно...
+
+- **clean** -- очистка
+- **compile** -- компиляция
+- **package** :
+    - сборка **.jar** -- для любой платформы, возможен кроссбилдинг, см. [в соответствующей главе](https://github.com/nikit-cpp/Coursework-on-Software-Engineering#crossbuilding)  
+    - сборка  **.exe** / **исполняемого файла** -- только для своей платформы, кроссбилдинга нет
+- **deploy** -- отправка `*.jar`, `*win32*.exe`, `*win64*.exe` на FTP
+
+b.Системные требования<a name="req"></a>
+=========================================
+
 > Требования? А где ожидаемая кроссплатформенность, мы же используем Java...
 
-###<a name="idereq"></a>1. Требования к IDE
+1. Требования к IDE<a name="idereq"></a>
+----------------------------------------
 
 Возникли из-за проблем совместимости версий Eclipse с плагинами для него(`m2e`, `Maven SCM Handler for EGit`).  
 Так вот, руководство актуально для `Eclipse Kepler`: **Eclipse Standard 4.3** или **Eclipse IDE for Java Developers 4.3** на момент 2 ноября 2013.
 
 У товарища была [проблема](#eejunotrouble) при использовании `Eclipse IDE for Java EE Developers` версии `Juno`.
 
-###2. Требования к версиям библиотек
+2. Требования к версиям библиотек
+---------------------------------
 
-Описаны в файле `pom.xml`, по возможности были указаны не жёстко номера версий, а >=, например для SWT `<version>[4.3,)</version>` означает 'использовать версию 4.3 или старше'.
+Описаны в файле `pom.xml` :)
 
 Учитывая отсутствие `.project`, `.settings`, а тем более `.classpath` проект *теоретически* можно собрать даже без среды.
 
-###3. Требования к ОС
+3. Требования к ОС
+------------------
 
 Являются следствием системозависимости либы `SWT`, на данный момент(6 ноября 2013) в `pom.xml` созданы профили для `Windows x86`, `Windows AMD64`, `Linux x86` и `Linux AMD64`.
 
 `Mac OS` не поддерживается библиотекой `Hunspell-BridJ`.
 
-#<a name="preparing">b.Подготовка Eclipse</a>
-##I. Добавление кнопок git на панель
+c.Подготовка Eclipse<a name="preparing"></a>
+============================================
+
+I. Добавление кнопок git на панель
+----------------------------------
+
 [Взято из предыдущего моего мануала Eclipse+GitHub](http://yadi.sk/d/Bd1JqGraBCPgK)
 
 1. ![](http://img-fotki.yandex.ru/get/9061/165433899.0/0_e6a34_b9311bf6_orig "Window -> Customize Perspective...")
 2. ![](http://img-fotki.yandex.ru/get/9065/165433899.0/0_e6a35_cc927160_orig "Command Groups Availability -> Git")
 
-##II. Установка Maven-плагина
+II. Установка Maven-плагина
+---------------------------
+
 Взято [отсюда](http://www.apache-maven.ru/quick_start.html).  
 Для установки:
 
@@ -46,7 +69,9 @@
 ![](http://img-fotki.yandex.ru/get/9480/165433899.0/0_e6a29_a835dd9_orig)
 4. Отключите галочки, как написано [здесь](#diskspace), чтобы Maven не забивал Workspace лишним мусором на полгигабайта.
 
-##III. Установка коннектора Maven SCM Handler for EGit
+III. Установка коннектора Maven SCM Handler for EGit
+----------------------------------------------------
+
 Взято [отсюда](http://www.machineversus.me/2012/08/if-youve-upgraded-to-eclipse-juno.html) и обновлено.  
 Коннектор нужен для того чтобы [на V-м шаге в поле 'SCM URL' был пункт 'git'](#connector), иными словами, для возможности нормального импорта Maven-проектов из Git-репозиториев.  
 Мы вынуждены добавлять неподписанный плагин-коннектор из стороннего репозитория, из-за того что коннектор из официального репозитория не совместим с последними версиями Eclipse (судя по [ссылке](http://www.machineversus.me/2012/08/if-youve-upgraded-to-eclipse-juno.html), эта проблема уже была начиная с Eclipse Juno).
@@ -59,16 +84,23 @@
 5. Eclipse предупредит об установке неподписанного плагина, соглашаемся...
 6. Finish the plugin install wizard and restart the workspace
 
-##IV. Установка WindowBuilder(опционально)
+IV. Установка WindowBuilder(опционально)
+------------------------------------------
+
 * Плагин [WindowBuilder](http://www.eclipse.org/windowbuilder/ "Страница WindowBuilder на сайте Eclipse") добавляет WYSIWYG-редактор, с помощью которого можно быстро создавать окошки.  
 * [Страница загрузки WindowBuilder](http://www.eclipse.org/windowbuilder/download.php), на которой нужно выбрать соответствующую вашей версии Eclipse ссылку:  
-![](http://img-fotki.yandex.ru/get/9166/165433899.0/0_e6a60_88e8cad2_orig)  
+![](http://img-fotki.yandex.ru/get/5008/165433899.0/0_f1de8_1c237a11_orig)  
 [Эта ссылка, например для Eclipse Kepler](http://download.eclipse.org/windowbuilder/WB/release/R201309271200/4.3/), как и все остальные, содержит инструкции по установке.
 * Использование: ![](http://img-fotki.yandex.ru/get/4912/165433899.0/0_e6a3c_e7a0a5f5_orig)
 ![](http://img-fotki.yandex.ru/get/9092/165433899.0/0_e6a3f_b3413d1f_orig)
 
-#<a name="import"></a>c.Импорт
-##V. Импорт maven-проекта из GitHub в Eclipse Workspace
+
+d.Импорт<a name="import"></a>
+============================
+
+V. Импорт maven-проекта из GitHub в Eclipse Workspace
+-----------------------------------------------------
+
 Взято [отсюда](http://stackoverflow.com/questions/4869815/importing-a-maven-project-into-eclipse-from-git) и дополнено.
 
 1. Select the "Import..." context menu from the Package Explorer view
@@ -92,37 +124,50 @@
 ![](http://img-fotki.yandex.ru/get/9584/165433899.0/0_e6b10_f93495bb_orig)  
 Если на значке проекта по-прежнему остаётся восклицательный знак или красный крест, то [обновляем](#mavenupd) проект.
 
-#<a name="crossbuilding"></a>d.Сборка для разных платформ
+e.Сборка для разных платформ<a name="crossbuilding"></a>
+========================================================
 
 Предположим, у вас платформа `win x86` и вы собираетесь сделать билд для `win x86_64`.  
 При попытке сборки с указанием профиля `mvn package -P winprofile64` в результирующий jar добавятся библиотеки SWT для win x86 (т. к. профиль winprofile32 активировался сам из-за тега `<activation>`), а плагин manen-assembly-plugin не произведёт замену, из-за того что содержащиеся в архиве org.eclipse.swt.win32.win32.**x86_64**-4.3.jar файлы `swt-xulrunner-win32-4332.dll, ...` имеют идентичные названия с уже добавленными файлами для org.eclipse.swt.win32.win32.**x86**-4.3.jar.  
 
-В результате на выходе в папке `target` имеем файл Coursework-on-Software-Engineering-win64-megajar.jar, который вроде бы и предназначен для x64, а на самом деле содержит x32-библиотеки, и на x64 не запустится в принципе.
+В результате на выходе в папке `target` имеем файл Coursework-on-Software-Engineering-win64--2014-01-12--15-39-standalone.jar, который вроде бы и предназначен для x64, а на самом деле содержит x32-библиотеки, и на x64 не запустится в принципе.
 
 Решение:  
 Нужно [принудительно деактивировать](http://maven.apache.org/guides/introduction/introduction-to-profiles.html#Deactivating_a_profile) профиль вашей платформы, в нашем случае это `winprofile32` :  
 `mvn package -P winprofile64,!winprofile32`  
 ![](http://img-fotki.yandex.ru/get/9584/165433899.0/0_e8b37_ed3bdd95_orig)
 
-#<a name="troubles"></a>e.Известные проблемы
-###1. Ругается на наличие BOM: `illegal character: \65279`
+
+f.Известные проблемы<a name="troubles"></a>
+===========================================
+
+1. Ругается на наличие BOM: `illegal character: \65279`
+------------------------------------------------------
+
 Проблема проявилась на Linux Mint amd64, но не проявилась на Windows x86.  
 [Решение:](http://stackoverflow.com/questions/1068650/using-awk-to-remove-the-byte-order-mark)  
 `# Removing BOM from all text files in current directory:`  
 `sed -i '1 s/^\xef\xbb\xbf//' *.java`
-###2. Куда подевался гигабайт дискового пространства?
+
+2. Куда подевался гигабайт дискового пространства?
+--------------------------------------------------
+
 1. <a name="repo"></a>Maven скачивает зависимости(библиотеки) и прочие maven-плагины в `~/.m2/repository` на Linux и в `%USERPROFILE%\.m2\repository` на Windows. Очищать эти папки во время работы над проектом нет смысла. 
 2. <a name="diskspace"></a>По непонятным причинам Maven забирает примерно 500МБ в `Your_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`  
 Это безобразие можно отключить, открыв `Window` -> `Preferences`  
 ![](http://img-fotki.yandex.ru/get/9311/165433899.0/0_e6b0c_d4b4aafb_orig)  
 и выставив галочки вот так: ![alt-текст](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e6a23_57a3866c_orig "Галочка Offline должна быть снята!")  
 (решение взято [отсюда](http://stackoverflow.com/questions/8539841/eclipse-metadata-plugins-disk-space), но нужно оставить снятой галочку `Offline`, иначе не скачаются новые файлы(плагины и зависимости), а значит мы не сможем собрать только что импортированный проект).  
-**Затем** можно удалить папку `Your_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`.
+**Затем** можно **удалить** папку `Your_Workspace_path/.metadata/.plugins/org.eclipse.m2e.core/nexus`.
 
-###3. pom.xml скорее всего не совместим со старым maven 2.x
+3. pom.xml скорее всего не совместим со старым maven 2.x
+--------------------------------------------------------
+
 В Eclipse, судя по возникшим проблемам, используется maven 3.x.
 
-###4. An error occurred while collecting items to be installed...
+4. An error occurred while collecting items to be installed...
+--------------------------------------------------------------
+
 Или "Восстанавливаем работоспособность `Help -> Install New Software` и `Help -> Check for Updates` в Eclipse Kepler".  
 Взято [отсюда](http://stackoverflow.com/questions/511367/error-when-updating-eclipse) и обновлено для Eclipse Kepler.
 
@@ -134,12 +179,16 @@
 4. start eclipse
 5. import the bookmarks.xml file (Install/Update->Available Software Sites->Import) that was exported in step 1
 
-###5. <a name="eejunotrouble"></a>Checking out maven projects has encountered a problem
+5. <a name="eejunotrouble"></a>Checking out maven projects has encountered a problem
+------------------------------------------------------------------------------------
+
 Возникает при импорте проекта(`Import...` -> `Check out Maven projects from SCM` -> `SCM URL`) на старых версиях Eclipse.  
 ![](http://img-fotki.yandex.ru/get/9161/165433899.0/0_e6b0b_153e0b3f_orig)  
 Решение: [Используйте Eclipse Kepler 4.3](#idereq)
 
-###6. No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+6. No compiler is provided in this environment. Perhaps you are running on a JRE rather than a JDK?
+---------------------------------------------------------------------------------------------------
+
 `[INFO] —-----------------------------------------------------------`  
 `[ERROR] COMPILATION ERROR :`  
 `[INFO] —-----------------------------------------------------------`  
@@ -153,7 +202,9 @@
 Должна быть JDK:  
 ![](http://img-fotki.yandex.ru/get/9319/165433899.0/0_e6bc3_bf80314f_orig)
 
-###7. Неправильно отображаются русские буквы
+7. Неправильно отображаются русские буквы
+-----------------------------------------
+
 ![](http://img-fotki.yandex.ru/get/9512/165433899.0/0_e74ac_5d994ca0_orig)  
 Решение: `Properties` -> `Resource` -> `Text File Encoding` -> `UTF-8`  
 ![](http://img-fotki.yandex.ru/get/9068/165433899.0/0_e74aa_d1dfb8ce_orig)  
@@ -161,11 +212,15 @@
 Результат:  
 ![](http://img-fotki.yandex.ru/get/9326/165433899.0/0_e74a9_bebeee36_orig)  
 
-###8. Внезапно появились ошибки - Eclipse не видит импортируемые пакеты
+8. Внезапно появились ошибки - Eclipse не видит импортируемые пакеты
+--------------------------------------------------------------------
+
 ![](http://img-fotki.yandex.ru/get/9168/165433899.0/0_e6b0e_b7b154b9_orig)  
 Решение: [обновите](#mavenupd) проект.  
 
-###9. Не работает maven-release-plugin
+9. Не работает maven-release-plugin :
+-------------------------------------
+
 `[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.0:branch (default-cli) on project Coursework-on-Software-Engineering: Unable to commit files`  
 `[ERROR] Provider message:`  
 `[ERROR] The git-add command failed.`  
@@ -173,12 +228,15 @@
 `[ERROR] "git" не является внутренней или внешней`  
 `[ERROR] командой, исполняемой программой или пакетным файлом.`  
 
-Решение:
+Решение:  
 1. Добавьте путь к git.exe в PATH  
-![Добавьте путь к git.exe в PATH](http://img-fotki.yandex.ru/get/9830/165433899.0/0_f1dd9_cbbebbc6_-1-orig)
-2. Перезапустите Eclipse  
+![Добавьте путь к git.exe в PATH](http://img-fotki.yandex.ru/get/9814/165433899.0/0_f1df1_c62aac40_orig)  
+2. **Перезапустите** Eclipse  
 
-#<a name="links"></a>f.Полезные ссылки
+
+g.Полезные ссылки<a name="links"></a>
+======================================
+
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
 * <http://habrahabr.ru/post/77382/> - Apache Maven — основы
 * <https://wiki.openmrs.org/display/docs/Using+the+M2Eclipse+Maven+Plugin+in+Eclipse> - работа с m2eclipse

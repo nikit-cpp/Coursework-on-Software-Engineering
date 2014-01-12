@@ -26,14 +26,13 @@
 		<dependency>
 			<groupId>com.atlascopco</groupId>
 			<artifactId>hunspell-bridj</artifactId>
-			<version>[1.0.0,)</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<!-- координаты необходимой библиотеки -->
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<!-- >= 4.11 -->
-			<version>[4.11,)</version>
+			<version>4.11</version>
 			<!-- эта библиотека используется только для запуска и компилирования тестов -->
 			<scope>test</scope>
 		</dependency>
@@ -150,14 +149,14 @@
 				</configuration>
 			</plugin>
 
-			<!-- Здесь AssemblyPlugin -->
+			<!-- Собирает standalone-jar, содержащий все зависимости -->
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.2.1</version>
 				<executions>
 					<execution>
 						<id>make-assembly</id>
-						<phase>prepare-package</phase>
+						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
 						</goals>
@@ -178,10 +177,11 @@
 				</configuration>
 			</plugin>
 
-			<!-- Создаёт исполняемый файл -->
+			<!-- Создаёт исполняемый файл из jar (который собирается assembly-plugin'ом) -->
 			<plugin>
 				<groupId>com.akathist.maven.plugins.launch4j</groupId>
 				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.5.2</version>
 				<executions>
 					<execution>
 						<id>l4j-clui</id>
@@ -288,7 +288,7 @@
 						<configuration>
 							<fromDir>${project.build.directory}</fromDir>
 							<!--url >ftp://ftp-repository/public_html</url -->
-							<includes>*win32*.exe,*.jar</includes>
+							<includes>*win32*.exe,*win64*.exe,*.jar</includes>
 							<excludes>pom.xml</excludes>
 							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
@@ -326,7 +326,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -345,7 +345,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -364,7 +364,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -383,7 +383,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>

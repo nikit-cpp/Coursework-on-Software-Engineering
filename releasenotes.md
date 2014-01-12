@@ -4,8 +4,9 @@
 * `engine.filesystem.FileChecker` : отображение MessageBox с предложением распаковать словарь из .jar 
 * `engine.filesystem.FileReader` : считывание файла в одну (длинную) строку и дальнейшая передача её в gui
 * `engine.thematicdictionary.ThematicDic` : сериализуется и наивно записывается ThematicDicManager'ом в файл dicts.out
+* загрузка из интернетов и распаковка zip-архива, содержащего словари плагином `maven-download-plugin` на фазе `generate-resources`
 * maven-цели:
-    - **clean**
+    - **clean** -- очистка :)
     - **compile** -- компиляция
     - **prepare-package** - сборка **.jar** -- для любой платформы, возможен кроссбилдинг, см. [в readme на GitHub](https://github.com/nikit-cpp/Coursework-on-Software-Engineering#crossbuilding)
     - **package** -- сборка  **.exe** / **исполняемого файла**, генерируется launch4j-maven-plugin -- только для своей платформы, кроссбилдинга нет

@@ -5,5 +5,5 @@ target
 .metadata
 .classpath
 .project
-/target
 resources
+pom.xml.releaseBackup
