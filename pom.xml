@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
@@ -207,8 +208,8 @@
 							<versionInfo>
 								<fileVersion>0.0.0.0</fileVersion>
 								<txtFileVersion>${project.version}</txtFileVersion>
-								<!-- Или из-за длины поля fileDescription, или из-за разрыва строки на две
-								получалась ошибка Exec Failed ... windres -->
+								<!-- Или из-за длины поля fileDescription, или из-за разрыва строки 
+									на две получалась ошибка Exec Failed ... windres -->
 								<fileDescription>Texts rubricator</fileDescription>
 								<copyright>Copyright ©${product.year} Konev Nikita Corp</copyright>
 								<productVersion>0.0.0.0</productVersion>
@@ -298,17 +299,22 @@
 					</execution>
 				</executions>
 			</plugin>
-			
-			 <plugin>
-			   <groupId>org.apache.maven.plugins</groupId>
-			   <artifactId>maven-release-plugin</artifactId>
-			   <configuration>
-			      <!-- <tagBase>svn://svn.zoo.com/zoo/tags</tagBase>
-			      <branchBase>svn://svn.zoo.com/zoo/branches</branchBase> -->
-			      <preparationGoals>clean install</preparationGoals>
-			      <goals>deploy</goals>
-			      <autoVersionSubmodules>true</autoVersionSubmodules>
-			   </configuration>
+
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.2.1</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>perform</goal>
+						</goals>
+						<configuration>
+							<pomFileName>${project.artifactId}\pom.xml</pomFileName>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 
 		</plugins>
@@ -403,7 +409,7 @@
 			</properties>
 		</profile>
 	</profiles>
-	
+
 	<scm>
 		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
 		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
