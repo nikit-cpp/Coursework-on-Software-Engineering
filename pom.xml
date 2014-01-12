@@ -281,7 +281,7 @@
 				<executions>
 					<execution>
 						<id>upload-build</id>
-						<phase>install</phase>
+						<phase>deploy</phase>
 						<goals>
 							<goal>upload</goal>
 						</goals>
@@ -407,5 +407,6 @@
 	<scm>
 		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
 		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</url>
+		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
 	</scm>
 </project>
