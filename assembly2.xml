@@ -13,8 +13,8 @@
       <outputDirectory>/</outputDirectory>
     </fileSet>
     <fileSet>
-      <directory>resources</directory>
-      <outputDirectory>/resources</outputDirectory>
+      <directory>hunspell</directory>
+      <outputDirectory>/hunspell</outputDirectory>
     </fileSet>
   </fileSets>
   <dependencySets>

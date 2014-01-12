@@ -1,40 +1,39 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.2.2-SNAPSHOT</version>
 
-	<!-- Один из способов устранить ошибку незапуска тестов Hunspell(TestNormalizer) 
-		из-под Maven "UTF-8 encoding error. Missing continuation byte in 0. character 
-		position:" "асептический" "This UTF-8 encoding can't convert to UTF-16:" 
-		"асептический" - сделать проект системно-зависимым, т. е. закомментировать 
-		кодировку UTF-8 : -->
 	<properties>
 		<jdkVersion>1.6</jdkVersion>
 		<mainClass>gui.MainWindow</mainClass>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd--HH-mm</maven.build.timestamp.format>
-		<jarname>${project.artifactId}-${lane}--${timestamp}</jarname>
+		<jarname>${project.artifactId}-${lane}</jarname>
 		<standalonejarname>${jarname}-standalone</standalonejarname>
 		<exeFileName>${standalonejarname}</exeFileName>
 		<product.year>2014</product.year>
-		<dictFolder>resources</dictFolder>
+		<!-- Папка со словарями для нормализатора. Также см. assembly2.xml / <assembly> 
+			/ <fileSets> / <fileSet> / <directory>hunspell и Options.java -->
+		<dictFolder>hunspell</dictFolder>
+		<releaseDir>release</releaseDir>
+		<!-- Папка для maven-release-plugin -->
+		<workingDirectory>${releaseDir}</workingDirectory>
+		<versionOutputFile>VERSION</versionOutputFile>
 	</properties>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.atlascopco</groupId>
 			<artifactId>hunspell-bridj</artifactId>
-			<version>[1.0.0,)</version>
+			<version>1.0.0</version>
 		</dependency>
 		<dependency>
 			<!-- координаты необходимой библиотеки -->
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<!-- >= 4.11 -->
-			<version>[4.11,)</version>
+			<version>4.11</version>
 			<!-- эта библиотека используется только для запуска и компилирования тестов -->
 			<scope>test</scope>
 		</dependency>
@@ -94,6 +93,19 @@
 										<ignore />
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.apache.maven.plugins</groupId>
+										<artifactId>maven-antrun-plugin</artifactId>
+										<versionRange>[1.1,)</versionRange>
+										<goals>
+											<goal>run</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -102,6 +114,91 @@
 		</pluginManagement>
 
 		<plugins>
+
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${dictFolder}</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>${releaseDir}</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>${versionOutputFile}</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+
+			<!-- Загружает число z в номере версии x.y.z из файла buildNumber.properties, 
+				инкрементирует его, перезаписывает файл новым значением z, создаёт maven-переменную 
+				buildNumber. Требует секцию <scm>. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Объявлем формат переменной buildNumber согласно Java MessageFormat -->
+					<format>{0}.{1,number}_{2}_{3,date,yyyy-MM-dd_HH:mm:ss}</format>
+					<items>
+						<item>${project.version}</item>
+						<item>buildNumber0</item>
+						<item>scmVersion</item>
+						<item>timestamp</item>
+					</items>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure>true</revisionOnScmFailure>
+				</configuration>
+			</plugin>
+
+			<!-- http://www.avajava.com/tutorials/lessons/how-do-i-display-an-environment-variable.html -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<!-- Версии 1.6 и 1.7 не работают из-за кириллической папки %USERPROFILRE% -->
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>idcompile</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<tasks>
+								<echo>Displaying value of 'lane': ${lane}</echo>
+								<echo>Displaying 3 environment variables</echo>
+								<echo>[COMPUTERNAME] ${env.COMPUTERNAME}</echo>
+								<echo>[M2_HOME] ${env.M2_HOME}</echo>
+								<echo>[Path] ${env.Path}</echo>
+								<echo>[Operating system] ${env.OS.name}</echo>
+								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
+								<echo file="${versionOutputFile}" message="${buildNumber}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -135,23 +232,7 @@
 				</executions>
 			</plugin>
 
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${dictFolder}</directory>
-							<includes>
-								<include>**/*.*</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-
-			<!-- Здесь AssemblyPlugin -->
+			<!-- Собирает standalone-jar, содержащий все зависимости -->
 			<plugin>
 				<artifactId>maven-assembly-plugin</artifactId>
 				<version>2.2.1</version>
@@ -179,10 +260,11 @@
 				</configuration>
 			</plugin>
 
-			<!-- Создаёт исполняемый файл -->
+			<!-- Создаёт исполняемый файл из jar (который собирается assembly-plugin'ом) -->
 			<plugin>
 				<groupId>com.akathist.maven.plugins.launch4j</groupId>
 				<artifactId>launch4j-maven-plugin</artifactId>
+				<version>1.5.2</version>
 				<executions>
 					<execution>
 						<id>l4j-clui</id>
@@ -208,8 +290,8 @@
 							<versionInfo>
 								<fileVersion>0.0.0.0</fileVersion>
 								<txtFileVersion>${project.version}</txtFileVersion>
-								<!-- Или из-за длины поля fileDescription, или из-за разрыва строки на две
-								получалась ошибка Exec Failed ... windres -->
+								<!-- Или из-за длины поля fileDescription, или из-за разрыва строки 
+									на две получалась ошибка Exec Failed ... windres -->
 								<fileDescription>Texts rubricator</fileDescription>
 								<copyright>Copyright ©${product.year} Konev Nikita Corp</copyright>
 								<productVersion>0.0.0.0</productVersion>
@@ -289,12 +371,31 @@
 						<configuration>
 							<fromDir>${project.build.directory}</fromDir>
 							<!--url >ftp://ftp-repository/public_html</url -->
-							<includes>*win32*.exe,*.jar</includes>
+							<includes>*win32*.exe,*win64*.exe,*.jar</includes>
 							<excludes>pom.xml</excludes>
 							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
 							<!-- <toDir>${maven.build.timestamp}</toDir> -->
-							<!-- <toDir>latest</toDir> -->
+							<toDir>${project.version}</toDir>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Помимо прочего инкрементирует число y в номере версии x.y.z, и сохраняет 
+				новый номер в pom.xml -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-release-plugin</artifactId>
+				<version>2.4.2</version>
+				<executions>
+					<execution>
+						<id>default</id>
+						<goals>
+							<goal>perform</goal>
+						</goals>
+						<configuration>
+							<pomFileName>${project.artifactId}\pom.xml</pomFileName>
 						</configuration>
 					</execution>
 				</executions>
@@ -327,7 +428,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.win32.win32.x86</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -346,7 +447,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.win32.win32.x86_64</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -365,7 +466,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.gtk.linux.x86</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -384,7 +485,7 @@
 				<dependency>
 					<groupId>org.eclipse.swt</groupId>
 					<artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
-					<version>[4.3,)</version>
+					<version>4.3</version>
 				</dependency>
 			</dependencies>
 			<properties>
@@ -392,4 +493,11 @@
 			</properties>
 		</profile>
 	</profiles>
+
+	<scm>
+		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
+		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
+		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
+		<tag>Coursework-on-Software-Engineering-0.3</tag>
+	</scm>
 </project>

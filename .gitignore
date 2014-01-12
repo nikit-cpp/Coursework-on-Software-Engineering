@@ -5,5 +5,10 @@ target
 .metadata
 .classpath
 .project
-/target
 resources
+hunspell
+pom.xml.releaseBackup
+release.properties
+VERSION
+release
+scm.properties
