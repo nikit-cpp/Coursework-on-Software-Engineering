@@ -163,7 +163,20 @@
 
 ###8. Внезапно появились ошибки - Eclipse не видит импортируемые пакеты
 ![](http://img-fotki.yandex.ru/get/9168/165433899.0/0_e6b0e_b7b154b9_orig)  
-Решение: [обновите](#mavenupd) проект.
+Решение: [обновите](#mavenupd) проект.  
+
+###9. Не работает maven-release-plugin
+`[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.0:branch (default-cli) on project Coursework-on-Software-Engineering: Unable to commit files`  
+`[ERROR] Provider message:`  
+`[ERROR] The git-add command failed.`  
+`[ERROR] Command output:`  
+`[ERROR] "git" не является внутренней или внешней`  
+`[ERROR] командой, исполняемой программой или пакетным файлом.`  
+
+Решение:
+1. Добавьте путь к git.exe в PATH  
+![Добавьте путь к git.exe в PATH](http://img-fotki.yandex.ru/get/9830/165433899.0/0_f1dd9_cbbebbc6_-1-orig)
+2. Перезапустите Eclipse  
 
 #<a name="links"></a>f.Полезные ссылки
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
