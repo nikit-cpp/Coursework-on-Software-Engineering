@@ -7,3 +7,4 @@ target
 .project
 resources
 pom.xml.releaseBackup
+/release.properties
