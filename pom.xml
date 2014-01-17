@@ -306,9 +306,9 @@
 				<executions>
 					<execution>
 						<id>default</id>
-						<goals>
+						<!-- <goals>
 							<goal>perform</goal>
-						</goals>
+						</goals> -->
 						<configuration>
 							<pomFileName>${project.artifactId}\pom.xml</pomFileName>
 						</configuration>
