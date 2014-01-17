@@ -10,12 +10,14 @@
 a.maven-цели
 ============
 
-Некоторые плагины были отключены(напр.: maven-jar-plugin) и заменены, т. к. в нашем usecase они делали совсем не то, что нужно...
+Для сботки используется build manager [Maven](http://maven.apache.org/);
+некоторые плагины были отключены(напр.: maven-jar-plugin) и заменены, т. к. в нашем usecase они делали совсем не то, что нужно...
+а некоторые цели(goals) были переопределены:
 
 - **clean** -- очистка
 - **compile** -- компиляция
 - **package** :
-    - сборка **.jar** -- для любой платформы, возможен кроссбилдинг, см. [в соответствующей главе](https://github.com/nikit-cpp/Coursework-on-Software-Engineering#crossbuilding)  
+    - сборка **.jar** -- для любой платформы, возможен кроссбилдинг, см. [в соответствующей главе](#crossbuilding)  
     - сборка  **.exe** / **исполняемого файла** -- только для своей платформы, кроссбилдинга нет
 - **deploy** -- отправка `*.jar`, `*win32*.exe`, `*win64*.exe` на FTP
 
@@ -254,10 +256,33 @@ f.Известные проблемы<a name="troubles"></a>
 2. ![Key: user.name, Value: your_name](http://img-fotki.yandex.ru/get/9061/165433899.0/0_f1df4_8444f0c5_orig)  
 3. ![Key: user.email, Value: your_email@gmail.com](http://img-fotki.yandex.ru/get/9747/165433899.0/0_f1df3_35372bf0_orig)  
 
+
+11. maven-release-plugin зависает на git push или куда вписывать логин-пароль?<a name="release_properties"></a>
+------------------------------------------------------------------------------
+В консоли отображается  
+`[INFO] Executing: cmd.exe /X /C "git push https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git 0.1.x"`  
+`[INFO] Working directory: E:\Programming\Examples 9 java\swt\Coursework-on-Software-Engineering`  
+а в диспетчере задач висит процесс git.exe
+
+Решение: нужно указать [имя и пароль](http://stackoverflow.com/questions/17973089/maven-release-plugin-with-git-repository-ignores-scm-user-scm-password):  
+
+- способ 1:
+    создать в папке проекта файл **release.properties** с 2-мя строками:  
+`scm.username=your_github_username`  
+`scm.password=your_github_password`  
+
+**Не забудьте добавить файл *release.properties* в .gitignore, вы же не хотите запушить свой логин и пароль на публичный репозиторий :)**
+
+Судя по всему он изменяется с каждой версией, и вышеупомянутые строки придётся вписать ещё раз...
+
+- способ 2:
+    дописать параметры при вызове maven: `-Dusername=your_github_username -Dpassword=your_github_password`
+
 g.Полезные ссылки<a name="links"></a>
 ======================================
 
+* <http://markable.in/editor/> - онлайн-редактор Markdown, этот текст был написан в нём
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
 * <http://habrahabr.ru/post/77382/> - Apache Maven — основы
 * <https://wiki.openmrs.org/display/docs/Using+the+M2Eclipse+Maven+Plugin+in+Eclipse> - работа с m2eclipse
-* <http://markable.in/editor/> - онлайн-редактор Markdown, этот текст был написан в нём
+* <http://habrahabr.ru/post/130936/> - Делаем релизы с помощью Maven в Java 
