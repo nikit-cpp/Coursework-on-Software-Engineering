@@ -414,5 +414,6 @@
 		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
 		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
 	  <!-- <tag>Coursework-on-Software-Engineering-0.2</tag> -->
+    <tag>0.1.x</tag>
   </scm>
 </project>
