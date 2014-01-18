@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
@@ -19,7 +20,9 @@
 		<standalonejarname>${jarname}-standalone</standalonejarname>
 		<exeFileName>${standalonejarname}</exeFileName>
 		<product.year>2014</product.year>
-		<dictFolder>resources</dictFolder>
+		<!-- Папка со словарями для нормализатора. Также см. assembly2.xml / <assembly> 
+			/ <fileSets> / <fileSet> / <directory>hunspell и Options.java -->
+		<dictFolder>hunspell</dictFolder>
 	</properties>
 
 	<dependencies>
@@ -306,14 +309,69 @@
 				<executions>
 					<execution>
 						<id>default</id>
-						<!-- <goals>
-							<goal>perform</goal>
-						</goals> -->
+						<!-- <goals> <goal>perform</goal> </goals> -->
 						<configuration>
 							<pomFileName>${project.artifactId}\pom.xml</pomFileName>
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+
+			<!-- http://www.avajava.com/tutorials/lessons/how-do-i-display-an-environment-variable.html;jsessionid=81E4AA43B05E8CA1F2ECD1D287453317 -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<!-- Версии 1.6 и 1.7 не работают из-за кириллической папки %USERPROFILRE% -->
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>idcompile</id>
+						<phase>initialize</phase>
+						<configuration>
+							<tasks>
+								<echo>Displaying 3 environment variables</echo>
+								<echo>[COMPUTERNAME] ${env.COMPUTERNAME}</echo>
+								<echo>[M2_HOME] ${env.M2_HOME}</echo>
+								<echo>[Path] ${env.Path}</echo>
+								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
+								<echo file="VERSION" message="${buildNumber}" />
+							</tasks>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- Загружает число z в номере версии x.y.z из файла buildNumber.properties, 
+				инкрементирует его, перезаписывает файл новым значением z, создаёт maven-переменную 
+				buildNumber. Требует секцию <scm>. -->
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.2</version>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Объявлем формат переменной buildNumber согласно Java MessageFormat -->
+					<format>{0}.{1,number}_{2}_{3,date,yyyy-MM-dd_HH:mm:ss}</format>
+					<items>
+						<item>${project.version}</item>
+						<item>buildNumber0</item>
+						<item>scmVersion</item>
+						<item>timestamp</item>
+					</items>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure>true</revisionOnScmFailure>
+				</configuration>
 			</plugin>
 
 		</plugins>
@@ -413,7 +471,6 @@
 		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
 		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
 		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
-	  <!-- <tag>Coursework-on-Software-Engineering-0.2</tag> -->
-    <tag>0.1.x</tag>
-  </scm>
+		<tag>0.1.x</tag>
+	</scm>
 </project>

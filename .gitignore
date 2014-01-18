@@ -6,5 +6,7 @@ target
 .classpath
 .project
 resources
+hunspell
 pom.xml.releaseBackup
-/release.properties
+release.properties
+VERSION
