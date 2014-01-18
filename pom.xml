@@ -1,9 +1,8 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.3</version>
 
 	<!-- Один из способов устранить ошибку незапуска тестов Hunspell(TestNormalizer) 
 		из-под Maven "UTF-8 encoding error. Missing continuation byte in 0. character 
@@ -477,6 +476,6 @@
 		<connection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</connection>
 		<url>https://github.com/nikit-cpp/Coursework-on-Software-Engineering</url>
 		<developerConnection>scm:git:https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git</developerConnection>
-		<tag>0.1.x</tag>
+		<tag>Coursework-on-Software-Engineering-0.3</tag>
 	</scm>
 </project>
