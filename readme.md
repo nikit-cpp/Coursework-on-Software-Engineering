@@ -233,6 +233,8 @@ f.Известные проблемы<a name="troubles"></a>
 Решение:  
 1. Добавьте путь к git.exe в PATH  
 ![Добавьте путь к git.exe в PATH](http://img-fotki.yandex.ru/get/9814/165433899.0/0_f1df1_c62aac40_orig)  
+1.1 Удостоверьтесь, что git.exe виден из консоли, набрав git:  
+![](http://img-fotki.yandex.ru/get/9834/165433899.0/0_f38e2_bdaa78b1_orig)  
 2. **Перезапустите** Eclipse  
 
 
@@ -259,6 +261,7 @@ f.Известные проблемы<a name="troubles"></a>
 
 11. maven-release-plugin зависает на git push или куда вписывать логин-пароль?<a name="release_properties"></a>
 ------------------------------------------------------------------------------
+
 В консоли отображается  
 `[INFO] Executing: cmd.exe /X /C "git push https://github.com/nikit-cpp/Coursework-on-Software-Engineering.git 0.1.x"`  
 `[INFO] Working directory: E:\Programming\Examples 9 java\swt\Coursework-on-Software-Engineering`  
@@ -277,6 +280,18 @@ f.Известные проблемы<a name="troubles"></a>
 
 - способ 2:
     дописать параметры при вызове maven: `-Dusername=your_github_username -Dpassword=your_github_password`
+
+12. Не работает release:prepare
+-------------------------------
+
+`[ERROR] Failed to execute goal org.apache.maven.plugins:maven-release-plugin:2.4.2:prepare (default-cli) on project Coursework-on-Software-Engineering: Failed to invoke Maven build. Error configuring command-line. Reason: Maven executable not found at: E:\Programming\Examples 9 java\swt\Coursework-on-Software-Engineering\EMBEDDED\bin\mvn.bat -> [Help 1]`  
+release-plugin не способен вызвать embedded maven, поэтому придётся [поставить](http://maven.apache.org/download.cgi#Installation_Instructions) maven(да-да, с дописыванием в PATH - чтобы его можно было вызвать из консоли, набрав mvn) и задать его в настройках Eclipse: Window -> Prefrences -> Maven -> Installations  
+![](http://img-fotki.yandex.ru/get/9752/165433899.1/0_f38e3_df6f91c3_orig)  
+![](http://img-fotki.yandex.ru/get/9747/165433899.1/0_f38e4_e8a50038_orig)  
+![](http://img-fotki.yandex.ru/get/9109/165433899.1/0_f38e5_3e67848_orig)  
+![](http://img-fotki.yandex.ru/get/9756/165433899.0/0_f38e1_aff1f876_orig)  
+![](http://img-fotki.yandex.ru/get/9765/165433899.0/0_f38e0_88d67f3c_orig)  
+
 
 g.Полезные ссылки<a name="links"></a>
 ======================================
