@@ -22,8 +22,9 @@
 		<!-- Папка со словарями для нормализатора. Также см. assembly2.xml / <assembly> 
 			/ <fileSets> / <fileSet> / <directory>hunspell и Options.java -->
 		<dictFolder>hunspell</dictFolder>
+		<releaseDir>release</releaseDir>
 		<!-- Папка для maven-release-plugin -->
-		<workingDirectory>release</workingDirectory>
+		<workingDirectory>${releaseDir}</workingDirectory>
 	</properties>
 
 	<dependencies>
@@ -144,6 +145,13 @@
 					<filesets>
 						<fileset>
 							<directory>${dictFolder}</directory>
+							<includes>
+								<include>**/*.*</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>${releaseDir}</directory>
 							<includes>
 								<include>**/*.*</include>
 							</includes>
