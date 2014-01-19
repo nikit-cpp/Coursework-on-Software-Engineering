@@ -1,8 +1,9 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.3</version>
 
 	<!-- Один из способов устранить ошибку незапуска тестов Hunspell(TestNormalizer) 
 		из-под Maven "UTF-8 encoding error. Missing continuation byte in 0. character 
@@ -26,8 +27,6 @@
 		<!-- Папка для maven-release-plugin -->
 		<workingDirectory>${releaseDir}</workingDirectory>
 		<versionOutputFile>VERSION</versionOutputFile>
-		<!-- для maven-release-plugin -->
-		<preparationGoals>clean verify properties:read-project-properties</preparationGoals>
 	</properties>
 
 	<dependencies>
@@ -113,19 +112,6 @@
 										<ignore />
 									</action>
 								</pluginExecution>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.codehaus.mojo</groupId>
-										<artifactId>properties-maven-plugin</artifactId>
-										<versionRange>1.0-alpha-2</versionRange>
-										<goals>
-											<goal>read-project-properties</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -134,22 +120,87 @@
 		</pluginManagement>
 
 		<plugins>
-		
+
+			<plugin>
+				<artifactId>maven-clean-plugin</artifactId>
+				<version>2.4.1</version>
+				<configuration>
+					<filesets>
+						<fileset>
+							<directory>${dictFolder}</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>${releaseDir}</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>${basedir}</directory>
+							<includes>
+								<include>${versionOutputFile}</include>
+							</includes>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+					</filesets>
+				</configuration>
+			</plugin>
+
+
+			<!-- Загружает число z в номере версии x.y.z из файла buildNumber.properties, 
+				инкрементирует его, перезаписывает файл новым значением z, создаёт maven-переменную 
+				buildNumber. Требует секцию <scm>. -->
 			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0-alpha-2</version>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<version>1.2</version>
 				<executions>
 					<execution>
-						<phase>initialize</phase>
+						<phase>validate</phase>
 						<goals>
-							<goal>read-project-properties</goal>
+							<goal>create</goal>
 						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<!-- Объявлем формат переменной buildNumber согласно Java MessageFormat -->
+					<format>{0}.{1,number}_{2}_{3,date,yyyy-MM-dd_HH:mm:ss}</format>
+					<items>
+						<item>${project.version}</item>
+						<item>buildNumber0</item>
+						<item>scmVersion</item>
+						<item>timestamp</item>
+					</items>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure>true</revisionOnScmFailure>
+				</configuration>
+			</plugin>
+
+			<!-- http://www.avajava.com/tutorials/lessons/how-do-i-display-an-environment-variable.html -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<!-- Версии 1.6 и 1.7 не работают из-за кириллической папки %USERPROFILRE% -->
+				<version>1.1</version>
+				<executions>
+					<execution>
+						<id>idcompile</id>
+						<phase>generate-sources</phase>
 						<configuration>
-							<files>
-								<file>${basedir}/scm.properties</file>
-							</files>
+							<tasks>
+								<echo>Displaying value of 'lane': ${lane}</echo>
+								<echo>Displaying 3 environment variables</echo>
+								<echo>[COMPUTERNAME] ${env.COMPUTERNAME}</echo>
+								<echo>[M2_HOME] ${env.M2_HOME}</echo>
+								<echo>[Path] ${env.Path}</echo>
+								<echo>[Operating system] ${env.OS.name}</echo>
+								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
+								<echo file="${versionOutputFile}" message="${buildNumber}" />
+							</tasks>
 						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
 					</execution>
 				</executions>
 			</plugin>
@@ -185,30 +236,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-
-			<plugin>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.4.1</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<directory>${dictFolder}</directory>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-						<fileset>
-							<directory>${releaseDir}</directory>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-						<fileset>
-							<directory>${basedir}</directory>
-							<includes>
-								<include>${versionOutputFile}</include>
-							</includes>
-							<followSymlinks>false</followSymlinks>
-						</fileset>
-					</filesets>
-				</configuration>
 			</plugin>
 
 			<!-- Собирает standalone-jar, содержащий все зависимости -->
@@ -378,65 +405,6 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>
-
-			<!-- http://www.avajava.com/tutorials/lessons/how-do-i-display-an-environment-variable.html -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-antrun-plugin</artifactId>
-				<!-- Версии 1.6 и 1.7 не работают из-за кириллической папки %USERPROFILRE% -->
-				<version>1.1</version>
-				<executions>
-					<execution>
-						<id>idcompile</id>
-						<phase>generate-sources</phase>
-						<configuration>
-							<tasks>
-								<echo>Displaying value of 'lane': ${lane}</echo>
-								<echo>Displaying 3 environment variables</echo>
-								<echo>[COMPUTERNAME] ${env.COMPUTERNAME}</echo>
-								<echo>[M2_HOME] ${env.M2_HOME}</echo>
-								<echo>[Path] ${env.Path}</echo>
-								<echo>[Operating system] ${env.OS.name}</echo>
-								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
-								<echo file="${versionOutputFile}" message="${buildNumber}" />
-							</tasks>
-						</configuration>
-						<goals>
-							<goal>run</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-
-			<!-- Загружает число z в номере версии x.y.z из файла buildNumber.properties, 
-				инкрементирует его, перезаписывает файл новым значением z, создаёт maven-переменную 
-				buildNumber. Требует секцию <scm>. -->
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>buildnumber-maven-plugin</artifactId>
-				<version>1.2</version>
-				<executions>
-					<execution>
-						<phase>validate</phase>
-						<goals>
-							<goal>create</goal>
-						</goals>
-					</execution>
-				</executions>
-				<configuration>
-					<!-- Объявлем формат переменной buildNumber согласно Java MessageFormat -->
-					<format>{0}.{1,number}_{2}_{3,date,yyyy-MM-dd_HH:mm:ss}</format>
-					<items>
-						<item>${project.version}</item>
-						<item>buildNumber0</item>
-						<item>scmVersion</item>
-						<item>timestamp</item>
-					</items>
-					<doCheck>false</doCheck>
-					<doUpdate>false</doUpdate>
-					<revisionOnScmFailure>true</revisionOnScmFailure>
-				</configuration>
 			</plugin>
 
 		</plugins>
