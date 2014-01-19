@@ -27,6 +27,8 @@
 		<!-- Папка для maven-release-plugin -->
 		<workingDirectory>${releaseDir}</workingDirectory>
 		<versionOutputFile>VERSION</versionOutputFile>
+		<!-- для maven-release-plugin -->
+		<preparationGoals>clean verify read-project-properties</preparationGoals>
 	</properties>
 
 	<dependencies>
@@ -140,7 +142,7 @@
 				<version>1.0-alpha-2</version>
 				<executions>
 					<execution>
-						<phase>initialize</phase>
+						<!-- <phase>initialize</phase> -->
 						<goals>
 							<goal>read-project-properties</goal>
 						</goals>
