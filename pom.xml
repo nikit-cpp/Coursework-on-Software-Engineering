@@ -300,7 +300,8 @@
 						<configuration>
 							<fromDir>${project.build.directory}</fromDir>
 							<!--url >ftp://ftp-repository/public_html</url -->
-							<includes>*win32*.exe,*win64*.exe,*.jar</includes>
+							<!--<includes>*win32*.exe,*win64*.exe,*.jar</includes> -->
+							<includes>*</includes>
 							<excludes>pom.xml</excludes>
 							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
