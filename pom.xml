@@ -28,7 +28,7 @@
 		<workingDirectory>${releaseDir}</workingDirectory>
 		<versionOutputFile>VERSION</versionOutputFile>
 		<!-- для maven-release-plugin -->
-		<preparationGoals>clean verify read-project-properties</preparationGoals>
+		<preparationGoals>clean verify properties:read-project-properties</preparationGoals>
 	</properties>
 
 	<dependencies>
