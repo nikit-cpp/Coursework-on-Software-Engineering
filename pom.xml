@@ -15,7 +15,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<timestamp>${maven.build.timestamp}</timestamp>
 		<maven.build.timestamp.format>yyyy-MM-dd--HH-mm</maven.build.timestamp.format>
-		<jarname>${project.artifactId}-${lane}--${timestamp}</jarname>
+		<jarname>${project.artifactId}-${lane}</jarname>
 		<standalonejarname>${jarname}-standalone</standalonejarname>
 		<exeFileName>${standalonejarname}</exeFileName>
 		<product.year>2014</product.year>
@@ -302,7 +302,7 @@
 							<!--url >ftp://ftp-repository/public_html</url -->
 							<includes>*win32*.exe,*win64*.exe,*.jar</includes>
 							<excludes>pom.xml</excludes>
-							<url>ftp://185.28.20.38/public_html</url>
+							<url>ftp://185.28.20.38/public_html/${project.version}</url>
 							<serverId>ftp-repository</serverId>
 							<!-- <toDir>${maven.build.timestamp}</toDir> -->
 							<!-- <toDir>latest</toDir> -->
@@ -342,10 +342,12 @@
 						<phase>initialize</phase>
 						<configuration>
 							<tasks>
+								<echo>Displaying value of 'lane': ${lane}</echo>
 								<echo>Displaying 3 environment variables</echo>
 								<echo>[COMPUTERNAME] ${env.COMPUTERNAME}</echo>
 								<echo>[M2_HOME] ${env.M2_HOME}</echo>
 								<echo>[Path] ${env.Path}</echo>
+								<echo>[Operating system] ${env.OS.name}</echo>
 								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
 								<echo file="VERSION" message="${buildNumber}" />
 							</tasks>
