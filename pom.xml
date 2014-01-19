@@ -148,7 +148,7 @@
 						</goals>
 						<configuration>
 							<files>
-								<file>scm.properties</file>
+								<file>${basedir}/scm.properties</file>
 							</files>
 						</configuration>
 					</execution>
