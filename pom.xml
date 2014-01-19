@@ -302,10 +302,10 @@
 							<!--url >ftp://ftp-repository/public_html</url -->
 							<includes>*win32*.exe,*win64*.exe,*.jar</includes>
 							<excludes>pom.xml</excludes>
-							<url>ftp://185.28.20.38/public_html/${project.version}</url>
+							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
 							<!-- <toDir>${maven.build.timestamp}</toDir> -->
-							<!-- <toDir>latest</toDir> -->
+							<toDir>/${project.version}</toDir>
 						</configuration>
 					</execution>
 				</executions>
