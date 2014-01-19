@@ -16,9 +16,8 @@ a.maven-цели
 
 - **clean** -- очистка
 - **compile** -- компиляция
-- **package** :
-    - сборка **.jar** -- для любой платформы, возможен кроссбилдинг, см. [в соответствующей главе](#crossbuilding)  
-    - сборка  **.exe** / **исполняемого файла** -- только для своей платформы, кроссбилдинга нет
+- **prepare-package** -- сборка **.jar** -- для любой платформы, возможен кроссбилдинг, см. [в соответствующей главе](#crossbuilding)  
+- **package** -- сборка  **.exe** / **исполняемого файла** -- только для своей платформы, кроссбилдинга нет
 - **deploy** -- отправка `*.jar`, `*win32*.exe`, `*win64*.exe` на FTP
 
 b.Системные требования<a name="req"></a>
@@ -130,14 +129,14 @@ e.Сборка для разных платформ<a name="crossbuilding"></a>
 ========================================================
 
 Предположим, у вас платформа `win x86` и вы собираетесь сделать билд для `win x86_64`.  
-При попытке сборки с указанием профиля `mvn package -P winprofile64` в результирующий jar добавятся библиотеки SWT для win x86 (т. к. профиль winprofile32 активировался сам из-за тега `<activation>`), а плагин manen-assembly-plugin не произведёт замену, из-за того что содержащиеся в архиве org.eclipse.swt.win32.win32.**x86_64**-4.3.jar файлы `swt-xulrunner-win32-4332.dll, ...` имеют идентичные названия с уже добавленными файлами для org.eclipse.swt.win32.win32.**x86**-4.3.jar.  
+При попытке сборки с указанием профиля `mvn prepare-package -P winprofile64` в результирующий jar добавятся библиотеки SWT для win x86 (т. к. профиль winprofile32 активировался сам из-за тега `<activation>`), а плагин manen-assembly-plugin не произведёт замену, из-за того что содержащиеся в архиве org.eclipse.swt.win32.win32.**x86_64**-4.3.jar файлы `swt-xulrunner-win32-4332.dll, ...` имеют идентичные названия с уже добавленными файлами для org.eclipse.swt.win32.win32.**x86**-4.3.jar.  
 
 В результате на выходе в папке `target` имеем файл Coursework-on-Software-Engineering-win64--2014-01-12--15-39-standalone.jar, который вроде бы и предназначен для x64, а на самом деле содержит x32-библиотеки, и на x64 не запустится в принципе.
 
 Решение:  
 Нужно [принудительно деактивировать](http://maven.apache.org/guides/introduction/introduction-to-profiles.html#Deactivating_a_profile) профиль вашей платформы, в нашем случае это `winprofile32` :  
-`mvn package -P winprofile64,!winprofile32`  
-![](http://img-fotki.yandex.ru/get/9584/165433899.0/0_e8b37_ed3bdd95_orig)
+`mvn prepare-package -P winprofile64,!winprofile32`  
+![](http://img-fotki.yandex.ru/get/9834/165433899.1/0_f3930_acc0c974_orig)
 
 
 f.Известные проблемы<a name="troubles"></a>
@@ -298,6 +297,7 @@ g.Полезные ссылки<a name="links"></a>
 
 * <http://markable.in/editor/> - онлайн-редактор Markdown, этот текст был написан в нём
 * <http://git-scm.com/book/ru/> - "Pro Git" на русском
+* <http://maven.apache.org/guides/introduction/introduction-to-the-lifecycle.html> - Жизненный цикл Maven
 * <http://habrahabr.ru/post/77382/> - Apache Maven — основы
 * <https://wiki.openmrs.org/display/docs/Using+the+M2Eclipse+Maven+Plugin+in+Eclipse> - работа с m2eclipse
 * <http://habrahabr.ru/post/130936/> - Делаем релизы с помощью Maven в Java 

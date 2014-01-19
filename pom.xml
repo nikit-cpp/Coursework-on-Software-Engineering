@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
-	<version>0.9-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 
 	<!-- Один из способов устранить ошибку незапуска тестов Hunspell(TestNormalizer) 
 		из-под Maven "UTF-8 encoding error. Missing continuation byte in 0. character 
@@ -168,7 +168,7 @@
 				<executions>
 					<execution>
 						<id>make-assembly</id>
-						<phase>package</phase>
+						<phase>prepare-package</phase>
 						<goals>
 							<goal>single</goal>
 						</goals>
@@ -300,8 +300,7 @@
 						<configuration>
 							<fromDir>${project.build.directory}</fromDir>
 							<!--url >ftp://ftp-repository/public_html</url -->
-							<!--<includes>*win32*.exe,*win64*.exe,*.jar</includes> -->
-							<includes>*</includes>
+							<includes>*win32*.exe,*win64*.exe,*.jar</includes>
 							<excludes>pom.xml</excludes>
 							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
