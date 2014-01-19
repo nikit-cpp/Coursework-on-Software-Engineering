@@ -2,7 +2,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
-	<version>0.2.2-SNAPSHOT</version>
+	<version>0.2.1-SNAPSHOT</version>
 
 	<properties>
 		<jdkVersion>1.6</jdkVersion>
@@ -179,7 +179,7 @@
 				<executions>
 					<execution>
 						<id>idcompile</id>
-						<phase>generate-sources</phase>
+						<phase>initialize</phase>
 						<configuration>
 							<tasks>
 								<echo>Displaying value of 'lane': ${lane}</echo>
@@ -189,7 +189,9 @@
 								<echo>[Path] ${env.Path}</echo>
 								<echo>[Operating system] ${env.OS.name}</echo>
 								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
-								<echo file="${versionOutputFile}" message="${buildNumber}" />
+								<echo file="${versionOutputFile}" message="${project.version}" />
+								<echo file="${versionOutputFile}" append="true" message="&#xa;" />
+								<echo file="${versionOutputFile}" append="true" message="${buildNumber}"/>
 							</tasks>
 						</configuration>
 						<goals>
