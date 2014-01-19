@@ -305,7 +305,7 @@
 							<url>ftp://185.28.20.38/public_html</url>
 							<serverId>ftp-repository</serverId>
 							<!-- <toDir>${maven.build.timestamp}</toDir> -->
-							<toDir>/${project.version}</toDir>
+							<toDir>${project.version}</toDir>
 						</configuration>
 					</execution>
 				</executions>
