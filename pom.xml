@@ -1,4 +1,5 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>Coursework-on-Software-Engineering</groupId>
 	<artifactId>Coursework-on-Software-Engineering</artifactId>
@@ -25,6 +26,7 @@
 		<releaseDir>release</releaseDir>
 		<!-- Папка для maven-release-plugin -->
 		<workingDirectory>${releaseDir}</workingDirectory>
+		<versionOutputFile>VERSION</versionOutputFile>
 	</properties>
 
 	<dependencies>
@@ -110,6 +112,19 @@
 										<ignore />
 									</action>
 								</pluginExecution>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>org.codehaus.mojo</groupId>
+										<artifactId>properties-maven-plugin</artifactId>
+										<versionRange>1.0-alpha-2</versionRange>
+										<goals>
+											<goal>read-project-properties</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore />
+									</action>
+								</pluginExecution>
 							</pluginExecutions>
 						</lifecycleMappingMetadata>
 					</configuration>
@@ -118,6 +133,26 @@
 		</pluginManagement>
 
 		<plugins>
+		
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>read-project-properties</goal>
+						</goals>
+						<configuration>
+							<files>
+								<file>scm.properties</file>
+							</files>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.1</version>
@@ -158,15 +193,16 @@
 					<filesets>
 						<fileset>
 							<directory>${dictFolder}</directory>
-							<includes>
-								<include>**/*.*</include>
-							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
 						<fileset>
 							<directory>${releaseDir}</directory>
+							<followSymlinks>false</followSymlinks>
+						</fileset>
+						<fileset>
+							<directory>${basedir}</directory>
 							<includes>
-								<include>**/*.*</include>
+								<include>${versionOutputFile}</include>
 							</includes>
 							<followSymlinks>false</followSymlinks>
 						</fileset>
@@ -323,9 +359,9 @@
 					</execution>
 				</executions>
 			</plugin>
-	
-			<!-- Помимо прочего инкрементирует число y в номере версии x.y.z,
-			и сохраняет новый номер в pom.xml -->
+
+			<!-- Помимо прочего инкрементирует число y в номере версии x.y.z, и сохраняет 
+				новый номер в pom.xml -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>
@@ -362,7 +398,7 @@
 								<echo>[Path] ${env.Path}</echo>
 								<echo>[Operating system] ${env.OS.name}</echo>
 								<echo>Displaying value of 'buildNumber': ${buildNumber}</echo>
-								<echo file="VERSION" message="${buildNumber}" />
+								<echo file="${versionOutputFile}" message="${buildNumber}" />
 							</tasks>
 						</configuration>
 						<goals>
