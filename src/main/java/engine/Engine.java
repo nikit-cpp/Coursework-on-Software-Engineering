@@ -6,7 +6,8 @@ import java.util.Collection;
 import engine.foundedwords.Builder;
 import engine.foundedwords.WordInfo;
 import engine.foundedwords.WordsMap;
-import engine.thematicdictionary.ThematicDic;
+import engine.thematicdictionary.WordDAO;
+import engine.thematicdictionary.ThematicDicWrapper;
 import engine.thematicdictionary.ThematicDicManager;
 
 public final class Engine {
@@ -37,7 +38,7 @@ public final class Engine {
 	public void rubricate(String text){
 		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
-		for(ThematicDic dic: tdm.getThematicDicts()){
+		for(ThematicDicWrapper dic: tdm.getThematicDicts()){
 			double unitP = calcProbabilityforDic(dic, stems);
 			dic.setProbability(unitP);
 		}
@@ -57,7 +58,7 @@ public final class Engine {
 	 * @param stems - стемы(начальные формы)
 	 * @return вероятность
 	 */
-	public double calcProbabilityforDic(ThematicDic dic, Collection<WordInfo> stems) {
+	public double calcProbabilityforDic(WordDAO dic, Collection<WordInfo> stems) {
 		double p = 0;
 		int size = 0;
 		
@@ -82,7 +83,7 @@ public final class Engine {
 		return string;
 	}
 
-	public ArrayList<ThematicDic> getThematicDicts() {
+	public ArrayList<ThematicDicWrapper> getThematicDicts() {
 		return tdm.getThematicDicts();
 	}
 	

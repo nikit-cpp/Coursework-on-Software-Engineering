@@ -8,7 +8,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	private final Table tableContainsWords;
 			
 	/**
-	 * Этот корнструктор используется вместе с ThematicDictionaries
+	 * Этот конструктор используется вместе с ThematicDictionaries
 	 * @param w
 	 */
 	ThematicDictsWindowManager(ThematicDictsWindow w) {

@@ -8,12 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+// rename to 'RubricDAO'
 public final class ThematicDicManager {
 	static final long serialVersionUID = 1L;
-	private ArrayList<ThematicDic> thematicDicts;
+	private ArrayList<ThematicDicWrapper> thematicDicts;
 	
 	public ThematicDicManager(/*tring path*/){
-		thematicDicts = new ArrayList<ThematicDic>();
+		thematicDicts = new ArrayList<ThematicDicWrapper>();
 		// TODO save-dic импортировать в ArrayList словари из path
 		load();
 	}
@@ -23,21 +24,21 @@ public final class ThematicDicManager {
 		save();
 	}
 	
-	public ArrayList<ThematicDic> getThematicDicts() {
+	public ArrayList<ThematicDicWrapper> getThematicDicts() {
 		return thematicDicts;
 	}
 	
 	public void add(String dicname, boolean isEnabled){
-		thematicDicts.add(new ThematicDic(dicname, isEnabled));
+		thematicDicts.add(new ThematicDicWrapper(dicname, isEnabled));
 		save();
 	}
 
-	public void add(ThematicDic dic) {
+	public void add(ThematicDicWrapper dic) {
 		thematicDicts.add(dic);
 		save();
 	}
 
-	public ThematicDic get(int i) {
+	public ThematicDicWrapper get(int i) {
 		return thematicDicts.get(i);
 	}
 	
@@ -80,7 +81,7 @@ public final class ThematicDicManager {
 		ObjectInputStream in;
 		try {
 			in = new ObjectInputStream(new FileInputStream(filename));
-			thematicDicts = (ArrayList<ThematicDic>) in.readObject();
+			thematicDicts = (ArrayList<ThematicDicWrapper>) in.readObject();
 			in.close();
 		} catch (IOException e) {
 			e.printStackTrace();

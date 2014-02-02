@@ -27,7 +27,7 @@ public class ThematicDicManagerTest {
 		tdm.add("АлгебраСловарьТест", true);
 		tdm.add("ЭкологияСловарьТест", false);
 		
-		ThematicDic informatica = new ThematicDic("информатика2", true);
+		ThematicDicWrapper informatica = new ThematicDicWrapper("информатика2", true);
 		informatica.add("риск", 1);
 		informatica.add("XP", 0.95);
 		tdm.add(informatica);
