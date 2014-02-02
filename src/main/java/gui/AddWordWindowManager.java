@@ -39,7 +39,7 @@ public class AddWordWindowManager extends ViewSuper {
 
 	void addWord() {
 		try{
-			engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
+			engine.getRubricator().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
 		}catch(ArrayIndexOutOfBoundsException e){
 			
 		}

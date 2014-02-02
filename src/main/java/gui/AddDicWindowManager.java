@@ -3,7 +3,7 @@ package gui;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Text;
 
-import engine.thematicdictionary.ThematicDicManager;
+import engine.thematicdictionary.Rubricator;
 
 public class AddDicWindowManager extends ViewSuper {
 	private final Text name;
@@ -18,7 +18,7 @@ public class AddDicWindowManager extends ViewSuper {
 		final String dicname = name.getText();
 		System.out.println("добавляем словарь "+dicname);
 		
-		engine.getTDM().add(dicname, false);
+		engine.getRubricator().addRubric(dicname, false);
 	}
 
 	@Override

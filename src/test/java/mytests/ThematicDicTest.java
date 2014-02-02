@@ -5,14 +5,14 @@ import static org.junit.Assert.*;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import engine.thematicdictionary.ThematicDicWrapper;
+import engine.thematicdictionary.RubricView;
 
 public class ThematicDicTest {
-	static ThematicDicWrapper td;
+	static RubricView td;
 	
 	@BeforeClass
 	public static void setUp(){
-		td = new ThematicDicWrapper("", true);
+		td = new RubricView("", true);
 	}
 
 	@Test(expected = IllegalArgumentException.class, timeout = 2000)

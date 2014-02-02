@@ -10,7 +10,7 @@ import org.junit.*;
 import engine.thematicdictionary.*;
 
 public class ThematicDicManagerTest {
-	static ThematicDicManager tdm;
+	static Rubricator tdm;
 
 	/*@BeforeClass
 	public static void setUpBefore() throws Exception {
@@ -19,23 +19,23 @@ public class ThematicDicManagerTest {
 
 	@Test
 	public void testAdd() {		
-		tdm = new ThematicDicManager();
+		tdm = new Rubricator();
 		tdm.clear();
 		tdm.remove();
 		
-		tdm.add("ФизикаСловарьТест", true);
-		tdm.add("АлгебраСловарьТест", true);
-		tdm.add("ЭкологияСловарьТест", false);
+		tdm.addRubric("ФизикаСловарьТест", true);
+		tdm.addRubric("АлгебраСловарьТест", true);
+		tdm.addRubric("ЭкологияСловарьТест", false);
 		
-		ThematicDicWrapper informatica = new ThematicDicWrapper("информатика2", true);
+		RubricView informatica = new RubricView("информатика2", true);
 		informatica.add("риск", 1);
 		informatica.add("XP", 0.95);
-		tdm.add(informatica);
+		tdm.addRubric(informatica);
 		
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
-		tdm = new ThematicDicManager();
+		tdm = new Rubricator();
 
-		assertThat(tdm.getThematicDicts().size(), is(4));
+		assertThat(tdm.getAllRubrics().size(), is(4));
 		
 		assertThat(tdm.get(0).getName(), is("ФизикаСловарьТест"));
 		assertThat(tdm.get(0).getEnabled(), is(true));
@@ -58,7 +58,7 @@ public class ThematicDicManagerTest {
 		tdm.deleteWord(ololo, eco);
 		
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
-		tdm = new ThematicDicManager();
+		tdm = new Rubricator();
 		// нулевая вероятность - признак отсутствия слова
 		assertThat(tdm.get(eco).getProbability(ololo), is(0.0));
 	}

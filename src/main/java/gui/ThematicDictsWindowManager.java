@@ -25,7 +25,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 		
 		// Получаем табличную строку из словаря ThematicDic с номером selectedIndex в цикле,
 		// т. к. он реализует интерфейс Iterable<String[]>
-		for(String[] row : engine.getThematicDicts().get(selectedIndex)){
+		for(String[] row : engine.getAllRubrics().get(selectedIndex)){
 			TableItem tableItem = new TableItem(tableContainsWords, SWT.NONE);
 	        tableItem.setText(row);
 		}
@@ -34,7 +34,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	void deleteWord(String word, int dicIndex) {
 		final String dic = tableThematicDicts.getItem(dicIndex).getText();
 		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word);
-		engine.getTDM().deleteWord(word, dicIndex);
+		engine.getRubricator().deleteWord(word, dicIndex);
 	}
 
 	@Override
@@ -51,6 +51,6 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	}
 
 	void deleteDic(int dicIndex) {
-		engine.getTDM().deleteDic(dicIndex);
+		engine.getRubricator().deleteRubric(dicIndex);
 	}
 }

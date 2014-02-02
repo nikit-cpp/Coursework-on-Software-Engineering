@@ -10,7 +10,7 @@ import engine.thematicdictionary.*;
 
 public class СalcProbabilityforDicTest {
 	static Engine engine;
-	static WordDAO megaDic;
+	static RubricView megaDic;
 	static Builder builder;
 	
 	@BeforeClass
@@ -18,7 +18,7 @@ public class СalcProbabilityforDicTest {
 		engine = Engine.getInstance();
 		builder = new Builder();
 		
-		megaDic = new ThematicDicWrapper("megaDic", true);
+		megaDic = new RubricView("megaDic", true);
 		
 		megaDic.add("начинать", 1.0);
 		megaDic.add("нас", 1.0);

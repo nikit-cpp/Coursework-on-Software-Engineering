@@ -6,7 +6,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 
 import engine.Engine;
-import engine.thematicdictionary.ThematicDicWrapper;
+import engine.thematicdictionary.RubricView;
 
 public abstract class ViewSuper implements Updateable {
 	protected static ArrayList<Updateable> upds = new ArrayList<Updateable>();
@@ -29,7 +29,7 @@ public abstract class ViewSuper implements Updateable {
 	    tableThematicDicts.removeAll();
 		
 	    int i=0;
-	    for (ThematicDicWrapper dic : engine.getThematicDicts()) {
+	    for (RubricView dic : engine.getAllRubrics()) {
 	    	WrappedTableItem wti = new WrappedTableItem(tableThematicDicts, SWT.NONE);
 	    	wti.arrListPos=i;
 	        
