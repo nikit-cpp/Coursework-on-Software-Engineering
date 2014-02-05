@@ -8,43 +8,63 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
+import engine.thematicdictionary.hibernate.DAO.RubricDAO;
+
 public final class ThematicDicManager {
 	static final long serialVersionUID = 1L;
 	private ArrayList<ThematicDic> thematicDicts;
+	private final RubricDAO dao;
 	
-	public ThematicDicManager(/*tring path*/){
-		thematicDicts = new ArrayList<ThematicDic>();
-		// TODO save-dic импортировать в ArrayList словари из path
-		load();
+	public ThematicDicManager(){
+		//thematicDicts = 
+		dao = new RubricDAO();
+	}
+	
+	public ArrayList<ThematicDic> getAllDicts() {
+		return thematicDicts;
+	}
+	
+	public void addDic(String dicname, boolean isEnabled){
+		thematicDicts.add(new ThematicDic(dicname, isEnabled));
+		save();
+	}
+
+	public void addDic(ThematicDic dic) {
+		thematicDicts.add(dic);
+		save();
+	}
+
+	public ThematicDic getDic(int i) {
+		return thematicDicts.get(i);
+	}
+	
+	public void deleteDic(int dicIndex) {
+		thematicDicts.remove(dicIndex);
+		save();
 	}
 
 	public void turn(boolean b, int index) {
 		thematicDicts.get(index).setEnabled(b);
 		save();
 	}
-	
-	public ArrayList<ThematicDic> getThematicDicts() {
-		return thematicDicts;
-	}
-	
-	public void add(String dicname, boolean isEnabled){
-		thematicDicts.add(new ThematicDic(dicname, isEnabled));
-		save();
-	}
 
-	public void add(ThematicDic dic) {
-		thematicDicts.add(dic);
-		save();
-	}
-
-	public ThematicDic get(int i) {
-		return thematicDicts.get(i);
-	}
-	
 	public void addWord(int dicIndex, String word, double probability){
 		thematicDicts.get(dicIndex).add(word, probability);
 		save();
 	}
+	
+	public void deleteWord(String word, int dicIndex) {
+		thematicDicts.get(dicIndex).delete(word);
+		save();
+	}
+
+	
+	
+	
+	
+	
+	
+	
 
 	final String filename = "dicts.out";
 	
@@ -87,16 +107,5 @@ public final class ThematicDicManager {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
-	}
-
-	public void deleteWord(String word, int dicIndex) {
-		thematicDicts.get(dicIndex).delete(word);
-		save();
-	}
-
-	public void deleteDic(int dicIndex) {
-		// TODO выяснить, удаляются ли слова при удалении содержащего их словаря
-		thematicDicts.remove(dicIndex);
-		save();
 	}
 }

@@ -18,7 +18,7 @@ public class AddDicWindowManager extends ViewSuper {
 		final String dicname = name.getText();
 		System.out.println("добавляем словарь "+dicname);
 		
-		engine.getTDM().add(dicname, false);
+		engine.getTDM().addDic(dicname, false);
 	}
 
 	@Override

@@ -5,18 +5,19 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import engine.Rowable;
+import engine.thematicdictionary.hibernate.DAO.WordDAO;
 
 public final class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 	private static final long serialVersionUID = 1L;
 	private boolean isEnabled;
 	private final String name;
-	private final HashMap<String, Double> dic;
 	private double probability;
+	private final WordDAO dao;
 	
 	public ThematicDic(String name, boolean isEnabled) {
 		this.name=name;
 		this.isEnabled=isEnabled;
-		dic = new HashMap<String, Double>();
+		dao = new WordDAO(name);
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	 * @return
 	 */
 	public double getProbability(String word){
-		Double d = dic.get(word);
+		Double d = dao.get(word);
 		if(d==null) return 0.0;
 		return d;
 	}
@@ -47,15 +48,15 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 
 	public void add(String string, double probability) {
 		checkProbability(probability);
-		dic.put(string, probability);
+		dao.put(string, probability);
 	}
 	
-	public void checkProbability(double probability){
+	public static void checkProbability(double probability){
 		if (probability>1.0 || probability<0.0) throw new IllegalArgumentException("Вероятность может быть только 0.0...1.0");
 	}
 
 	public int getSize() {
-		return dic.size();
+		return dao.size();
 	}
 	
 	public void setProbability(double p){
@@ -82,14 +83,14 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	@Override
 	public Iterator<String[]> iterator() {
 		return new Iterator<String[]>() {
-			Iterator<String> keyIterator = dic.keySet().iterator();
+			Iterator<String> keyIterator = dao.getIterator();
 			public boolean hasNext() {
 				return keyIterator.hasNext();
 			}
 
 			public String[] next() {
 				String key = keyIterator.next();
-				String[] row = {key, String.valueOf(dic.get(key))};
+				String[] row = {key, String.valueOf(dao.get(key))};
 				return row;
 			}
 
@@ -104,6 +105,6 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	}
 
 	public void delete(String word) {
-		dic.remove(word);
+		dao.remove(word);
 	}	
 }

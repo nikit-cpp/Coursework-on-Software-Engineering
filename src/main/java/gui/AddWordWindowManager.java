@@ -4,6 +4,8 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 
+import engine.thematicdictionary.ThematicDic;
+
 public class AddWordWindowManager extends ViewSuper {
 	private final Text txtProbability;
 	private final Text textAddableWord;
@@ -26,8 +28,14 @@ public class AddWordWindowManager extends ViewSuper {
 				double p = Double.parseDouble(txtProbability.getText());
 				// TODO убрать дублирование: засунуть в ThematicDic и побороть конфликт сериализации и static
 				btnAdd.setEnabled(true);
-				if(p>1.0 || p<0.0)
+
+				// Проверяем введённую вероятность
+				try{
+					ThematicDic.checkProbability(p);
+				}catch(IllegalArgumentException ie){
+					ie.printStackTrace();
 					btnAdd.setEnabled(false);
+				}
 			}catch(/*java.lang.NumberFormat*/Exception e){
 				System.err.println("Введённый текст невозможно распарсить как double.");
 				btnAdd.setEnabled(false);

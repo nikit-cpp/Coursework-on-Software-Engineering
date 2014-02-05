@@ -37,7 +37,7 @@ public final class Engine {
 	public void rubricate(String text){
 		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
-		for(ThematicDic dic: tdm.getThematicDicts()){
+		for(ThematicDic dic: tdm.getAllDicts()){
 			double unitP = calcProbabilityforDic(dic, stems);
 			dic.setProbability(unitP);
 		}
@@ -83,7 +83,7 @@ public final class Engine {
 	}
 
 	public ArrayList<ThematicDic> getThematicDicts() {
-		return tdm.getThematicDicts();
+		return tdm.getAllDicts();
 	}
 	
 	public ThematicDicManager getTDM(){
