@@ -1,6 +1,5 @@
 package engine.thematicdictionary;
 
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -14,9 +13,10 @@ import engine.Rowable;
 public final class RubricView implements Rowable, Iterable<String[]>{
 	private static final long serialVersionUID = 1L;
 	private double probability;
+	private final HashMap<String, Double> rubrics;
 	
 	public RubricView(String name, boolean isEnabled) {
-		super(name, isEnabled);
+		rubrics = new HashMap<String, Double>();
 	}
 	
 	public void setProbability(double p){
@@ -24,11 +24,12 @@ public final class RubricView implements Rowable, Iterable<String[]>{
 	}
 	
 	public String getProbabilityString(){
-		if(super.getEnabled())
+		if(getEnabled())
 			return String.valueOf(probability);
 		return "";
 	}
 	
+
 	public String[] getRow() {
 		String dicName = toString();
         String probabilitty = getProbabilityString();
@@ -37,20 +38,31 @@ public final class RubricView implements Rowable, Iterable<String[]>{
 		return row;
 	}
 	
+	public void setEnabled(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public boolean getEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	
 	/**
 	 * Возвращает массив строк, которые образуют 1 строку таблицы
 	 */
 	@Override
 	public Iterator<String[]> iterator() {
 		return new Iterator<String[]>() {
-			Iterator<String> keyIterator = rubric.keySet().iterator();
+			Iterator<String> keyIterator = rubrics.keySet().iterator();
 			public boolean hasNext() {
 				return keyIterator.hasNext();
 			}
 
 			public String[] next() {
 				String key = keyIterator.next();
-				String[] row = {key, String.valueOf(rubric.get(key))};
+				String[] row = {key, String.valueOf(rubrics.get(key))};
 				return row;
 			}
 
@@ -58,10 +70,5 @@ public final class RubricView implements Rowable, Iterable<String[]>{
 				throw new UnsupportedOperationException();
 			}
 		};
-	}
-
-	public void setEnabled(boolean b) {
-		// TODO Auto-generated method stub
-		
 	}
 }

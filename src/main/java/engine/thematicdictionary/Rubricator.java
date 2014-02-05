@@ -7,8 +7,8 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
-import engine.hibernate.entities.Rubric;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  * Фасад
@@ -50,12 +50,12 @@ public final class Rubricator {
 	}
 	
 	public void addWord(int dicIndex, String word, double probability){
-		rubrics.get(dicIndex).add(word, probability);
+		//rubrics.get(dicIndex).add(word, probability);
 		save();
 	}
 	
 	public void deleteWord(String word, int dicIndex) {
-		rubrics.get(dicIndex).delete(word);
+		//rubrics.get(dicIndex).delete(word);
 		save();
 	}
 
@@ -65,11 +65,11 @@ public final class Rubricator {
 		save();
 	}
 	
-	public double getProbability(Rubric rubric, String word){
+	public double getProbability(RubricView rubric, String word){
 		return 0;
 		// TODO Auto-generated method stub
 	}
-	
+		
 	private void save() {
 		// TODO Auto-generated method stub
 	}

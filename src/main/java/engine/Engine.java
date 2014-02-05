@@ -6,7 +6,6 @@ import java.util.Collection;
 import engine.foundedwords.Builder;
 import engine.foundedwords.WordInfo;
 import engine.foundedwords.WordsMap;
-import engine.hibernate.entities.Rubric;
 import engine.thematicdictionary.RubricView;
 import engine.thematicdictionary.Rubricator;
 
@@ -38,7 +37,7 @@ public final class Engine {
 	public void rubricate(String text){
 		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
-		for(Rubric rubric: rubricator.getAllRubrics()){
+		for(RubricView rubric: rubricator.getAllRubrics()){
 			double unitP = calcProbabilityforDic(rubric, stems);
 			rubric.setProbability(unitP);
 		}
@@ -58,7 +57,7 @@ public final class Engine {
 	 * @param stems - стемы(начальные формы)
 	 * @return вероятность
 	 */
-	public double calcProbabilityforDic(Rubric rubric, Collection<WordInfo> stems) {
+	public double calcProbabilityforDic(RubricView rubric, Collection<WordInfo> stems) {
 		double p = 0;
 		int size = 0;
 		
