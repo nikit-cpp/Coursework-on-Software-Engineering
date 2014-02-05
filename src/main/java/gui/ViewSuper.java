@@ -35,7 +35,7 @@ public abstract class ViewSuper implements Updateable {
 	        
 	        wti.setText(dic.getRow());
 	        
-	        wti.setChecked(dic.getEnabled());
+	        wti.setChecked(dic.getDicEnabled());
 	        i++;
 	    }
 	}

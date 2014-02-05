@@ -39,7 +39,7 @@ public final class Engine {
 		Collection<WordInfo> stems = container.getStems();
 		for(ThematicDic dic: tdm.getAllDicts()){
 			double unitP = calcProbabilityforDic(dic, stems);
-			dic.setProbability(unitP);
+			dic.setCalculatedProbability(unitP);
 		}
 	}
 	
@@ -64,7 +64,7 @@ public final class Engine {
 		for(WordInfo word : stems){
 			String s = word.getString();
 			int count = word.getCount();
-			p += (dic.getProbability(s) * count);
+			p += (dic.getProbability4Word(s) * count);
 			
 			size+=count;
 		}

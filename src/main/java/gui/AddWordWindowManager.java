@@ -31,7 +31,7 @@ public class AddWordWindowManager extends ViewSuper {
 
 				// Проверяем введённую вероятность
 				try{
-					ThematicDic.checkProbability(p);
+					ThematicDic.checkProbabilityBounds(p);
 				}catch(IllegalArgumentException ie){
 					ie.printStackTrace();
 					btnAdd.setEnabled(false);

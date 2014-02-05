@@ -2,6 +2,7 @@ package engine.thematicdictionary;
 
 import java.io.Serializable;
 import java.util.Iterator;
+
 import engine.Rowable;
 import engine.thematicdictionary.hibernate.DAO.WordDAO;
 
@@ -18,10 +19,23 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 		dao = new WordDAO(name);
 	}
 
+	public String getDicName() {
+		return name;
+	}
+
 	@Override
 	public String toString() {
 		return name;
 	}
+	public void addWord(String string, double probability) {
+		checkProbabilityBounds(probability);
+		dao.put(string, probability);
+	}
+
+	public void deleteWord(String word) {
+		dao.remove(word);
+	}
+
 	/**
 	 * Возвращает вероятность того, что слово относится к предметной
 	 * области, слова которой описаны в данном словаре.
@@ -29,27 +43,22 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	 * @param word
 	 * @return
 	 */
-	public double getProbability(String word){
+	public double getProbability4Word(String word){
 		Double d = dao.get(word);
 		if(d==null) return 0.0;
 		return d;
 	}
 	
-	public boolean getEnabled() {
+	public boolean getDicEnabled() {
 		return isEnabled;
 	}
 
-	public void setEnabled(boolean isEnabled) {
+	public void setDicEnabled(boolean isEnabled) {
 		this.isEnabled=isEnabled;
 		//System.out.println(toString() + " "+isEnabled);
 	}
 
-	public void add(String string, double probability) {
-		checkProbability(probability);
-		dao.put(string, probability);
-	}
-	
-	public static void checkProbability(double probability){
+	public static void checkProbabilityBounds(double probability){
 		if (probability>1.0 || probability<0.0) throw new IllegalArgumentException("Вероятность может быть только 0.0...1.0");
 	}
 
@@ -57,19 +66,22 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 		return dao.size();
 	}
 	
-	public void setProbability(double p){
+	public void setCalculatedProbability(double p){
 		this.probability=p;
 	}
 	
-	public String getProbabilityString(){
+	public String getCalculatedProbabilityString(){
 		if(isEnabled)
 			return String.valueOf(probability);
 		return "";
 	}
 	
+	/**
+	 * Возвращает строку с Названием словаря и Вычисленной вероятностью
+	 */
 	public String[] getRow() {
 		String dicName = toString();
-        String probabilitty = getProbabilityString();
+        String probabilitty = getCalculatedProbabilityString();
         String[] row = {dicName, probabilitty};
 		
 		return row;
@@ -96,13 +108,5 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 				throw new UnsupportedOperationException();
 			}
 		};
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void delete(String word) {
-		dao.remove(word);
 	}	
 }

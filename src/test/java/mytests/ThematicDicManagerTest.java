@@ -28,8 +28,8 @@ public class ThematicDicManagerTest {
 		tdm.addDic("ЭкологияСловарьТест", false);
 		
 		ThematicDic informatica = new ThematicDic("информатика2", true);
-		informatica.add("риск", 1);
-		informatica.add("XP", 0.95);
+		informatica.addWord("риск", 1);
+		informatica.addWord("XP", 0.95);
 		tdm.addDic(informatica);
 		
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
@@ -37,19 +37,19 @@ public class ThematicDicManagerTest {
 
 		assertThat(tdm.getAllDicts().size(), is(4));
 		
-		assertThat(tdm.getDic(0).getName(), is("ФизикаСловарьТест"));
-		assertThat(tdm.getDic(0).getEnabled(), is(true));
-		assertThat(tdm.getDic(1).getName(), is("АлгебраСловарьТест"));
-		assertThat(tdm.getDic(1).getEnabled(), is(true));
-		assertThat(tdm.getDic(2).getName(), is("ЭкологияСловарьТест"));
-		assertThat(tdm.getDic(2).getEnabled(), is(false));
-		assertThat(tdm.getDic(3).getName(), is("информатика2"));
-		assertThat(tdm.getDic(3).getEnabled(), is(true));
+		assertThat(tdm.getDic(0).getDicName(), is("ФизикаСловарьТест"));
+		assertThat(tdm.getDic(0).getDicEnabled(), is(true));
+		assertThat(tdm.getDic(1).getDicName(), is("АлгебраСловарьТест"));
+		assertThat(tdm.getDic(1).getDicEnabled(), is(true));
+		assertThat(tdm.getDic(2).getDicName(), is("ЭкологияСловарьТест"));
+		assertThat(tdm.getDic(2).getDicEnabled(), is(false));
+		assertThat(tdm.getDic(3).getDicName(), is("информатика2"));
+		assertThat(tdm.getDic(3).getDicEnabled(), is(true));
 		
-		assertThat(tdm.getDic(3).getName(), is("информатика2"));
-		assertThat(tdm.getDic(3).getEnabled(), is(true));
+		assertThat(tdm.getDic(3).getDicName(), is("информатика2"));
+		assertThat(tdm.getDic(3).getDicEnabled(), is(true));
 		
-		assertThat(tdm.getDic(3).getProbability("риск"), is(1.0));
+		assertThat(tdm.getDic(3).getProbability4Word("риск"), is(1.0));
 		
 		// Удаление слова
 		final String ololo = "ололо";
@@ -60,7 +60,7 @@ public class ThematicDicManagerTest {
 		// Создаём новый объект, который должен считать сохранённые на диск файлы
 		tdm = new ThematicDicManager();
 		// нулевая вероятность - признак отсутствия слова
-		assertThat(tdm.getDic(eco).getProbability(ololo), is(0.0));
+		assertThat(tdm.getDic(eco).getProbability4Word(ololo), is(0.0));
 	}
 
 }

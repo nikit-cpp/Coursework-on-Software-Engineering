@@ -20,10 +20,10 @@ public class СalcProbabilityforDicTest {
 		
 		megaDic = new ThematicDic("megaDic", true);
 		
-		megaDic.add("начинать", 1.0);
-		megaDic.add("нас", 1.0);
-		megaDic.add("спасать", 1.0);
-		megaDic.add("от", 1.0);
+		megaDic.addWord("начинать", 1.0);
+		megaDic.addWord("нас", 1.0);
+		megaDic.addWord("спасать", 1.0);
+		megaDic.addWord("от", 1.0);
 		//megaDic.add("недобросовестный", 0.3);
 		//megaDic.add("исполнитель", 0.3);
 	}
@@ -39,7 +39,7 @@ public class СalcProbabilityforDicTest {
 
 	@Test
 	public void test2() {
-		megaDic.add("исполнитель", 1.0);
+		megaDic.addWord("исполнитель", 1.0);
 		
 		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("исполнителей исполнители").getStems());
 		assertEquals(true, p<=1.0);
@@ -50,7 +50,7 @@ public class СalcProbabilityforDicTest {
 	
 	@Test
 	public void test3() {
-		megaDic.add("образ", 0.5);
+		megaDic.addWord("образ", 0.5);
 		
 		double p = engine.calcProbabilityforDic(megaDic, builder.buildMap("образом образ образы").getStems());
 		assertEquals(true, p<=1.0);

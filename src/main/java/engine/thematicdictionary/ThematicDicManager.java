@@ -23,15 +23,15 @@ public final class ThematicDicManager extends RubricDAO{
 	}
 		
 	public void turn(boolean b, int index) {
-		this.getDic(index).setEnabled(b);
+		this.getDic(index).setDicEnabled(b);
 	}
 
 	public void addWord(int dicIndex, String word, double probability){
-		this.getDic(dicIndex).add(word, probability);
+		this.getDic(dicIndex).addWord(word, probability);
 	}
 	
 	public void deleteWord(String word, int dicIndex) {
-		this.getDic(dicIndex).delete(word);
+		this.getDic(dicIndex).deleteWord(word);
 	}
 	
 	/**
