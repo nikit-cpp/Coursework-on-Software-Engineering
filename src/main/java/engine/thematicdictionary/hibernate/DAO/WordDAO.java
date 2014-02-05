@@ -13,9 +13,9 @@ public class WordDAO {
 	private HashMap<String, Double> dic;
 
 	/**
-	 * @param name название словаря/рубрики, используемое для выборки относящихся к нему слов
+	 * @param dicName название словаря/рубрики, используемое для выборки относящихся к нему слов
 	 */
-	public WordDAO(String name) {
+	public WordDAO(String dicName) {
 		// TODO Auto-generated constructor stub
 		dic = new HashMap<String, Double>();
 	}
@@ -30,9 +30,13 @@ public class WordDAO {
 		return null;
 	}
 
-	public void put(String string, double probability) {
+	/**
+	 * Возвращает Id слова, если его нет, то добавляет его в таблицу
+	 * @param string
+	 */
+	public long put(String word) {
+		return 0;
 		// TODO Auto-generated method stub
-		
 	}
 
 	public int size() {

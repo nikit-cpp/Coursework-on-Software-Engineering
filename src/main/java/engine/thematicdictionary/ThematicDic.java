@@ -4,19 +4,25 @@ import java.io.Serializable;
 import java.util.Iterator;
 
 import engine.Rowable;
+import engine.thematicdictionary.hibernate.DAO.ProbabilityDAO;
 import engine.thematicdictionary.hibernate.DAO.WordDAO;
 
 public final class ThematicDic implements Rowable, Iterable<String[]>, Serializable{
 	private static final long serialVersionUID = 1L;
 	private boolean isEnabled;
 	private final String name;
-	private double probability;
-	private final WordDAO dao;
+	private double calculatedProbability;
+	private final WordDAO wordDAO;
+	private final ProbabilityDAO probabilityDAO;
+	//private final 
+	private final long rubricId;
 	
-	public ThematicDic(String name, boolean isEnabled) {
-		this.name=name;
+	public ThematicDic(String dicName, boolean isEnabled) {
+		this.name=dicName;
 		this.isEnabled=isEnabled;
-		dao = new WordDAO(name);
+		wordDAO = new WordDAO(dicName);
+		probabilityDAO = new ProbabilityDAO();
+		rubricId = -1;
 	}
 
 	public String getDicName() {
@@ -27,13 +33,20 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	public String toString() {
 		return name;
 	}
-	public void addWord(String string, double probability) {
+	
+	/**
+	 * Добавляет в эту рубрику слово и вероятность
+	 * @param word
+	 * @param probability
+	 */
+	public void addWord(String word, double probability) {
 		checkProbabilityBounds(probability);
-		dao.put(string, probability);
+		long wordId = wordDAO.put(word);
+		probabilityDAO.put(wordId, probability, rubricId);
 	}
 
 	public void deleteWord(String word) {
-		dao.remove(word);
+		wordDAO.remove(word);
 	}
 
 	/**
@@ -44,7 +57,7 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	 * @return
 	 */
 	public double getProbability4Word(String word){
-		Double d = dao.get(word);
+		Double d = wordDAO.get(word);
 		if(d==null) return 0.0;
 		return d;
 	}
@@ -63,21 +76,21 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	}
 
 	public int getSize() {
-		return dao.size();
+		return wordDAO.size();
 	}
 	
 	public void setCalculatedProbability(double p){
-		this.probability=p;
+		this.calculatedProbability=p;
 	}
 	
 	public String getCalculatedProbabilityString(){
 		if(isEnabled)
-			return String.valueOf(probability);
+			return String.valueOf(calculatedProbability);
 		return "";
 	}
 	
 	/**
-	 * Возвращает строку с Названием словаря и Вычисленной вероятностью
+	 * Возвращает массив строк : [Название словаря, Вычисленная вероятность]
 	 */
 	public String[] getRow() {
 		String dicName = toString();
@@ -88,19 +101,21 @@ public final class ThematicDic implements Rowable, Iterable<String[]>, Serializa
 	}
 
 	/**
-	 * Возвращает массив строк, которые образуют 1 строку таблицы
+	 * Итератор по массивам слов, относящимся к данному словарю, которые выглядят так:
+	 * [Слово, Вероятность]
+	 * Возвращает массив строк, которые образуют 1 строку таблицы "Содержащиеся с словаре слова"
 	 */
 	@Override
 	public Iterator<String[]> iterator() {
 		return new Iterator<String[]>() {
-			Iterator<String> keyIterator = dao.getIterator();
+			Iterator<String> keyIterator = wordDAO.getIterator();
 			public boolean hasNext() {
 				return keyIterator.hasNext();
 			}
 
 			public String[] next() {
 				String key = keyIterator.next();
-				String[] row = {key, String.valueOf(dao.get(key))};
+				String[] row = {key, String.valueOf(wordDAO.get(key))};
 				return row;
 			}
 

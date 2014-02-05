@@ -10,6 +10,11 @@ import engine.thematicdictionary.ThematicDic;
  */
 public class RubricDAO {
 	private ArrayList<ThematicDic> thematicDicts;
+	
+	public RubricDAO(){
+		// TODO Здесь должны загружаться рубрики из БД, превращаться в ThematicDic и записываться в список thematicDicts
+		// session.createCriteria(Rubric.class)
+	}
 
 	public ArrayList<ThematicDic> getAllDicts() {
 		return thematicDicts;
@@ -36,7 +41,7 @@ public class RubricDAO {
 	
 	
 	/**
-	 * Создаёт arrayList из аолученных из БД объектов Rubric
+	 * Создаёт arrayList из полученных из БД объектов Rubric
 	 * @return
 	 */
 	private void updateDictsArrayList() {
