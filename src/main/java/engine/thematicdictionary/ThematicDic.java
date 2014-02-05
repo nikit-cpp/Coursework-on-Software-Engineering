@@ -1,9 +1,7 @@
 package engine.thematicdictionary;
 
 import java.io.Serializable;
-import java.util.HashMap;
 import java.util.Iterator;
-
 import engine.Rowable;
 import engine.thematicdictionary.hibernate.DAO.WordDAO;
 

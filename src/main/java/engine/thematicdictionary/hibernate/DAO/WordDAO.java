@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * Data Access Object для части таблицы "Слова", относящейся к определённому тематическому словарю
+ * Data Access Object таблицы "Слова", предназначенный для выборки строк, относящихся к определённой рубрике / тематическому словарю
  * @author Ник
  *
  */
@@ -13,8 +13,7 @@ public class WordDAO {
 	private HashMap<String, Double> dic;
 
 	/**
-	 * Добавляет / извлекает строку в / из таблицу "Рубрики" с названнием  тематического словаря
-	 * @param name название словаря, используемое для выборки относящихся к нему слов
+	 * @param name название словаря/рубрики, используемое для выборки относящихся к нему слов
 	 */
 	public WordDAO(String name) {
 		// TODO Auto-generated constructor stub

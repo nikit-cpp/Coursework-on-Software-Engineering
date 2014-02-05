@@ -10,69 +10,35 @@ import java.util.ArrayList;
 
 import engine.thematicdictionary.hibernate.DAO.RubricDAO;
 
-public final class ThematicDicManager {
-	static final long serialVersionUID = 1L;
-	private ArrayList<ThematicDic> thematicDicts;
-	private final RubricDAO dao;
+/**
+ * Расширение RubricDAO для повышения юзабилити
+ */
+public final class ThematicDicManager extends RubricDAO{
 	
 	public ThematicDicManager(){
-		//thematicDicts = 
-		dao = new RubricDAO();
 	}
-	
-	public ArrayList<ThematicDic> getAllDicts() {
-		return thematicDicts;
-	}
-	
+
 	public void addDic(String dicname, boolean isEnabled){
-		thematicDicts.add(new ThematicDic(dicname, isEnabled));
-		save();
+		addDic(new ThematicDic(dicname, isEnabled));
 	}
-
-	public void addDic(ThematicDic dic) {
-		thematicDicts.add(dic);
-		save();
-	}
-
-	public ThematicDic getDic(int i) {
-		return thematicDicts.get(i);
-	}
-	
-	public void deleteDic(int dicIndex) {
-		thematicDicts.remove(dicIndex);
-		save();
-	}
-
+		
 	public void turn(boolean b, int index) {
-		thematicDicts.get(index).setEnabled(b);
-		save();
+		this.getDic(index).setEnabled(b);
 	}
 
 	public void addWord(int dicIndex, String word, double probability){
-		thematicDicts.get(dicIndex).add(word, probability);
-		save();
+		this.getDic(dicIndex).add(word, probability);
 	}
 	
 	public void deleteWord(String word, int dicIndex) {
-		thematicDicts.get(dicIndex).delete(word);
-		save();
+		this.getDic(dicIndex).delete(word);
 	}
-
-	
-	
-	
-	
-	
-	
-	
-
-	final String filename = "dicts.out";
 	
 	/**
 	 * Удаление файла
 	 */
 	public void remove(){
-		File file = new File(filename);
+		File file = new File("dicts.out");
 		if(file.exists())
 			file.delete();
 	}
@@ -81,31 +47,6 @@ public final class ThematicDicManager {
 	 * Очистка ArrayList
 	 */
 	public void clear(){
-		thematicDicts.clear();
-	}
-
-	public void save(){
-		ObjectOutputStream out;
-		try {
-			out = new ObjectOutputStream(new FileOutputStream(filename));
-			out.writeObject(thematicDicts);
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	@SuppressWarnings("unchecked")
-	public void load(){
-		ObjectInputStream in;
-		try {
-			in = new ObjectInputStream(new FileInputStream(filename));
-			thematicDicts = (ArrayList<ThematicDic>) in.readObject();
-			in.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
+		
 	}
 }
