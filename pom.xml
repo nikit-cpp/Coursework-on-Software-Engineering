@@ -37,7 +37,11 @@
 			<!-- эта библиотека используется только для запуска и компилирования тестов -->
 			<scope>test</scope>
 		</dependency>
-
+		<dependency>
+			<groupId>Coursework-on-Software-Engineering-ThematicDicts-model</groupId>
+			<artifactId>Coursework-on-Software-Engineering-ThematicDicts-model</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 	</dependencies>
 
 	<repositories>

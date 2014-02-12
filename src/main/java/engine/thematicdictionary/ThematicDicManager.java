@@ -2,36 +2,58 @@ package engine.thematicdictionary;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+
+import util.HibernateUtil;
+import entities.Rubric;
+import entities.Word;
 /**
- * Расширение RubricDAO для повышения юзабилити
+ * 
  */
-public final class ThematicDicManager /*extends RubricDAO*/{
-	private ArrayList<ThematicDic> thematicDicts;
+public final class ThematicDicManager {
+	
+	private static ThematicDicManager instance;
+	
+	private List<Rubric> thematicDicts;
+	private Session session;
+	private Criteria crit;
 
-	public ThematicDicManager(){
+	public static ThematicDicManager getInstance(){
+		if( instance==null ){
+		      instance = new ThematicDicManager();
+		}
+		return instance;
 	}
 	
-	public ArrayList<ThematicDic> getAllDicts() {
+	
+	/**
+	 * Конструктор
+	 */
+	private ThematicDicManager(){
+        session = HibernateUtil.getSessionFactory().getCurrentSession();
+        session.beginTransaction();
+    	crit = session.createCriteria(Rubric.class); // создаем критерий запроса
+    	updateDictsArrayList();
+	}
+	
+	public List<Rubric> getAllDicts() {
 		return thematicDicts;
 	}
 
-	public void addDic(ThematicDic thematicDic) {
-		// TODO Auto-generated method stub
-		// session.save(new Rubric(thematicDic.getName()))
-		
+	public void addDic(Rubric thematicDic) {
+		session.save(thematicDic);
 		updateDictsArrayList();
 	}
 
-	public ThematicDic getDic(int i) {
-		// TODO Auto-generated method stub
-		// TODO учесть то что в БД индекс начинается с 1, а в ArrayList с 0.
-		return null;
+	public Rubric getDic(int i) {
+		return thematicDicts.get(i);
 	}
 
 	public void deleteDic(int dicIndex) {
-		// TODO Auto-generated method stub
-		// TODO учесть то что в БД индекс начинается с 1, а в ArrayList с 0.
+		session.delete(thematicDicts.get(dicIndex));
 		updateDictsArrayList();
 	}
 	
@@ -41,9 +63,11 @@ public final class ThematicDicManager /*extends RubricDAO*/{
 	 * @return
 	 */
 	private void updateDictsArrayList() {
-		// TODO Auto-generated method stub
-		//thematicDicts = new ArrayList<ThematicDic>();
-		//session.createCriteria();
+		session.flush();
+		session.clear();
+
+		thematicDicts = crit.list();
+		
 	}
 
 	
@@ -54,7 +78,8 @@ public final class ThematicDicManager /*extends RubricDAO*/{
 	
 
 	public void addDic(String dicname, boolean isEnabled){
-		addDic(new ThematicDic(dicname, isEnabled));
+		Rubric r = new Rubric(dicname, isEnabled);
+		addDic(r);
 	}
 		
 	public void turn(boolean b, int index) {
@@ -62,11 +87,11 @@ public final class ThematicDicManager /*extends RubricDAO*/{
 	}
 
 	public void addWord(int dicIndex, String word, double probability){
-		this.getDic(dicIndex).addWord(word, probability);
+		//this.getDic(dicIndex).addWord(word, probability);
 	}
 	
 	public void deleteWord(String word, int dicIndex) {
-		this.getDic(dicIndex).deleteWord(word);
+		//this.getDic(dicIndex).deleteWord(word);
 	}
 	
 	/**
