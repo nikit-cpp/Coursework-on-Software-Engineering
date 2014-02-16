@@ -151,7 +151,7 @@ public final class ThematicDicManager {
 			String tableName = aep.getTableName();
 			System.out.println("\tДля класса: " + key + " Имя таблицы: "
 					+ tableName);
-			System.out.println("\tУдаляю таблицу " + tableName);
+			System.out.println("\tУдаляю содержимое таблицы " + tableName);
 			SQLQuery q = session.createSQLQuery("DELETE " + tableName + ";");
 			q.executeUpdate();
 		}
