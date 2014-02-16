@@ -78,6 +78,7 @@ public class MainWindow {
 		shell.addListener(SWT.Close, new Listener() {
 		      public void handleEvent(Event event) {
 		        view.delFromUpdateable();
+		        view.msgExit();
 		      }
 		});
 		

@@ -10,6 +10,7 @@ import engine.filesystem.FileReader;
 import engine.foundedwords.WordInfo;
 import engine.options.OptId;
 import engine.options.Options;
+import engine.thematicdictionary.ThematicDicManager;
 import gui.listeners.OpenFileDialog;
 
 public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
@@ -90,5 +91,12 @@ public class MainWindowManager extends ViewSuper /*implements Updateable*/ {
 	@Override
 	public void updateThematicDictsTableImpl() {
 		super.createThematicDicTable(tableThematicDicts);
+	}
+	
+	/**
+	 * Посылает сообщение о завершении программы менеджеру словарей, чтобы тот закрыл соединение с БД
+	 */
+	void msgExit() {
+		ThematicDicManager.getInstance().terminate();
 	}
 }

@@ -1,12 +1,10 @@
 package gui;
 
 import java.util.ArrayList;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
-
 import engine.Engine;
-import engine.thematicdictionary.Rubric;
+import entities.Rubric;
 
 public abstract class ViewSuper implements Updateable {
 	protected static ArrayList<Updateable> upds = new ArrayList<Updateable>();

@@ -1,10 +1,8 @@
 package gui;
 
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
-
-import engine.thematicdictionary.Rubric;
+import engine.thematicdictionary.ThematicDicManager;
 
 public class AddWordWindowManager extends ViewSuper {
 	private final Text txtProbability;
@@ -31,7 +29,7 @@ public class AddWordWindowManager extends ViewSuper {
 
 				// Проверяем введённую вероятность
 				try{
-					Rubric.checkProbabilityBounds(p);
+					ThematicDicManager.checkProbabilityBounds(p);
 				}catch(IllegalArgumentException ie){
 					ie.printStackTrace();
 					btnAdd.setEnabled(false);

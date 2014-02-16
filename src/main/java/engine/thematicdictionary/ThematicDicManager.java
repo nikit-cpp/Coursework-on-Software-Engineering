@@ -43,6 +43,7 @@ public final class ThematicDicManager {
         session = HibernateUtil.getSessionFactory().getCurrentSession();
         session.beginTransaction();
     	crit = session.createCriteria(Rubric.class); // создаем критерий запроса
+    	//session.getTransaction().commit();
     	updateDictsArrayList();
 	}
 	
@@ -74,7 +75,9 @@ public final class ThematicDicManager {
 	private void updateDictsArrayList() {
 		session.flush();
 		session.clear();
-
+		/*session.getTransaction().commit();
+		session = HibernateUtil.getSessionFactory().openSession();
+		session.beginTransaction();*/
 		//thematicDicts = crit.list();
 		thematicDicts.clear();
 		thematicDicts.addAll(crit.list());
@@ -190,4 +193,19 @@ public final class ThematicDicManager {
 	private double getProbability4Word(Rubric r, String s){
 		return 0.0;
 	}
+	
+	public static void checkProbabilityBounds(double probability){
+		if (probability>1.0 || probability<0.0) throw new IllegalArgumentException("Вероятность может быть только 0.0...1.0");
+	}
+
+	/**
+	 * Закрытие фабрики сессий, влекущее за собой закрытие соединения с БД.
+	 */
+	public void terminate() {
+		session.flush();
+		session.clear();
+		session.getTransaction().commit();
+		HibernateUtil.getSessionFactory().close();
+	}
+
 }
