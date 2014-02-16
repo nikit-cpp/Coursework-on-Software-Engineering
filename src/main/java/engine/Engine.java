@@ -1,6 +1,5 @@
 package engine;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -39,8 +38,7 @@ public final class Engine {
 		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
 		for(Rubric dic: tdm.getAllDicts()){
-			double unitP = calcProbabilityforDic(dic, stems);
-			dic.setCalculatedProbability(unitP);
+			tdm.calcProbabilityforDic(dic, stems);
 		}
 	}
 	
@@ -52,28 +50,6 @@ public final class Engine {
 		return container.getWords();
 	}
 	
-	/**
-	 * Вычисляет вероятность того, что данный текст относится к рубрике, представленной словарём.
-	 * @param dic - Тематический словарь, представляющий данную рубрику
-	 * @param stems - стемы(начальные формы)
-	 * @return вероятность
-	 */
-	public double calcProbabilityforDic(Rubric dic, Collection<WordInfo> stems) {
-		double p = 0;
-		int size = 0;
-		
-		for(WordInfo word : stems){
-			String s = word.getString();
-			int count = word.getCount();
-			p += (dic.getProbability4Word(s) * count);
-			
-			size+=count;
-		}
-		p /= size;
-		
-		return p;
-	}
-
 	public void turnThematicDictionary(boolean b, int index){
 		//System.out.println("turnThematicDictionary(): turning "+index+" to "+b);
 		tdm.turn(b, index);

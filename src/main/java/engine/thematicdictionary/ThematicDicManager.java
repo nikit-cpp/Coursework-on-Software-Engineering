@@ -2,15 +2,20 @@ package engine.thematicdictionary;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
+
 import util.HibernateUtil;
+import engine.foundedwords.WordInfo;
 import entities.Rubric;
 /**
  * 
@@ -134,7 +139,7 @@ public final class ThematicDicManager {
 	public void clearDb() {
 		System.out.println("Очистка БД...");
 
-		Map m = HibernateUtil.getSessionFactory().getAllClassMetadata();
+		Map<String, ClassMetadata> m = HibernateUtil.getSessionFactory().getAllClassMetadata();
 
 		// iterate map :
 		// http://stackoverflow.com/questions/46898/how-do-i-iterate-over-each-entry-in-a-map/46905#46905
@@ -157,5 +162,32 @@ public final class ThematicDicManager {
 		}
 
 		updateDictsArrayList();
+	}
+	
+	
+	/**
+	 * Вычисляет вероятность того, что данный текст относится к рубрике, представленной словарём.
+	 * @param dic - Тематический словарь, представляющий данную рубрику
+	 * @param stems - стемы(начальные формы)
+	 * @return вероятность
+	 */
+	public void calcProbabilityforDic(Rubric dic, Collection<WordInfo> stems) {
+		double p = 0;
+		int size = 0;
+		
+		for(WordInfo word : stems){
+			String s = word.getString();
+			int count = word.getCount();
+			p += (getProbability4Word(dic, s) * count);
+			
+			size+=count;
+		}
+		p /= size;
+		
+		dic.setCalculatedProbability(p);
+	}
+	
+	private double getProbability4Word(Rubric r, String s){
+		return 0.0;
 	}
 }
