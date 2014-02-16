@@ -20,25 +20,50 @@ public class ThematicDicManagerTest {
 	}*/
 
 	@Test
-	public void testAdd() {		
+	public void testAdd() throws Exception {		
 		tdm = ThematicDicManager.getInstance();
-		tdm.clear();
-		tdm.remove();
+		tdm.clearDb();
 		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
 		tdm.addDic("ЭкологияСловарьТест", false);
 		Rubric informatica = new Rubric("информатика2", true);
 		tdm.addDic(informatica);
-		
-		// Утверждаю что эти словпри загружаются...
+				
+		// Утверждаю что эти словари загружаются...
 		List<Rubric> loaded = tdm.getAllDicts();
 		for (Rubric r : loaded){
 			System.out.println(r.toString());
-			
 		}
-		// Удаление словаря
+		assertThat(loaded.get(3), is(informatica));
+		assertThat(loaded.size(), is(4));	
+	}
+	
+	@Test
+	public void testRemove() throws Exception {		
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDb();
 		
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addDic("АлгебраСловарьТест", true);
+		tdm.addDic("ЭкологияСловарьТест", false);
+		Rubric informatica = new Rubric("информатика2", true);
+		tdm.addDic(informatica);
+				
+		// Утверждаю что эти словари загружаются...
+		List<Rubric> loaded = tdm.getAllDicts();
+		for (Rubric r : loaded){
+			System.out.println(r.toString());
+		}
+		assertThat(loaded.get(3), is(informatica));
+		assertThat(loaded.size(), is(4));
+		
+		// Удаление словарей
+		System.out.println("Удаление словарей");
+		for (int i=loaded.size()-1; i>=0; i--){
+			tdm.deleteDic(i);
+		}
+		assertThat(loaded.size(), is(0));
 	}
 
 }
