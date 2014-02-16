@@ -2,12 +2,13 @@ package engine;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import engine.foundedwords.Builder;
 import engine.foundedwords.WordInfo;
 import engine.foundedwords.WordsMap;
-import engine.thematicdictionary.Rubric;
 import engine.thematicdictionary.ThematicDicManager;
+import entities.Rubric;
 
 public final class Engine {
 	private final Builder builder;
@@ -31,7 +32,7 @@ public final class Engine {
 	 */
 	private Engine() {
 		builder = new Builder();
-		tdm = new ThematicDicManager();
+		tdm = ThematicDicManager.getInstance();
 	}
 	
 	public void rubricate(String text){
@@ -82,7 +83,7 @@ public final class Engine {
 		return string;
 	}
 
-	public ArrayList<Rubric> getThematicDicts() {
+	public List<Rubric> getThematicDicts() {
 		return tdm.getAllDicts();
 	}
 	
