@@ -128,6 +128,7 @@ public class MainWindow {
 		menuItemExit.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
+				view.msgExit();
 				System.exit(0);
 			}
 		});
