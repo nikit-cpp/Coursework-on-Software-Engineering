@@ -45,6 +45,7 @@ public final class ThematicDicManager {
 	 * Конструктор
 	 */
 	private ThematicDicManager(){
+		session = sessions.openSession();
 		begin();
     	end();
 	}
@@ -76,7 +77,6 @@ public final class ThematicDicManager {
 	 * Стартует сессию
 	 */
 	private void begin(){
-		session = sessions.openSession();
 		tx = session.beginTransaction();
 	}
 	
@@ -91,7 +91,6 @@ public final class ThematicDicManager {
 		tx.commit();
 
 		session.flush();
-		session.close();
 	}	
 
 	
@@ -218,6 +217,7 @@ public final class ThematicDicManager {
 	 * Закрытие фабрики сессий, влекущее за собой закрытие соединения с БД.
 	 */
 	public void terminate() {
+		session.close();
 		sessions.close();
 	}
 
