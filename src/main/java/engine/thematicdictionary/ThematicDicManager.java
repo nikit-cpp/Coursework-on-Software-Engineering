@@ -9,8 +9,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
 
@@ -26,7 +29,9 @@ public final class ThematicDicManager {
 	
 	private List<Rubric> thematicDicts = new ArrayList<Rubric>();
 	private Session session;
+	private SessionFactory sessions = HibernateUtil.getSessionFactory();
 	private Criteria crit;
+	private Transaction tx;
 
 	public static ThematicDicManager getInstance(){
 		if( instance==null ){
@@ -40,21 +45,19 @@ public final class ThematicDicManager {
 	 * Конструктор
 	 */
 	private ThematicDicManager(){
-        session = HibernateUtil.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-    	crit = session.createCriteria(Rubric.class); // создаем критерий запроса
-    	//session.getTransaction().commit();
-    	updateDictsArrayList();
+		begin();
+    	end();
 	}
 	
 	public List<Rubric> getAllDicts() {
 		return thematicDicts;
-	}
-
+	}	
+	
 	public void addDic(Rubric thematicDic) {
+		begin();
 		session.save(thematicDic);
-		updateDictsArrayList();
-	}
+		end();
+    }
 
 	public Rubric getDic(int i) {
 		return thematicDicts.get(i);
@@ -63,26 +66,38 @@ public final class ThematicDicManager {
 	public void deleteDic(int dicIndex) {
 		// Каскадные удаления для -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
 		// http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#objectstate-transitive
+		begin();
 		session.delete(thematicDicts.get(dicIndex));
-		updateDictsArrayList();
+		end();
 	}
 	
 	
 	/**
-	 * Создаёт arrayList из полученных из БД объектов Rubric
-	 * @return
+	 * Стартует сессию
 	 */
-	private void updateDictsArrayList() {
-		session.flush();
-		session.clear();
-		/*session.getTransaction().commit();
-		session = HibernateUtil.getSessionFactory().openSession();
-		session.beginTransaction();*/
-		//thematicDicts = crit.list();
-		thematicDicts.clear();
-		thematicDicts.addAll(crit.list());
+	private void begin(){
+		session = sessions.openSession();
+		tx = session.beginTransaction();
 	}
+	
+	/**
+	 * Обновляет список рубрик и закрывает сессию.
+	 */
+	private void end() {
+		thematicDicts.clear();
+		crit = session.createCriteria(Rubric.class); // создаем критерий //
+														// запроса
+		thematicDicts.addAll(crit.list());
+		tx.commit();
 
+		session.flush();
+		session.close();
+	}	
+
+	
+	
+	
+	
 	
 	
 	
@@ -164,7 +179,8 @@ public final class ThematicDicManager {
 			q.executeUpdate();
 		}
 
-		updateDictsArrayList();
+		begin();
+		end();
 	}
 	
 	
@@ -202,10 +218,7 @@ public final class ThematicDicManager {
 	 * Закрытие фабрики сессий, влекущее за собой закрытие соединения с БД.
 	 */
 	public void terminate() {
-		session.flush();
-		session.clear();
-		session.getTransaction().commit();
-		HibernateUtil.getSessionFactory().close();
+		sessions.close();
 	}
 
 }
