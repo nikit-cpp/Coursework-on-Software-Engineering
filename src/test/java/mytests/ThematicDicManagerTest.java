@@ -66,4 +66,31 @@ public class ThematicDicManagerTest {
 		assertThat(loaded.size(), is(0));
 	}
 
+	@Test
+	public void testRename() throws Exception {		
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDb();
+		
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addDic("АлгебраСловарьТест", true);
+		tdm.addDic("ЭкологияСловарьТест", false);
+		Rubric informatica = new Rubric("информатика2", true);
+		tdm.addDic(informatica);
+						
+		// Переименование
+		System.out.println("Переименование");
+		int eco = 2;
+		tdm.renameDic(eco, "Новая Экология");
+		
+		// Утверждаю что эти словари загружаются...
+		List<Rubric> loaded = tdm.getAllDicts();
+		for (Rubric r : loaded){
+			System.out.println(r.toString());
+		}
+		assertThat(loaded.get(3), is(informatica));
+		assertThat(loaded.size(), is(4));
+
+		assertThat(loaded.get(eco), is(new Rubric("Новая Экология")));
+	}
+
 }

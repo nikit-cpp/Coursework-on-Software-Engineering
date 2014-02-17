@@ -72,6 +72,11 @@ public final class ThematicDicManager {
 		end();
 	}
 	
+	public void renameDic(int dicIndex, String newName) {
+		begin();
+		thematicDicts.get(dicIndex).setName(newName);
+		end();
+	}
 	
 	/**
 	 * Стартует сессию
@@ -220,5 +225,4 @@ public final class ThematicDicManager {
 		session.close();
 		sessions.close();
 	}
-
 }

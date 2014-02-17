@@ -6,12 +6,17 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+import org.eclipse.swt.widgets.TableItem;
+import org.eclipse.swt.widgets.Text;
 import org.eclipse.swt.custom.SashForm;
+import org.eclipse.swt.custom.TableEditor;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.layout.FillLayout;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Point;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
@@ -101,6 +106,61 @@ public class ThematicDictsWindow {
 			}
 		});
 		mntmDelDic.setText("Удалить словарь");
+		
+		final TableEditor editor = new TableEditor(tableDicts);
+	    editor.horizontalAlignment = SWT.LEFT;
+	    editor.grabHorizontal = true;
+
+		MenuItem mntmRenameDic = new MenuItem(menuDicts, SWT.NONE);
+		mntmRenameDic.addListener(SWT.Selection, new Listener() {
+			public void handleEvent(Event event) {
+				try{
+				final int dicIndex = tableDicts.getSelectionIndex();
+				int index = dicIndex;
+				boolean visible = false;
+				final TableItem item = tableDicts.getItem(index);
+				int i = 0; // Столбец
+				final int column = i;
+
+				final Text text = new Text(tableDicts, SWT.NONE);
+				Listener textListener = new Listener() {
+					public void handleEvent(final Event e) {
+						switch (e.type) {
+						case SWT.FocusOut:
+							item.setText(column, text.getText());
+							view.renameDic(dicIndex, text.getText());
+							text.dispose();
+							break;
+						case SWT.Traverse:
+							switch (e.detail) {
+							case SWT.TRAVERSE_RETURN:
+								item.setText(column, text.getText());
+								view.renameDic(dicIndex, text.getText());
+								// FALL THROUGH
+							case SWT.TRAVERSE_ESCAPE:
+								text.dispose();
+								e.doit = false;
+							}
+							break;
+						}
+					}
+				};
+				text.addListener(SWT.FocusOut, textListener);
+				text.addListener(SWT.Traverse, textListener);
+				editor.setEditor(text, item, i);
+				text.setText(item.getText(i));
+				text.selectAll();
+				text.setFocus();
+				text.setVisible(true);
+				
+				return;
+				}catch(ArrayIndexOutOfBoundsException e){
+				}catch(Exception e){
+		    		  e.printStackTrace();
+				}
+			}
+		});
+		mntmRenameDic.setText("Переименовать словарь");
 		
 		tableWords = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
 		tableWords.setHeaderVisible(true);
