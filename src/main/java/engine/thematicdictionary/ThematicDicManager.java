@@ -29,7 +29,6 @@ public final class ThematicDicManager extends ThematicDicList {
 	
 	private Session session;
 	private SessionFactory sessions = HibernateUtil.getSessionFactory();
-	//private Criteria crit;
 	private Transaction tx;
 
 	public static ThematicDicManager getInstance(){
@@ -235,4 +234,31 @@ public final class ThematicDicManager extends ThematicDicList {
 		session.close();
 		sessions.close();
 	}
+}
+
+class ThematicDicList {
+	private boolean isTracked = true;
+	private List<Rubric> thematicDicts = new ArrayList<Rubric>();
+	Criteria crit;
+	
+	void setListNotTracked() {
+		isTracked = false;
+	}
+	
+	public List<Rubric> getAllDicts() {
+		if(!isTracked){
+			refresh();
+			isTracked = true;
+		}
+		return thematicDicts;
+	}	
+	
+	/**
+	 * Перед вызовом метода в наследующем классе д. б. проинициализирован критерий
+	 */
+	void refresh(){
+		thematicDicts.clear();
+		thematicDicts.addAll(crit.list());
+	}
+
 }
