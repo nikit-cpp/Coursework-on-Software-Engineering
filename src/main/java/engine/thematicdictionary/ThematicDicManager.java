@@ -23,14 +23,13 @@ import entities.Rubric;
 /**
  * 
  */
-public final class ThematicDicManager {
+public final class ThematicDicManager extends ThematicDicList {
 	
 	private static ThematicDicManager instance;
 	
-	private List<Rubric> thematicDicts = new ArrayList<Rubric>();
 	private Session session;
 	private SessionFactory sessions = HibernateUtil.getSessionFactory();
-	private Criteria crit;
+	//private Criteria crit;
 	private Transaction tx;
 
 	public static ThematicDicManager getInstance(){
@@ -49,11 +48,7 @@ public final class ThematicDicManager {
 		begin();
     	end();
 	}
-	
-	public List<Rubric> getAllDicts() {
-		return thematicDicts;
-	}	
-	
+		
 	public void addDic(Rubric thematicDic) throws Exception {
 		try{		
 			begin();
@@ -66,20 +61,20 @@ public final class ThematicDicManager {
     }
 
 	public Rubric getDic(int i) {
-		return thematicDicts.get(i);
+		return getAllDicts().get(i);
 	}
 
 	public void deleteDic(int dicIndex) {
 		// Каскадные удаления для -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
 		// http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#objectstate-transitive
 		begin();
-		session.delete(thematicDicts.get(dicIndex));
+		session.delete(getAllDicts().get(dicIndex));
 		end();
 	}
 	
 	public void renameDic(int dicIndex, String newName) {
 		begin();
-		thematicDicts.get(dicIndex).setName(newName);
+		getAllDicts().get(dicIndex).setName(newName);
 		end();
 	}
 	
@@ -94,10 +89,11 @@ public final class ThematicDicManager {
 	 * Обновляет список рубрик и закрывает транзакцию.
 	 */
 	private void end() {
-		thematicDicts.clear();
+		//thematicDicts.clear();
 		crit = session.createCriteria(Rubric.class); // создаем критерий //
 														// запроса
-		thematicDicts.addAll(crit.list());
+		//thematicDicts.addAll(crit.list());
+		refresh();
 		tx.commit();
 
 		session.flush();
@@ -111,6 +107,7 @@ public final class ThematicDicManager {
 	private void cancel(){
 		tx.rollback();
 		session.clear();
+		setListNotTracked();
 	}
 	
 	

@@ -94,7 +94,7 @@ public class ThematicDicManagerTest {
 	}
 	
 	@Test
-	public void testIsWorkAfterError(){
+	public void testIsWorkAddAfterError(){
 		tdm = ThematicDicManager.getInstance();
 		tdm.clearDb();
 
@@ -117,6 +117,29 @@ public class ThematicDicManagerTest {
 			System.out.println(r.toString());
 		}
 		assertThat(loaded.size(), is(2));
+
+	}
+
+	@Test
+	public void testIsWorkRenameAfterError(){
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDb();
+
+		try {
+			tdm.addDic("словарь1", true);
+			tdm.addDic("словарь1", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		tdm.renameDic(0, "словарь 333");
+		
+		// Утверждаю что эти словари загружаются...
+		List<Rubric> loaded = tdm.getAllDicts();
+		for (Rubric r : loaded){
+			System.out.println(r.toString());
+		}
+		assertThat(loaded.get(0).getName(), is("словарь 333"));
 
 	}
 
