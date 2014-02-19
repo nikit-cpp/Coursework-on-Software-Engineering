@@ -100,15 +100,18 @@ public final class ThematicDicManager extends ThematicDicList {
 
 	/**
 	 * Отмена транзакции и очистка сессии, вызывается перед rethrow
-	 * необрабатываемого (насл. java.lang.RunTimeException -> ConstraintViolationException)
-	 * в обрабатываемое (насл. java.lang.Exception).
+	 * необрабатываемого (насл. java.lang.RunTimeException ->
+	 * ConstraintViolationException) в обрабатываемое (насл.
+	 * java.lang.Exception).
 	 */
-	private void cancel(){
+	private void cancel() {
 		tx.rollback();
 		session.clear();
-		setListNotTracked();
-	}
-	
+		setListNotTracked(); // помечаем что лист неперь не отслеживается по
+								// причине очистки сессии, для того, чтобы при
+								// вызове getAllDicts() он был обновлён в
+								// соответствии с последним критерием
+	}	
 	
 	
 	
