@@ -54,10 +54,15 @@ public final class ThematicDicManager {
 		return thematicDicts;
 	}	
 	
-	public void addDic(Rubric thematicDic) {
-		begin();
-		session.save(thematicDic);
-		end();
+	public void addDic(Rubric thematicDic) throws Exception {
+		try{		
+			begin();
+			session.save(thematicDic);
+			end();
+		}catch(HibernateException e){
+			cancel();
+			throw new Exception(e.getMessage());
+		}
     }
 
 	public Rubric getDic(int i) {
@@ -79,14 +84,14 @@ public final class ThematicDicManager {
 	}
 	
 	/**
-	 * Стартует сессию
+	 * Стартует транзакцию
 	 */
 	private void begin(){
 		tx = session.beginTransaction();
 	}
 	
 	/**
-	 * Обновляет список рубрик и закрывает сессию.
+	 * Обновляет список рубрик и закрывает транзакцию.
 	 */
 	private void end() {
 		thematicDicts.clear();
@@ -98,7 +103,15 @@ public final class ThematicDicManager {
 		session.flush();
 	}	
 
-	
+	/**
+	 * Отмена транзакции и очистка сессии, вызывается перед rethrow
+	 * необрабатываемого (насл. java.lang.RunTimeException -> ConstraintViolationException)
+	 * в обрабатываемое (насл. java.lang.Exception).
+	 */
+	private void cancel(){
+		tx.rollback();
+		session.clear();
+	}
 	
 	
 	
@@ -109,7 +122,7 @@ public final class ThematicDicManager {
 	
 	
 
-	public void addDic(String dicname, boolean isEnabled){
+	public void addDic(String dicname, boolean isEnabled) throws Exception{
 		Rubric r = new Rubric(dicname, isEnabled);
 		addDic(r);
 	}

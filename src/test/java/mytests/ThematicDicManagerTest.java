@@ -92,5 +92,32 @@ public class ThematicDicManagerTest {
 
 		assertThat(loaded.get(eco), is(new Rubric("Новая Экология")));
 	}
+	
+	@Test
+	public void testIsWorkAfterError(){
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDb();
+
+		try {
+			tdm.addDic("словарь1", true);
+			tdm.addDic("словарь1", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+			tdm.addDic("словарь2", true);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		// Утверждаю что эти словари загружаются...
+		List<Rubric> loaded = tdm.getAllDicts();
+		for (Rubric r : loaded){
+			System.out.println(r.toString());
+		}
+		assertThat(loaded.size(), is(2));
+
+	}
 
 }

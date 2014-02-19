@@ -9,8 +9,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	LexerTest.class,
 	NormalizerTest.class,
 	DictionaryBuilderTest.class,
-	ThematicDicTest.class,
-	СalcProbabilityforDicTest.class,
+	//ThematicDicTest.class,
+	//СalcProbabilityforDicTest.class,
 	ThematicDicManagerTest.class
 })
 public class AllTests {
