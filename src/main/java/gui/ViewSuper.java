@@ -1,8 +1,12 @@
 package gui;
 
 import java.util.ArrayList;
+
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
+
 import engine.Engine;
 import entities.Rubric;
 
@@ -64,5 +68,18 @@ public abstract class ViewSuper implements Updateable {
 		for(Updateable u : upds){
 			u.updateThematicDictsTableImpl();
 		}
+	}
+	
+	public void showErrorWindow(Shell shell, Exception e){
+        int style = 0;
+        style |= SWT.ICON_ERROR;
+        style |= SWT.OK;
+
+        MessageBox mb = new MessageBox(shell, style);
+        mb.setText("Ошибка");
+        mb.setMessage(e.getMessage());
+        int val = mb.open();
+
+		e.printStackTrace();
 	}
 }

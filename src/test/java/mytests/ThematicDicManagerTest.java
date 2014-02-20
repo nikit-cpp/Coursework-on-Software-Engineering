@@ -94,7 +94,7 @@ public class ThematicDicManagerTest {
 	}
 	
 	@Test
-	public void testIsWorkAddAfterError(){
+	public void testIsWorkAddAfterErrorAdd(){
 		tdm = ThematicDicManager.getInstance();
 		tdm.clearDb();
 
@@ -121,7 +121,7 @@ public class ThematicDicManagerTest {
 	}
 
 	@Test
-	public void testIsWorkRenameAfterError(){
+	public void testIsWorkRenameAfterErrorAdd(){
 		tdm = ThematicDicManager.getInstance();
 		tdm.clearDb();
 
@@ -132,7 +132,10 @@ public class ThematicDicManagerTest {
 			e.printStackTrace();
 		}
 
-		tdm.renameDic(0, "словарь 333");
+		try {
+			tdm.renameDic(0, "словарь 333");
+		} catch (Exception e) {
+		}
 		
 		// Утверждаю что эти словари загружаются...
 		List<Rubric> loaded = tdm.getAllDicts();
@@ -142,5 +145,37 @@ public class ThematicDicManagerTest {
 		assertThat(loaded.get(0).getName(), is("словарь 333"));
 
 	}
+	
+	@Test
+	public void testIsWorkRenameAfterErrorRename(){
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDb();
+
+		try {
+			tdm.addDic("словарь0", true);
+			tdm.addDic("словарь1", true);
+			tdm.addDic("словарь2", true);
+		} catch (Exception e) {
+		}
+
+		try {
+			tdm.renameDic(0, "словарь2");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Утверждаю что эти словари загружаются...
+		List<Rubric> loaded = tdm.getAllDicts();
+		for (Rubric r : loaded){
+			System.out.println(r.toString());
+		}
+		assertThat(loaded.size(), is(3));
+		// Утверждаю что не появилось 2 одинаковых словаря
+		assertThat(loaded.get(0).getName(), is("словарь0"));
+		assertThat(loaded.get(1).getName(), is("словарь1"));
+		assertThat(loaded.get(2).getName(), is("словарь2"));
+
+	}
+
 
 }

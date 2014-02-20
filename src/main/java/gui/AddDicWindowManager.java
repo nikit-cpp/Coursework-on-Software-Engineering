@@ -26,16 +26,7 @@ public class AddDicWindowManager extends ViewSuper {
 		try {
 			engine.getTDM().addDic(dicname, false);
 		} catch (Exception e) {
-	        int style = 0;
-	        style |= SWT.ICON_ERROR;
-	        style |= SWT.OK;
-
-	        MessageBox mb = new MessageBox(shell, style);
-	        mb.setText("Ошибка");
-	        mb.setMessage(e.getMessage());
-	        int val = mb.open();
-
-			e.printStackTrace();
+			super.showErrorWindow(shell, e);
 		}
 	}
 

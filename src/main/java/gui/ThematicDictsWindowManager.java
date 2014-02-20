@@ -1,11 +1,14 @@
 package gui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MessageBox;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
 public class ThematicDictsWindowManager extends ViewSuper /*implements Updateable*/ {
 	private final Table tableContainsWords;
+	private final Shell shell;
 			
 	/**
 	 * Этот конструктор используется вместе с ThematicDictionaries
@@ -18,6 +21,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 		this.tableContainsWords=w.tableWords;
 		
 		super.createThematicDicTable(tableThematicDicts);
+		this.shell = w.shell;
 	}
 		
 	private void createContainsWordsTable(int selectedIndex) {
@@ -55,7 +59,11 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	}
 
 	public void renameDic(int dicIndex, String string) {
+		try {
 		engine.getTDM().renameDic(dicIndex, string);
+		} catch (Exception e) {
+			super.showErrorWindow(shell, e);
+		}
 		ViewSuper.updateThematicDictsTable();
 	}
 }

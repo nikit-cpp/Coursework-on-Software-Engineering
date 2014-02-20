@@ -49,7 +49,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	}
 		
 	public void addDic(Rubric thematicDic) throws Exception {
-		try{		
+		try{
 			begin();
 			session.save(thematicDic);
 			end();
@@ -64,17 +64,30 @@ public final class ThematicDicManager extends ThematicDicList {
 	}
 
 	public void deleteDic(int dicIndex) {
-		// Каскадные удаления для -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
+		// Каскадные удаления для Вероятностей -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
 		// http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#objectstate-transitive
 		begin();
 		session.delete(getAllDicts().get(dicIndex));
 		end();
 	}
 	
-	public void renameDic(int dicIndex, String newName) {
-		begin();
-		getAllDicts().get(dicIndex).setName(newName);
-		end();
+	/**
+	 * Переименовывает словарь
+	 * @param dicIndex индекс словаря в List
+	 * @param newName новое имя для словаря
+	 * @throws Exception
+	 */
+	public void renameDic(int dicIndex, String newName) throws Exception {
+		try{
+			begin();
+			Rubric dic = getAllDicts().get(dicIndex);
+
+			dic.setName(newName);
+			end();
+		}catch(HibernateException e){
+			cancel();
+			throw new Exception(e.getMessage());
+		}
 	}
 	
 	/**
@@ -103,15 +116,17 @@ public final class ThematicDicManager extends ThematicDicList {
 	 * необрабатываемого (насл. java.lang.RunTimeException ->
 	 * ConstraintViolationException) в обрабатываемое (насл.
 	 * java.lang.Exception). Очищает сессию и помечает лист недействительным(т.
-	 * к. сесия очищена - выборка по критерию теряет с ней связь), для его
+	 * к. сессия очищена - выборка по критерию теряет с ней связь), для его
 	 * последущего обновления при getAllDicts()
 	 */
-	private void cancel() {
+	private void cancel(/*Object object*/) {
 		tx.rollback();
 		session.clear(); // очищаем сессию, если этого не сделать, будет ошибка
 							// во время flush() не нарушающей uniqueConstraint
 							// рубрики, т. к. в сессии остался неправильный
 							// объект(нарушающий) с Id = null
+		//if(object!=null)
+		//session.evict(object); // удаляем заблудшую душу из сессии
 		markListNotTracked(); // помечаем что лист неперь не отслеживается по
 								// причине очистки сессии, для того, чтобы при
 								// вызове getAllDicts() он был обновлён в
