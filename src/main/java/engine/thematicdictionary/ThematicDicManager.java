@@ -59,16 +59,25 @@ public final class ThematicDicManager extends ThematicDicList {
 		}
     }
 
-	public Rubric getDic(int i) {
+	Rubric getDic(int i) {
 		return getAllDicts().get(i);
 	}
 
-	public void deleteDic(int dicIndex) {
+	public void deleteDic(int dicIndex) throws Exception {
 		// Каскадные удаления для Вероятностей -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
 		// http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#objectstate-transitive
-		begin();
-		session.delete(getAllDicts().get(dicIndex));
-		end();
+		try{
+			begin();
+			session.delete(getAllDicts().get(dicIndex));
+			end();
+		}catch(HibernateException e){
+			cancel();
+			throw new Exception(e.getMessage());
+		}catch(IndexOutOfBoundsException e){
+			cancel();
+			throw new Exception(e.getMessage());
+		}
+
 	}
 	
 	/**
@@ -85,6 +94,9 @@ public final class ThematicDicManager extends ThematicDicList {
 			dic.setName(newName);
 			end();
 		}catch(HibernateException e){
+			cancel();
+			throw new Exception(e.getMessage());
+		}catch(IndexOutOfBoundsException e){
 			cancel();
 			throw new Exception(e.getMessage());
 		}

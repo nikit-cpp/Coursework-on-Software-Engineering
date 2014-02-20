@@ -55,12 +55,16 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	}
 
 	void deleteDic(int dicIndex) {
-		engine.getTDM().deleteDic(dicIndex);
+		try {
+			engine.getTDM().deleteDic(dicIndex);
+		} catch (Exception e) {
+			super.showErrorWindow(shell, e);
+		}
 	}
 
 	public void renameDic(int dicIndex, String string) {
 		try {
-		engine.getTDM().renameDic(dicIndex, string);
+			engine.getTDM().renameDic(dicIndex, string);
 		} catch (Exception e) {
 			super.showErrorWindow(shell, e);
 		}

@@ -99,7 +99,7 @@ public class ThematicDictsWindow {
 			    	  
 					view.deleteDic(dicIndex);
 					ViewSuper.updateThematicDictsTable();
-				}catch(ArrayIndexOutOfBoundsException e){
+				/*}catch(ArrayIndexOutOfBoundsException e){*/
 				}catch(Exception e){
 		    		  e.printStackTrace();
 				}
@@ -154,7 +154,7 @@ public class ThematicDictsWindow {
 				text.setVisible(true);
 				
 				return;
-				}catch(ArrayIndexOutOfBoundsException e){
+				/*}catch(ArrayIndexOutOfBoundsException e){*/
 				}catch(Exception e){
 		    		  e.printStackTrace();
 				}

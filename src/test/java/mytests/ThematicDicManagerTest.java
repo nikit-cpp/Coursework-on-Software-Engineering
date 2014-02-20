@@ -177,5 +177,39 @@ public class ThematicDicManagerTest {
 
 	}
 
+	/**
+	 * 
+	 */
+	@Test
+	public void testIsWorkRenameAfterErrorDelete(){
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDb();
+
+		try {
+			tdm.addDic("словарь0", true);
+			tdm.addDic("словарь1", true);
+			tdm.addDic("словарь2", true);
+		} catch (Exception e) {
+		}
+
+		try {
+			tdm.deleteDic(-1);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		// Утверждаю что эти словари загружаются...
+		List<Rubric> loaded = tdm.getAllDicts();
+		for (Rubric r : loaded){
+			System.out.println(r.toString());
+		}
+		assertThat(loaded.size(), is(3));
+		// Утверждаю что не появилось 2 одинаковых словаря
+		assertThat(loaded.get(0).getName(), is("словарь0"));
+		assertThat(loaded.get(1).getName(), is("словарь1"));
+		assertThat(loaded.get(2).getName(), is("словарь2"));
+
+	}
+
 
 }
