@@ -20,6 +20,10 @@ import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.widgets.MenuItem;
+import org.eclipse.swt.events.FocusAdapter;
+import org.eclipse.swt.events.FocusEvent;
+import org.eclipse.swt.events.MouseAdapter;
+import org.eclipse.swt.events.MouseEvent;
 
 public class ThematicDictsWindow {
 	private Display display;
@@ -30,6 +34,7 @@ public class ThematicDictsWindow {
 	private TableColumn tableColumn;
 	private TableColumn tableColumn_1;
 	private TableColumn tableColumn_2;
+	MenuItem[] turnableContextMenuItems;
 	
 	ThematicDictsWindow(Display display){
 		this.display=display;
@@ -66,11 +71,18 @@ public class ThematicDictsWindow {
 		SashForm sashForm = new SashForm(shell, SWT.NONE);
 		
 		tableDicts = new Table(sashForm, SWT.BORDER | SWT.FULL_SELECTION);
+		tableDicts.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseUp(MouseEvent arg0) {
+				view.updateContextMenuVisible();
+			}
+		});
 		tableDicts.addSelectionListener(new SelectionAdapter() {
 		      public void widgetSelected(SelectionEvent e) {
 		    	  //System.out.println(tableDicts.getSelectionIndex());
 		    	  //view.createContainsWordsTable(tableDicts.getSelectionIndex());
 		    	  view.updateContainingWordsImpl();
+		    	  //view.updateContextMenuVisible();
 		      }
 		});
 		tableDicts.setHeaderVisible(true);
@@ -202,6 +214,9 @@ public class ThematicDictsWindow {
 		    	  }
 		      }
 		    });
+		turnableContextMenuItems = new MenuItem[2];
+		turnableContextMenuItems[0] = mntmRenameDic;
+		turnableContextMenuItems[1] = mntmDelDic;
 		
 		sashForm.setWeights(new int[] {1, 1});
 	}

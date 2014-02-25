@@ -1,6 +1,7 @@
 package gui;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.MenuItem;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
@@ -9,7 +10,8 @@ import org.eclipse.swt.widgets.TableItem;
 public class ThematicDictsWindowManager extends ViewSuper /*implements Updateable*/ {
 	private final Table tableContainsWords;
 	private final Shell shell;
-			
+	private final MenuItem[] turnableContextMenuItems;
+	
 	/**
 	 * Этот конструктор используется вместе с ThematicDictionaries
 	 * @param w
@@ -22,6 +24,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 		
 		super.createThematicDicTable(tableThematicDicts);
 		this.shell = w.shell;
+		turnableContextMenuItems  =w.turnableContextMenuItems;
 	}
 		
 	private void createContainsWordsTable(int selectedIndex) {
@@ -69,5 +72,13 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 			super.showErrorWindow(shell, e);
 		}
 		ViewSuper.updateThematicDictsTable();
+	}
+
+	public void updateContextMenuVisible() {
+		System.out.println("updateContextMenuVisible()");
+		boolean needEnable = tableThematicDicts.getSelectionIndex() != -1;
+
+		for(MenuItem m : turnableContextMenuItems)
+			m.setEnabled(needEnable);
 	}
 }
