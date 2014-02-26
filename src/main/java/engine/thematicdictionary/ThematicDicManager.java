@@ -19,7 +19,9 @@ import org.hibernate.persister.entity.AbstractEntityPersister;
 
 import util.HibernateUtil;
 import engine.foundedwords.WordInfo;
+import entities.Probability;
 import entities.Rubric;
+import entities.Word;
 /**
  * 
  */
@@ -160,8 +162,17 @@ public final class ThematicDicManager extends ThematicDicList {
 		this.getDic(index).setDicEnabled(b);
 	}
 
+	
+	
 	public void addWord(int dicIndex, String word, double probability){
-		//this.getDic(dicIndex).addWord(word, probability);
+		//getDic(dicIndex).addWord(word, probability);
+		begin();
+		Word w = new Word("тестовое слово");
+		session.save(w);
+		Probability p = new Probability(probability, w);
+		session.save(p);
+		getDic(dicIndex).getProbabilitys().add(p);
+		end();
 	}
 	
 	public void deleteWord(String word, int dicIndex) {
