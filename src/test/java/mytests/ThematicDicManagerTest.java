@@ -2,12 +2,8 @@ package mytests;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
-
-import java.io.File;
 import java.util.List;
-
 import org.junit.*;
-
 import engine.thematicdictionary.*;
 import entities.Rubric;
 

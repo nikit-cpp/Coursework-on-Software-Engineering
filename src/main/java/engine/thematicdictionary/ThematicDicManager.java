@@ -14,6 +14,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
 
@@ -30,7 +31,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	private static ThematicDicManager instance;
 	
 	private Session session;
-	private SessionFactory sessions = HibernateUtil.getSessionFactory();
+	private SessionFactory sessions;
 	private Transaction tx;
 
 	public static ThematicDicManager getInstance(){
@@ -45,9 +46,17 @@ public final class ThematicDicManager extends ThematicDicList {
 	 * Конструктор
 	 */
 	private ThematicDicManager(){
-		session = sessions.openSession();
+		//session = sessions.openSession();
+		open();
+		
 		begin();
     	end();
+	}
+	
+	/**
+	 * Use in tests  only
+	 */
+	public ThematicDicManager(int thisIsNoSingleton){
 	}
 		
 	public void addDic(Rubric thematicDic) throws Exception {
@@ -164,11 +173,28 @@ public final class ThematicDicManager extends ThematicDicList {
 
 	
 	
-	public void addWord(int dicIndex, String word, double probability){
-		//getDic(dicIndex).addWord(word, probability);
+	public void addWord(int dicIndex, String word, double probability) {
+		// getDic(dicIndex).addWord(word, probability);
 		begin();
-		Word w = new Word("тестовое слово");
-		session.save(w);
+		Word w = null;
+		try {
+			w = new Word(word);
+			session.save(w);
+		} catch (ConstraintViolationException c) {
+			try{
+				session.evict(w);
+			}catch(Exception e){ }
+			List<Word> list = session.createCriteria(Word.class).list();
+			long index = 0;
+			for(Word e : list){
+				index = e.getWordId();
+				if(e.getWord().equals(word))
+					break;
+			}
+			System.out.println("index = " + index);
+			w = (Word) session.get(Word.class, index);
+			System.out.println("Word for this index:" + w);
+		}
 		Probability p = new Probability(probability, w);
 		session.save(p);
 		getDic(dicIndex).getProbabilitys().add(p);
@@ -272,14 +298,42 @@ public final class ThematicDicManager extends ThematicDicList {
 	}
 
 	/**
+	 * Открывает фабрику сессий и сессию
+	 */
+	private void open(){
+		sessions = HibernateUtil.getSessionFactory();
+		session = sessions.openSession();
+	}
+	
+	/**
 	 * Закрытие фабрики сессий, влекущее за собой закрытие соединения с БД.
 	 */
 	public void terminate() {
 		session.close();
 		sessions.close();
 	}
+
+
+	/**
+	 * Use in tests  only
+	 */
+	public void setSessions(SessionFactory sessions) {
+		this.sessions=sessions;
+	}
+
+	/**
+	 * Use in tests  only
+	 */
+	public void setSession(Session session) {
+		this.session = session;
+	}
 }
 
+/**
+ * Класс, обслуживающий список рубрик
+ * @author Ник
+ *
+ */
 class ThematicDicList {
 	private boolean isTracked = true;
 	private List<Rubric> thematicDicts = new ArrayList<Rubric>();
