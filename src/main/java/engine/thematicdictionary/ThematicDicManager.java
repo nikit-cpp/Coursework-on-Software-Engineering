@@ -14,6 +14,7 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.criterion.Example;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.metadata.ClassMetadata;
 import org.hibernate.persister.entity.AbstractEntityPersister;
@@ -184,14 +185,9 @@ public final class ThematicDicManager extends ThematicDicList {
 			try{
 				session.evict(w);
 			}catch(Exception e){ }
-			List<Word> list = session.createCriteria(Word.class).list();
-			long index = 0;
-			for(Word e : list){
-				index = e.getWordId();
-				if(e.getWord().equals(word))
-					break;
-			}
-			System.out.println("index = " + index);
+
+			List<Word> list = session.createCriteria(Word.class).add(Example.create(w)).list();
+			long index = list.get(0).getWordId();
 			w = (Word) session.get(Word.class, index);
 			System.out.println("Word for this index:" + w);
 		}
@@ -237,7 +233,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	/**
 	 * Очистка БД -- Удаляет содержимое всех таблиц
 	 */
-	public void clearDb() {
+	public void clearDbSQL() {
 		System.out.println("Очистка БД...");
 
 		Map<String, ClassMetadata> m = HibernateUtil.getSessionFactory().getAllClassMetadata();

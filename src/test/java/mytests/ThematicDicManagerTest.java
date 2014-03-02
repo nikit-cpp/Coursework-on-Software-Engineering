@@ -18,7 +18,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testAdd() throws Exception {		
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
@@ -38,7 +38,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testRemove() throws Exception {		
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
@@ -65,7 +65,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testRename() throws Exception {		
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
@@ -92,7 +92,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testIsWorkAddAfterErrorAdd(){
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 
 		try {
 			tdm.addDic("словарь1", true);
@@ -119,7 +119,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testIsWorkRenameAfterErrorAdd(){
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 
 		try {
 			tdm.addDic("словарь1", true);
@@ -145,7 +145,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testIsWorkRenameAfterErrorRename(){
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 
 		try {
 			tdm.addDic("словарь0", true);
@@ -179,7 +179,7 @@ public class ThematicDicManagerTest {
 	@Test
 	public void testIsWorkRenameAfterErrorDelete(){
 		tdm = ThematicDicManager.getInstance();
-		tdm.clearDb();
+		tdm.clearDbSQL();
 
 		try {
 			tdm.addDic("словарь0", true);
