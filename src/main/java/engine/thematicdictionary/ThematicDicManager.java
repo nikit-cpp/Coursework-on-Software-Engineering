@@ -187,12 +187,11 @@ public final class ThematicDicManager extends ThematicDicList {
 			try{
 				session.evict(w); // Приказвываем сессии забыть об объекте w
 			}catch(Exception e){ }
-			// Далее, мы должны получить из БД идентификатор вышеупомянутого слова
+			// Далее, мы должны получить из БД вышеупомянутое слово
 			// Запрашиваем список слов, у которых поле word совпадает с таковым в объекте w
 			List<Word> list = session.createCriteria(Word.class).add(Example.create(w)).list();
-			// учитывая ограничение уникальности Word.word, список состоит из 1-го элемента, у которого мы получаем нужный нам Id
-			long index = list.get(0).getWordId();
-			w = (Word) session.get(Word.class, index);
+			// учитывая ограничение уникальности Word.word, список состоит из 1-го элемента, который является нужным нам словом
+			w = list.get(0);
 			System.out.println("Word for this index:" + w);
 		}
 		Probability p = new Probability(probability, getDic(dicIndex), w);
