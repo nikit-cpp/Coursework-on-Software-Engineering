@@ -195,7 +195,7 @@ public final class ThematicDicManager extends ThematicDicList {
 			w = (Word) session.get(Word.class, index);
 			System.out.println("Word for this index:" + w);
 		}
-		Probability p = new Probability(probability, w);
+		Probability p = new Probability(probability, getDic(dicIndex), w);
 		session.save(p);
 		getDic(dicIndex).getProbabilitys().add(p);
 		end();
