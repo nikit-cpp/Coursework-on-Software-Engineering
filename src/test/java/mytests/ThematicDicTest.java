@@ -44,4 +44,27 @@ public class ThematicDicTest {
 		tdm.addDic("Алгебра+", true);
 		tdm.addWord(1, "атом", 0.1);
 	}
+	
+	@Test(expected=ThematicDicManagerException.class)
+	public void testAddFailSafe1() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		tdm.addDic("ФизикаСловарьТест", true);
+		//try{
+			tdm.addWord(0, "атом", 0.33);
+			tdm.addWord(0, "атом", 0.1);
+		/*}catch(Exception e){
+			
+		}*/
+	}
+	
+	@Test(expected=ThematicDicManagerException.class)
+	public void testAddFailSafe2() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(0, "атом", 0.8);
+		tdm.addWord(0, "атом", 0.8);
+	}
+
 }

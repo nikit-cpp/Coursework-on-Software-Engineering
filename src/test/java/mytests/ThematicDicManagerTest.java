@@ -2,8 +2,11 @@ package mytests;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.*;
+
 import java.util.List;
+
 import org.junit.*;
+
 import engine.thematicdictionary.*;
 import entities.Rubric;
 
@@ -97,13 +100,13 @@ public class ThematicDicManagerTest {
 		try {
 			tdm.addDic("словарь1", true);
 			tdm.addDic("словарь1", true);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			e.printStackTrace();
 		}
 
 		try {
 			tdm.addDic("словарь2", true);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			e.printStackTrace();
 		}
 
@@ -124,13 +127,13 @@ public class ThematicDicManagerTest {
 		try {
 			tdm.addDic("словарь1", true);
 			tdm.addDic("словарь1", true);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			e.printStackTrace();
 		}
 
 		try {
 			tdm.renameDic(0, "словарь 333");
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 		}
 		
 		// Утверждаю что эти словари загружаются...
@@ -151,12 +154,12 @@ public class ThematicDicManagerTest {
 			tdm.addDic("словарь0", true);
 			tdm.addDic("словарь1", true);
 			tdm.addDic("словарь2", true);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 		}
 
 		try {
 			tdm.renameDic(0, "словарь2");
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			e.printStackTrace();
 		}
 		
@@ -185,12 +188,12 @@ public class ThematicDicManagerTest {
 			tdm.addDic("словарь0", true);
 			tdm.addDic("словарь1", true);
 			tdm.addDic("словарь2", true);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 		}
 
 		try {
 			tdm.deleteDic(-1);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			e.printStackTrace();
 		}
 		
@@ -206,6 +209,4 @@ public class ThematicDicManagerTest {
 		assertThat(loaded.get(2).getName(), is("словарь2"));
 
 	}
-
-
 }

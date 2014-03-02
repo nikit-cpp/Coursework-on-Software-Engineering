@@ -57,17 +57,16 @@ public final class ThematicDicManager extends ThematicDicList {
 	/**
 	 * Use in tests  only
 	 */
-	public ThematicDicManager(int thisIsNoSingleton){
-	}
+	public ThematicDicManager(int thisIsNoSingleton){}
 		
-	public void addDic(Rubric thematicDic) throws Exception {
+	public void addDic(Rubric thematicDic) throws ThematicDicManagerException {
 		try{
 			begin();
 			session.save(thematicDic);
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new Exception(e.getMessage());
+			throw new ThematicDicManagerException(e.getMessage());
 		}
     }
 
@@ -75,7 +74,7 @@ public final class ThematicDicManager extends ThematicDicList {
 		return getAllDicts().get(i);
 	}
 
-	public void deleteDic(int dicIndex) throws Exception {
+	public void deleteDic(int dicIndex) throws ThematicDicManagerException {
 		// Каскадные удаления для Вероятностей -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
 		// http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#objectstate-transitive
 		try{
@@ -84,12 +83,11 @@ public final class ThematicDicManager extends ThematicDicList {
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new Exception(e.getMessage());
+			throw new ThematicDicManagerException(e.getMessage());
 		}catch(IndexOutOfBoundsException e){
 			cancel();
-			throw new Exception(e.getMessage());
+			throw new ThematicDicManagerException(e.getMessage());
 		}
-
 	}
 	
 	/**
@@ -98,7 +96,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	 * @param newName новое имя для словаря
 	 * @throws Exception
 	 */
-	public void renameDic(int dicIndex, String newName) throws Exception {
+	public void renameDic(int dicIndex, String newName) throws ThematicDicManagerException {
 		try{
 			begin();
 			Rubric dic = getAllDicts().get(dicIndex);
@@ -107,10 +105,10 @@ public final class ThematicDicManager extends ThematicDicList {
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new Exception(e.getMessage());
+			throw new ThematicDicManagerException(e.getMessage());
 		}catch(IndexOutOfBoundsException e){
 			cancel();
-			throw new Exception(e.getMessage());
+			throw new ThematicDicManagerException(e.getMessage());
 		}
 	}
 	
@@ -163,7 +161,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	
 	
 
-	public void addDic(String dicname, boolean isEnabled) throws Exception{
+	public void addDic(String dicname, boolean isEnabled) throws ThematicDicManagerException{
 		Rubric r = new Rubric(dicname, isEnabled);
 		addDic(r);
 	}
@@ -174,34 +172,47 @@ public final class ThematicDicManager extends ThematicDicList {
 
 	
 	
-	@SuppressWarnings("unchecked")
-	public void addWord(int dicIndex, String word, double probability) {
-		// getDic(dicIndex).addWord(word, probability);
-		begin();
-		Word w = null;
+	public void addWord(int dicIndex, String word, double probability) throws ThematicDicManagerException {
 		try {
-			w = new Word(word);
-			session.save(w); // Пытаемся сохранить w в БД
-		} catch (ConstraintViolationException c) {
-			// Если мы поймали искючение нарушения ограничений, значит(см. Word.java), в БД уже сохранено такое слово
-			try{
-				session.evict(w); // Приказвываем сессии забыть об объекте w
-			}catch(Exception e){ }
-			// Далее, мы должны получить из БД вышеупомянутое слово
-			// Запрашиваем список слов, у которых поле word совпадает с таковым в объекте w
-			List<Word> list = session.createCriteria(Word.class).add(Example.create(w)).list();
-			// учитывая ограничение уникальности Word.word, список состоит из 1-го элемента, который является нужным нам словом
-			w = list.get(0);
-			System.out.println("Word for this index:" + w);
+			begin();
+			Word w = null;
+			try {
+				w = new Word(word);
+				session.save(w); // Пытаемся сохранить w в БД
+			} catch (ConstraintViolationException c) {
+				// Если мы поймали искючение нарушения ограничений, значит(см.
+				// Word.java), в БД уже сохранено такое слово
+				try {
+					session.evict(w); // Приказвываем сессии забыть об объекте w
+				} catch (Exception e) {
+				}
+				// Далее, мы должны получить из БД вышеупомянутое слово
+				// Запрашиваем список слов, у которых поле word совпадает с
+				// таковым в объекте w
+				List<Word> list = session.createCriteria(Word.class)
+						.add(Example.create(w)).list();
+				// учитывая ограничение уникальности Word.word, список состоит
+				// из 1-го элемента, который является нужным нам словом
+				w = list.get(0);
+				System.out.println("Word for this index:" + w);
+			}
+			Probability p = new Probability(probability, getDic(dicIndex), w);
+			session.save(p);
+			getDic(dicIndex).getProbabilitys().add(p);
+			end();
+		}catch(HibernateException e){
+			cancel();
+			throw new ThematicDicManagerException(e.getMessage());
+		}catch(IndexOutOfBoundsException e){
+			cancel();
+			throw new ThematicDicManagerException(e.getMessage());
 		}
-		Probability p = new Probability(probability, getDic(dicIndex), w);
-		session.save(p);
-		getDic(dicIndex).getProbabilitys().add(p);
-		end();
 	}
 	
-	public void deleteWord(String word, int dicIndex) {
-		//this.getDic(dicIndex).deleteWord(word);
+	public void deleteWord(int wordIndex, int dicIndex) {
+		begin();
+		getDic(dicIndex).getProbabilitys().remove(wordIndex);
+		end();
 	}
 	
 	/**

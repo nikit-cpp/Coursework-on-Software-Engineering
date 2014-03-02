@@ -106,15 +106,15 @@ public class ThematicDictsWindow {
 		MenuItem mntmDelDic = new MenuItem(menuDicts, SWT.NONE);
 		mntmDelDic.addListener(SWT.Selection, new Listener() {
 			public void handleEvent(Event event) {
-				try{
+				//try{
 					final int dicIndex = tableDicts.getSelectionIndex();
 			    	  
 					view.deleteDic(dicIndex);
 					ViewSuper.updateThematicDictsTable();
 				/*}catch(ArrayIndexOutOfBoundsException e){*/
-				}catch(Exception e){
+				/*}catch(Exception e){
 		    		  e.printStackTrace();
-				}
+				}*/
 			}
 		});
 		mntmDelDic.setText("Удалить словарь");
@@ -201,17 +201,17 @@ public class ThematicDictsWindow {
 		menuItemDeleteWord.setText("Удалить");
 		menuItemDeleteWord.addListener(SWT.Selection, new Listener() {
 		      public void handleEvent(Event event) {
-		    	  try{
-			    	  final String word = tableWords.getItem(tableWords.getSelectionIndex()).getText(0);
+		    	  //try{
+		    		  final int wordIndex = tableWords.getSelectionIndex();
 			    	  final int dicIndex = tableDicts.getSelectionIndex();
 			    	  
-			    	  view.deleteWord(word, dicIndex);
+			    	  view.deleteWord(wordIndex, dicIndex);
 			    	  //view.updateContainingWords();
 			    	  ViewSuper.updateContainingWords();
-		    	  }catch(ArrayIndexOutOfBoundsException e){
+		    	  /*}catch(ArrayIndexOutOfBoundsException e){
 		    	  }catch(Exception e){
 		    		  e.printStackTrace();
-		    	  }
+		    	  }*/
 		      }
 		    });
 		turnableContextMenuItems = new MenuItem[2];

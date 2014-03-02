@@ -1,13 +1,17 @@
 package gui;
 
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
+
 import engine.thematicdictionary.ThematicDicManager;
+import engine.thematicdictionary.ThematicDicManagerException;
 
 public class AddWordWindowManager extends ViewSuper {
 	private final Text txtProbability;
 	private final Text textAddableWord;
 	private final Button btnAdd;
+	private final Shell shell;
 	
 	AddWordWindowManager(AddWordWindow addWord) {
 		super();
@@ -16,7 +20,7 @@ public class AddWordWindowManager extends ViewSuper {
 		this.btnAdd=addWord.btnAdd;
 		this.txtProbability=addWord.textProbability;
 		this.textAddableWord=addWord.textAddableWord;
-		
+		this.shell = addWord.shell;
 		super.createThematicDicTable(tableThematicDicts);
 	}
 	
@@ -46,8 +50,8 @@ public class AddWordWindowManager extends ViewSuper {
 	void addWord() {
 		try{
 			engine.getTDM().addWord(tableThematicDicts.getSelectionIndex(), textAddableWord.getText(), Double.parseDouble(txtProbability.getText()));
-		}catch(ArrayIndexOutOfBoundsException e){
-			
+		}catch(ThematicDicManagerException e){
+			super.showErrorWindow(shell, e);
 		}
 	}
 

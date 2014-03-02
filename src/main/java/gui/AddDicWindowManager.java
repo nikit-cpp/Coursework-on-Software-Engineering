@@ -7,6 +7,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import engine.thematicdictionary.ThematicDicManager;
+import engine.thematicdictionary.ThematicDicManagerException;
 
 public class AddDicWindowManager extends ViewSuper {
 	private final Text name;
@@ -25,7 +26,7 @@ public class AddDicWindowManager extends ViewSuper {
 		
 		try {
 			engine.getTDM().addDic(dicname, false);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			super.showErrorWindow(shell, e);
 		}
 	}

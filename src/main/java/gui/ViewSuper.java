@@ -80,6 +80,6 @@ public abstract class ViewSuper implements Updateable {
         mb.setMessage(e.getMessage());
         int val = mb.open();
 
-		e.printStackTrace();
+		//e.printStackTrace();
 	}
 }

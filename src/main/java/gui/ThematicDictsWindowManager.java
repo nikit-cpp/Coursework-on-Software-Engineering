@@ -7,6 +7,8 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableItem;
 
+import engine.thematicdictionary.ThematicDicManagerException;
+
 public class ThematicDictsWindowManager extends ViewSuper /*implements Updateable*/ {
 	private final Table tableContainsWords;
 	private final Shell shell;
@@ -38,10 +40,16 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 		}
 	}
 	
-	void deleteWord(String word, int dicIndex) {
+	void deleteWord(int wordIndex, int dicIndex) {
+		try{
 		final String dic = tableThematicDicts.getItem(dicIndex).getText();
+		final String word = tableContainsWords.getItem(wordIndex).getText(0);
 		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word);
-		engine.getTDM().deleteWord(word, dicIndex);
+		engine.getTDM().deleteWord(wordIndex, dicIndex);
+		}catch(ArrayIndexOutOfBoundsException e){
+  	  }catch(Exception e){
+  		  e.printStackTrace();
+  	  }
 	}
 
 	@Override
@@ -60,7 +68,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	void deleteDic(int dicIndex) {
 		try {
 			engine.getTDM().deleteDic(dicIndex);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			super.showErrorWindow(shell, e);
 		}
 	}
@@ -68,7 +76,7 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 	public void renameDic(int dicIndex, String string) {
 		try {
 			engine.getTDM().renameDic(dicIndex, string);
-		} catch (Exception e) {
+		} catch (ThematicDicManagerException e) {
 			super.showErrorWindow(shell, e);
 		}
 		ViewSuper.updateThematicDictsTable();
