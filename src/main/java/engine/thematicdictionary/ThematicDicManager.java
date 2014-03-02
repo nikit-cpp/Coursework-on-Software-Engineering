@@ -174,19 +174,23 @@ public final class ThematicDicManager extends ThematicDicList {
 
 	
 	
+	@SuppressWarnings("unchecked")
 	public void addWord(int dicIndex, String word, double probability) {
 		// getDic(dicIndex).addWord(word, probability);
 		begin();
 		Word w = null;
 		try {
 			w = new Word(word);
-			session.save(w);
+			session.save(w); // Пытаемся сохранить w в БД
 		} catch (ConstraintViolationException c) {
+			// Если мы поймали искючение нарушения ограничений, значит(см. Word.java), в БД уже сохранено такое слово
 			try{
-				session.evict(w);
+				session.evict(w); // Приказвываем сессии забыть об объекте w
 			}catch(Exception e){ }
-
+			// Далее, мы должны получить из БД идентификатор вышеупомянутого слова
+			// Запрашиваем список слов, у которых поле word совпадает с таковым в объекте w
 			List<Word> list = session.createCriteria(Word.class).add(Example.create(w)).list();
+			// учитывая ограничение уникальности Word.word, список состоит из 1-го элемента, у которого мы получаем нужный нам Id
 			long index = list.get(0).getWordId();
 			w = (Word) session.get(Word.class, index);
 			System.out.println("Word for this index:" + w);
