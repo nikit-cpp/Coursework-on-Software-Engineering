@@ -67,4 +67,14 @@ public class ThematicDicTest {
 		tdm.addWord(0, "атом", 0.8);
 	}
 
+	@Test
+	public void testDelWord() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(0, "атом", 0.8);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
+		tdm.deleteWord(0, 0);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+	}
 }

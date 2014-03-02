@@ -211,6 +211,13 @@ public final class ThematicDicManager extends ThematicDicList {
 	
 	public void deleteWord(int wordIndex, int dicIndex) {
 		begin();
+		// Удаляем вероятность
+		Probability p = (Probability) getDic(dicIndex).getProbabilitys().get(wordIndex);
+		session.delete(p);
+		end();
+		
+		begin();
+		// Удаляем ссылку словаря на вероятность
 		getDic(dicIndex).getProbabilitys().remove(wordIndex);
 		end();
 	}
