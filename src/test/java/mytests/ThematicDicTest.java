@@ -77,4 +77,28 @@ public class ThematicDicTest {
 		tdm.deleteWord(0, 0);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
 	}
+	
+	@Test
+	public void testDel2Word() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(0, "атом", 0.8);
+		tdm.addWord(0, "мегаатом", 0.8);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(2));
+		tdm.deleteWord(1, 0);
+		tdm.deleteWord(0, 0);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+	}
+	
+	@Test(expected=ThematicDicManagerException.class)
+	public void testDelWordNonExists() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(0, "атом", 0.8);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
+		tdm.deleteWord(1, 0);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+	}
 }

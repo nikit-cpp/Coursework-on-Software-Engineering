@@ -44,12 +44,15 @@ public class ThematicDictsWindowManager extends ViewSuper /*implements Updateabl
 		try{
 		final String dic = tableThematicDicts.getItem(dicIndex).getText();
 		final String word = tableContainsWords.getItem(wordIndex).getText(0);
-		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word);
+		System.out.println("удаляем "+dic+"("+dicIndex+"): "+word + "(" + wordIndex + ")");
 		engine.getTDM().deleteWord(wordIndex, dicIndex);
-		}catch(ArrayIndexOutOfBoundsException e){
-  	  }catch(Exception e){
-  		  e.printStackTrace();
-  	  }
+  	  
+  	  }catch(ThematicDicManagerException e){
+  		  super.showErrorWindow(shell, e);
+  	  }catch(IndexOutOfBoundsException e){}
+		catch(IllegalArgumentException i){
+			
+		}
 	}
 
 	@Override

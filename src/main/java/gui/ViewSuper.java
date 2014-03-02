@@ -67,6 +67,7 @@ public abstract class ViewSuper implements Updateable {
 	public static void updateThematicDictsTable() {
 		for(Updateable u : upds){
 			u.updateThematicDictsTableImpl();
+			u.updateContainingWordsImpl();
 		}
 	}
 	

@@ -209,17 +209,19 @@ public final class ThematicDicManager extends ThematicDicList {
 		}
 	}
 	
-	public void deleteWord(int wordIndex, int dicIndex) {
-		begin();
-		// Удаляем вероятность
-		Probability p = (Probability) getDic(dicIndex).getProbabilitys().get(wordIndex);
-		session.delete(p);
-		end();
-		
-		begin();
-		// Удаляем ссылку словаря на вероятность
-		getDic(dicIndex).getProbabilitys().remove(wordIndex);
-		end();
+	public void deleteWord(int wordIndex, int dicIndex) throws ThematicDicManagerException {
+		try {
+			begin();
+			// Удаляем элемент коллекции, см. Cascade в Rubric.java
+			getDic(dicIndex).getProbabilitys().remove(wordIndex);
+			end();
+		}catch(HibernateException e){
+			cancel();
+			throw new ThematicDicManagerException(e.getMessage());
+		}catch(IndexOutOfBoundsException e){
+			cancel();
+			throw new ThematicDicManagerException("Неверный индекс");
+		}
 	}
 	
 	/**
