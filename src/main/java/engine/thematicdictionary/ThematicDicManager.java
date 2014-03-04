@@ -66,7 +66,7 @@ public final class ThematicDicManager extends ThematicDicList {
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}
     }
 
@@ -75,18 +75,21 @@ public final class ThematicDicManager extends ThematicDicList {
 	}
 
 	public void deleteDic(int dicIndex) throws ThematicDicManagerException {
-		// Каскадные удаления для Вероятностей -- применять(дописать в класс Rubric), когда в Рубриках появятся Вероятности
-		// http://docs.jboss.org/hibernate/orm/4.3/manual/en-US/html_single/#objectstate-transitive
 		try{
 			begin();
-			session.delete(getAllDicts().get(dicIndex));
+			Rubric r = getAllDicts().get(dicIndex);
+			
+			for(int i = r.getProbabilitys().size() - 1; i>=0; i--){
+				probabilityAndWordDelete(r, i);
+			}
+			session.delete(r);
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}catch(IndexOutOfBoundsException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}
 	}
 	
@@ -105,10 +108,10 @@ public final class ThematicDicManager extends ThematicDicList {
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}catch(IndexOutOfBoundsException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}
 	}
 	
@@ -142,6 +145,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	 * последущего обновления при getAllDicts()
 	 */
 	private void cancel(/*Object object*/) {
+		System.out.println("rollback...");
 		tx.rollback();
 		session.clear(); // очищаем сессию, если этого не сделать, будет ошибка
 							// во время flush() не нарушающей uniqueConstraint
@@ -203,38 +207,56 @@ public final class ThematicDicManager extends ThematicDicList {
 			end();
 		}catch(HibernateException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}catch(IndexOutOfBoundsException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}
 	}
 	
+	/**
+	 * Удаляет вероятность - всегда, слово - только если не него больше нет ссылок из вероятностей
+	 * @param wordIndex - индекс слова-вероятности в списке
+	 * @param dicIndex - индекс словаря-рубрики в списке
+	 * @throws ThematicDicManagerException
+	 */
 	public void deleteWord(int wordIndex, int dicIndex) throws ThematicDicManagerException {
 		try {
 			begin();
-			// Удаляем вероятность - элемент коллекции, см. Cascade в Rubric.java
-			Probability p  = (Probability) getDic(dicIndex).getProbabilitys().get(wordIndex);
+			
+			/*Probability p = (Probability) getDic(dicIndex).getProbabilitys().get(wordIndex);
 			Word w = p.getWord();
+			w.getProbabilitys().remove(p);
+			if(w.getProbabilitys().size()==0)
+				session.delete(w);
 			
-			// если у слова > 1 вероятности (мы не будем его удалять из таблицы слов)
-			if(w.getProbabilitys().size()>1){
-				w.getProbabilitys().remove(p); // обновляем вероятности слова
-				p.setWord(null); // то мы отцепляем это слово от удаляемой вероятности, чтобы каскадно не удалить это слово
-			}
-			
-			getDic(dicIndex).getProbabilitys().remove(p);
+			getDic(dicIndex).getProbabilitys().remove(p);*/
+			probabilityAndWordDelete(getDic(dicIndex), wordIndex);
 			end();
 			
 		}catch(HibernateException e){
 			cancel();
-			throw new ThematicDicManagerException(e.getMessage());
+			throw new ThematicDicManagerException(e);
 		}catch(IndexOutOfBoundsException e){
 			cancel();
-			throw new ThematicDicManagerException("Неверный индекс");
+			throw new ThematicDicManagerException(e);
 		}
 	}
 	
+	/**
+	 * удаление всех вероятностей, и слов, которые остались без вероятностей
+	 * @param r
+	 * @param wordIndex
+	 */
+	private void probabilityAndWordDelete(Rubric r, int wordIndex){
+		Probability p = (Probability) r.getProbabilitys().get(wordIndex);
+		Word w = p.getWord();
+		w.getProbabilitys().remove(p);
+		if(w.getProbabilitys().size()==0)
+			session.delete(w);
+		
+		r.getProbabilitys().remove(p);
+	}
 	
 	
 	public List<Probability> getAllProbabilitys(){

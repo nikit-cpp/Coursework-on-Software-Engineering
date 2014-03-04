@@ -8,7 +8,9 @@ import java.util.List;
 import org.junit.*;
 
 import engine.thematicdictionary.*;
+import entities.Probability;
 import entities.Rubric;
+import entities.Word;
 
 public class ThematicDicManagerTest {
 	static ThematicDicManager tdm;
@@ -63,6 +65,40 @@ public class ThematicDicManagerTest {
 			tdm.deleteDic(i);
 		}
 		assertThat(loaded.size(), is(0));
+	}
+	
+	@Test
+	public void testRemoveProbabilitysAndWords() throws Exception {		
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(0, "атом", 0.833);
+		tdm.addWord(0, "производная", 0.13);
+		
+		tdm.addDic("АлгебраСловарьТест", true);
+		tdm.addWord(1, "производная", 0.77);
+		tdm.addDic("ЭкологияСловарьТест", false);
+		Rubric informatica = new Rubric("информатика2", true);
+		tdm.addDic(informatica);
+				
+		// Проверяем корректность наполнения
+		assertThat(tdm.getAllDicts().size(), is(4));
+		assertThat(tdm.getAllProbabilitys().size(), is(3));
+		assertThat(tdm.getAllWords().size(), is(2));
+		
+		// Удаление Физики
+		tdm.deleteDic(0);
+		assertThat(tdm.getAllDicts().size(), is(3));
+		assertThat(tdm.getAllProbabilitys().size(), is(1));
+		
+		assertThat(tdm.getAllDicts().get(0).getName(), is("АлгебраСловарьТест"));
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
+		assertThat(((Word)((Probability)tdm.getAllDicts().get(0).getProbabilitys().get(0)).getWord()).getWord(), is("производная"));
+		//assertThat(tdm.getAllWords().size(), is(1));
+		assertThat(tdm.getAllWords().get(0).getProbabilitys().size(), is(1)); // по смыслу не правильно - ссылка на несуществующую вер-ть
+		assertThat(tdm.getAllWords().get(0).getWord(), is("производная"));
+		assertThat(tdm.getAllWords().get(0).getProbabilitys().size(), is(1));
 	}
 
 	@Test

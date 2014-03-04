@@ -70,6 +70,15 @@ public class ThematicDicTest {
 		tdm.addWord(0, "атом", 0.8);
 		tdm.addWord(0, "атом", 0.8);
 	}
+	
+	@Test(expected=ThematicDicManagerException.class)
+	public void testNoAddIfDicIndexFail() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(-10, "атом", 0.8);
+		assertThat(tdm.getAllWords().size(), is(0)); // истина, т. к. происходит rollback транзакции в cancel()
+	}
 
 	@Test
 	public void testDelWord() throws Exception {
@@ -137,10 +146,11 @@ public class ThematicDicTest {
 		tdm.clearDbSQL();
 		
 		tdm.addDic("ФизикаСловарьТест", true);
-		tdm.addDic("Информатика", true);
-
 		tdm.addWord(0, "атом", 0.8);
 		tdm.addWord(0, "мегаатом", 0.81);
+		
+		tdm.addDic("Информатика", true);
+
 		tdm.addWord(1, "мегаатом", 0.021);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(2));
 		assertThat(tdm.getAllDicts().get(1).getProbabilitys().size(), is(1));
