@@ -197,7 +197,8 @@ public final class ThematicDicManager extends ThematicDicList {
 				System.out.println("Word for this index:" + w);
 			}
 			Probability p = new Probability(probability, getDic(dicIndex), w);
-			session.save(p);
+			w.getProbabilitys().add(p);
+			//session.save(p); // не обязательно при каскадировании в Rubric.java
 			getDic(dicIndex).getProbabilitys().add(p);
 			end();
 		}catch(HibernateException e){
@@ -212,9 +213,21 @@ public final class ThematicDicManager extends ThematicDicList {
 	public void deleteWord(int wordIndex, int dicIndex) throws ThematicDicManagerException {
 		try {
 			begin();
-			// Удаляем элемент коллекции, см. Cascade в Rubric.java
-			getDic(dicIndex).getProbabilitys().remove(wordIndex);
+			// Удаляем вероятность - элемент коллекции, см. Cascade в Rubric.java
+			Probability p  = (Probability) getDic(dicIndex).getProbabilitys().get(wordIndex);
+			getDic(dicIndex).getProbabilitys().remove(p);
 			end();
+			
+/*			begin();
+			Word w = p.getWord();
+			System.out.println("before merge");
+			w=(Word) session.get(Word.class, w.getWordId());
+			if(w.getProbabilitys().size()==0){
+				//getAllWords().remove(w);
+				session.delete(w);
+			}
+			end();
+*/
 		}catch(HibernateException e){
 			cancel();
 			throw new ThematicDicManagerException(e.getMessage());
@@ -223,6 +236,19 @@ public final class ThematicDicManager extends ThematicDicList {
 			throw new ThematicDicManagerException("Неверный индекс");
 		}
 	}
+	
+	
+	
+	public List<Probability> getAllProbabilitys(){
+		Criteria pcrit = session.createCriteria(Probability.class);
+		return pcrit.list();
+	}
+	
+	public List<Word> getAllWords(){
+		Criteria wcrit = session.createCriteria(Word.class);
+		return wcrit.list();
+	}
+	
 	
 	/**
 	 * Удаление файла БД
@@ -332,20 +358,6 @@ public final class ThematicDicManager extends ThematicDicList {
 		sessions.close();
 	}
 
-
-	/**
-	 * Use in tests  only
-	 */
-	public void setSessions(SessionFactory sessions) {
-		this.sessions=sessions;
-	}
-
-	/**
-	 * Use in tests  only
-	 */
-	public void setSession(Session session) {
-		this.session = session;
-	}
 }
 
 /**

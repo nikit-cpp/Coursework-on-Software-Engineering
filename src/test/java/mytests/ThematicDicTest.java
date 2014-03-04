@@ -24,10 +24,14 @@ public class ThematicDicTest {
 		
 		tdm.addDic("ФизикаСловарьТест", true);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+		assertThat(tdm.getAllProbabilitys().size(), is(0));
 		
 		tdm.addWord(0, "субатом", 0.3);
 
 		assertThat(tdm.getAllDicts().size(), is(1));
+		assertThat(tdm.getAllProbabilitys().size(), is(1));
+		assertThat(tdm.getAllWords().size(), is(1));
+		assertThat(tdm.getAllWords().get(0).getProbabilitys().size(), is(1));
 		
 		// Покрывает строчку ThematicDicManager:196
 		// "getDic(dicIndex).getProbabilitys().add(p);"
@@ -68,7 +72,7 @@ public class ThematicDicTest {
 	}
 
 	@Test
-	public void testDelWord() throws Exception{
+	public void testDelWord() throws Exception {
 		tdm = ThematicDicManager.getInstance();
 		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
@@ -76,6 +80,15 @@ public class ThematicDicTest {
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
 		tdm.deleteWord(0, 0);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+		assertThat(tdm.getAllProbabilitys().size(), is(0)); // проверка удаления
+															// сирот(вероятностей
+															// из таблицы
+															// вероятностей, на
+															// которые не
+															// ссыласется ни
+															// одна рубрика) -
+															// Rubric.java
+															// orphan
 	}
 	
 	@Test
@@ -100,5 +113,45 @@ public class ThematicDicTest {
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
 		tdm.deleteWord(1, 0);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+	}
+	
+	@Test
+	public void testDelProbsAfterDelDic() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addWord(0, "атом", 0.8);
+		tdm.addWord(0, "мегаатом", 0.81);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(2));
+		assertThat(tdm.getAllProbabilitys().size(), is(2));
+		
+		tdm.deleteDic(0);
+		assertThat(tdm.getAllProbabilitys().size(), is(0));
+		assertThat(tdm.getAllDicts().size(), is(0));
+	}
+	
+	@Test
+	public void testDelWordsAfterDelProbability() throws Exception{
+		tdm = ThematicDicManager.getInstance();
+		tdm.clearDbSQL();
+		
+		tdm.addDic("ФизикаСловарьТест", true);
+		tdm.addDic("Информатика", true);
+
+		tdm.addWord(0, "атом", 0.8);
+		tdm.addWord(0, "мегаатом", 0.81);
+		tdm.addWord(1, "мегаатом", 0.021);
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(2));
+		assertThat(tdm.getAllDicts().get(1).getProbabilitys().size(), is(1));
+		assertThat(tdm.getAllProbabilitys().size(), is(3));
+		assertThat(tdm.getAllWords().size(), is(2));
+				
+		tdm.deleteWord(0, 0); // удаляем атом:ФизикаСловарьТест
+		tdm.deleteWord(0, 0); // удаляем мегаатом:ФизикаСловарьТест
+		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
+		assertThat(tdm.getAllDicts().get(1).getProbabilitys().size(), is(1));
+		assertThat(tdm.getAllProbabilitys().size(), is(1));
+		assertThat(tdm.getAllWords().size(), is(1)); // должен остаться только мегаатом:Информатика
 	}
 }
