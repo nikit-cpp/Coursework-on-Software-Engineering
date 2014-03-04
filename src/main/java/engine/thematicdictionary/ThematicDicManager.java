@@ -215,19 +215,17 @@ public final class ThematicDicManager extends ThematicDicList {
 			begin();
 			// Удаляем вероятность - элемент коллекции, см. Cascade в Rubric.java
 			Probability p  = (Probability) getDic(dicIndex).getProbabilitys().get(wordIndex);
+			Word w = p.getWord();
+			
+			// если у слова > 1 вероятности (мы не будем его удалять из таблицы слов)
+			if(w.getProbabilitys().size()>1){
+				w.getProbabilitys().remove(p); // обновляем вероятности слова
+				p.setWord(null); // то мы отцепляем это слово от удаляемой вероятности, чтобы каскадно не удалить это слово
+			}
+			
 			getDic(dicIndex).getProbabilitys().remove(p);
 			end();
 			
-/*			begin();
-			Word w = p.getWord();
-			System.out.println("before merge");
-			w=(Word) session.get(Word.class, w.getWordId());
-			if(w.getProbabilitys().size()==0){
-				//getAllWords().remove(w);
-				session.delete(w);
-			}
-			end();
-*/
 		}catch(HibernateException e){
 			cancel();
 			throw new ThematicDicManagerException(e.getMessage());

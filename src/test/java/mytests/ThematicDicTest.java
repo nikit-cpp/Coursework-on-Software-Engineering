@@ -149,9 +149,14 @@ public class ThematicDicTest {
 				
 		tdm.deleteWord(0, 0); // удаляем атом:ФизикаСловарьТест
 		tdm.deleteWord(0, 0); // удаляем мегаатом:ФизикаСловарьТест
+		System.out.println("Закончили deleteWord");
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(0));
 		assertThat(tdm.getAllDicts().get(1).getProbabilitys().size(), is(1));
 		assertThat(tdm.getAllProbabilitys().size(), is(1));
 		assertThat(tdm.getAllWords().size(), is(1)); // должен остаться только мегаатом:Информатика
+		System.out.println("Оставшееся слово: "+tdm.getAllWords().get(0));
+		assertThat(tdm.getAllWords().get(0).getWord(), is("мегаатом"));
+		
+		assertThat(tdm.getAllWords().get(0).getProbabilitys().size(), is(1)); // тестируем наличие несуществующих вероятностей у слова
 	}
 }
