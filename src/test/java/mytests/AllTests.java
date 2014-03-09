@@ -11,7 +11,8 @@ import org.junit.runners.Suite.SuiteClasses;
 	DictionaryBuilderTest.class,
 	ThematicDicTest.class,
 	//СalcProbabilityforDicTest.class,
-	ThematicDicManagerTest.class
+	ThematicDicManagerTest.class,
+	HibernateUtinH2Test.class
 })
 public class AllTests {
 

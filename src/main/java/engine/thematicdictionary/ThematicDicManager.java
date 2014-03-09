@@ -1,6 +1,8 @@
 package engine.thematicdictionary;
 
 import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
@@ -37,7 +39,12 @@ public final class ThematicDicManager extends ThematicDicList {
 
 	public static ThematicDicManager getInstance(){
 		if( instance==null ){
-		      instance = new ThematicDicManager();
+			Path p = (Paths.get(".")).toAbsolutePath().normalize().resolve("h2db");
+			p.toFile().mkdirs();
+			p = p.resolve("thematicdicts");
+		    HibernateUtil.setDbFileName(p.toString());
+		    
+		    instance = new ThematicDicManager();
 		}
 		return instance;
 	}
@@ -276,9 +283,9 @@ public final class ThematicDicManager extends ThematicDicList {
 	 */
 	public void remove() throws Exception{
 		String home = "";
-		String path = HibernateUtil.dbFileName;
+		String path = HibernateUtil.getDbFileName();
 		final String ext = ".h2.db";
-		if(HibernateUtil.dbFileName.startsWith("~")){
+		if(HibernateUtil.getDbFileName().startsWith("~")){
 			home = System.getProperty("user.home");
 			System.out.println("user.home: "+ home);
 			path = path.substring(1);

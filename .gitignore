@@ -12,3 +12,4 @@ VERSION
 release
 scm.properties
 mydatabases
+h2db
