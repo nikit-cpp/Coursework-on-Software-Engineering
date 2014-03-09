@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.junit.*;
 
+import util.HibernateUtil;
 import engine.thematicdictionary.*;
 import entities.Probability;
 import entities.Rubric;
@@ -15,16 +16,19 @@ import entities.Word;
 public class ThematicDicManagerTest {
 	static ThematicDicManager tdm;
 
-	/*@BeforeClass
+	@BeforeClass
 	public static void setUpBefore() throws Exception {
-		tdm = new ThematicDicManager();
-	}*/
+		HibernateUtil.setUp(null);
+		tdm = ThematicDicManager.getInstance();
+	}
+	
+	@Before
+	public void setUp(){
+		tdm.clearDbSQL(); // Очищаем содержимое БД, используя SQL
+	}
 
 	@Test
 	public void testAdd() throws Exception {		
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
 		tdm.addDic("ЭкологияСловарьТест", false);
@@ -42,9 +46,6 @@ public class ThematicDicManagerTest {
 	
 	@Test
 	public void testRemove() throws Exception {		
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
 		tdm.addDic("ЭкологияСловарьТест", false);
@@ -69,9 +70,6 @@ public class ThematicDicManagerTest {
 	
 	@Test
 	public void testRemoveProbabilitysAndWords() throws Exception {		
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.833);
 		tdm.addWord(0, "производная", 0.13);
@@ -103,9 +101,6 @@ public class ThematicDicManagerTest {
 
 	@Test
 	public void testRename() throws Exception {		
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addDic("АлгебраСловарьТест", true);
 		tdm.addDic("ЭкологияСловарьТест", false);
@@ -130,9 +125,6 @@ public class ThematicDicManagerTest {
 	
 	@Test
 	public void testIsWorkAddAfterErrorAdd(){
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-
 		try {
 			tdm.addDic("словарь1", true);
 			tdm.addDic("словарь1", true);
@@ -157,9 +149,6 @@ public class ThematicDicManagerTest {
 
 	@Test
 	public void testIsWorkRenameAfterErrorAdd(){
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-
 		try {
 			tdm.addDic("словарь1", true);
 			tdm.addDic("словарь1", true);
@@ -183,9 +172,6 @@ public class ThematicDicManagerTest {
 	
 	@Test
 	public void testIsWorkRenameAfterErrorRename(){
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-
 		try {
 			tdm.addDic("словарь0", true);
 			tdm.addDic("словарь1", true);
@@ -217,9 +203,6 @@ public class ThematicDicManagerTest {
 	 */
 	@Test
 	public void testIsWorkRenameAfterErrorDelete(){
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-
 		try {
 			tdm.addDic("словарь0", true);
 			tdm.addDic("словарь1", true);

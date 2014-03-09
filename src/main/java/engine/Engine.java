@@ -1,11 +1,16 @@
 package engine;
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Collection;
 import java.util.List;
 
+import util.HibernateUtil;
 import engine.foundedwords.Builder;
 import engine.foundedwords.WordInfo;
 import engine.foundedwords.WordsMap;
+import engine.options.OptId;
+import engine.options.Options;
 import engine.thematicdictionary.ThematicDicManager;
 import entities.Rubric;
 
@@ -31,6 +36,10 @@ public final class Engine {
 	 */
 	private Engine() {
 		builder = new Builder();
+		
+		Path p = (Paths.get(Options.getInstance().getString(OptId.THEMATIC_DIC_PATH)));
+	    HibernateUtil.setUp(p);
+
 		tdm = ThematicDicManager.getInstance();
 	}
 	

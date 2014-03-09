@@ -40,7 +40,7 @@
 		<dependency>
 			<groupId>Coursework-on-Software-Engineering-ThematicDicts-model</groupId>
 			<artifactId>Coursework-on-Software-Engineering-ThematicDicts-model</artifactId>
-			<version>0.0.7</version>
+			<version>0.0.8</version>
 		</dependency>
 	</dependencies>
 

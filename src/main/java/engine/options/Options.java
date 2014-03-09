@@ -48,6 +48,7 @@ public final class Options {
 		this.add(OptId.AFF_PATH, new Option("hunspell/ru_RU.aff"));
 		this.add(OptId.CHARSET, new Option("cp1251"));
 		this.add(OptId.RUBRICATE_ON_FILEOPEN, new Option(true));
+		this.add(OptId.THEMATIC_DIC_PATH, new Option("."));	
 	}
 
 	// Добавление опций

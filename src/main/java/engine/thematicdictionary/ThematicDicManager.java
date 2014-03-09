@@ -23,6 +23,8 @@ import org.hibernate.persister.entity.AbstractEntityPersister;
 
 import util.HibernateUtil;
 import engine.foundedwords.WordInfo;
+import engine.options.OptId;
+import engine.options.Options;
 import entities.Probability;
 import entities.Rubric;
 import entities.Word;
@@ -38,12 +40,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	private Transaction tx;
 
 	public static ThematicDicManager getInstance(){
-		if( instance==null ){
-			Path p = (Paths.get(".")).toAbsolutePath().normalize().resolve("h2db");
-			p.toFile().mkdirs();
-			p = p.resolve("thematicdicts");
-		    HibernateUtil.setDbFileName(p.toString());
-		    
+		if( instance==null ){		    
 		    instance = new ThematicDicManager();
 		}
 		return instance;
@@ -60,12 +57,7 @@ public final class ThematicDicManager extends ThematicDicList {
 		begin();
     	end();
 	}
-	
-	/**
-	 * Use in tests  only
-	 */
-	public ThematicDicManager(int thisIsNoSingleton){}
-		
+			
 	public void addDic(Rubric thematicDic) throws ThematicDicManagerException {
 		try{
 			begin();

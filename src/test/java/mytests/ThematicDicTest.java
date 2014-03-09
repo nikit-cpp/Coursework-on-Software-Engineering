@@ -7,16 +7,27 @@ import java.util.List;
 
 import org.junit.*;
 
+import util.HibernateUtil;
 import engine.thematicdictionary.*;
 import entities.Rubric;
 
 public class ThematicDicTest {
 	static ThematicDicManager tdm;
+	
+	@BeforeClass
+	public static void setUpBefore() throws Exception {
+		HibernateUtil.setUp(null);
+		tdm = ThematicDicManager.getInstance();
+	}
+	
+	@Before
+	public void setUp(){
+		tdm.clearDbSQL(); // Очищаем содержимое БД, используя SQL
+	}
+
 
 	@Test
-	public void testAdd() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		
+	public void testAdd() throws Exception{		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.clearDbSQL();
 		
@@ -40,8 +51,6 @@ public class ThematicDicTest {
 	
 	@Test
 	public void testAddWithConflict() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.33);
 		
@@ -51,8 +60,6 @@ public class ThematicDicTest {
 	
 	@Test(expected=ThematicDicManagerException.class)
 	public void testAddFailSafe1() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		//try{
 			tdm.addWord(0, "атом", 0.33);
@@ -64,8 +71,6 @@ public class ThematicDicTest {
 	
 	@Test(expected=ThematicDicManagerException.class)
 	public void testAddFailSafe2() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.8);
 		tdm.addWord(0, "атом", 0.8);
@@ -73,8 +78,6 @@ public class ThematicDicTest {
 	
 	@Test(expected=ThematicDicManagerException.class)
 	public void testNoAddIfDicIndexFail() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(-10, "атом", 0.8);
 		assertThat(tdm.getAllWords().size(), is(0)); // истина, т. к. происходит rollback транзакции в cancel()
@@ -82,8 +85,6 @@ public class ThematicDicTest {
 
 	@Test
 	public void testDelWord() throws Exception {
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.8);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
@@ -102,8 +103,6 @@ public class ThematicDicTest {
 	
 	@Test
 	public void testDel2Word() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.8);
 		tdm.addWord(0, "мегаатом", 0.8);
@@ -115,8 +114,6 @@ public class ThematicDicTest {
 	
 	@Test(expected=ThematicDicManagerException.class)
 	public void testDelWordNonExists() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.8);
 		assertThat(tdm.getAllDicts().get(0).getProbabilitys().size(), is(1));
@@ -125,10 +122,7 @@ public class ThematicDicTest {
 	}
 	
 	@Test
-	public void testDelProbsAfterDelDic() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-		
+	public void testDelProbsAfterDelDic() throws Exception{		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.8);
 		tdm.addWord(0, "мегаатом", 0.81);
@@ -142,9 +136,6 @@ public class ThematicDicTest {
 	
 	@Test
 	public void testDelWordsAfterDelProbability() throws Exception{
-		tdm = ThematicDicManager.getInstance();
-		tdm.clearDbSQL();
-		
 		tdm.addDic("ФизикаСловарьТест", true);
 		tdm.addWord(0, "атом", 0.8);
 		tdm.addWord(0, "мегаатом", 0.81);
