@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 
 import org.hibernate.Criteria;
 import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -353,8 +354,29 @@ public final class ThematicDicManager extends ThematicDicList {
 		dic.setCalculatedProbability(p);
 	}
 	
-	private double getProbability4Word(Rubric r, String s){
-		return 0.0;
+	private double getProbability4Word(Rubric rubric, String word){
+		/*Word w = new Word(word);
+		begin();
+		List<Word> list = session.createCriteria(Word.class)
+				.add(Example.create(w)).list();
+		end();*/
+		/*List<Probability> list = rubric.getProbabilitys();
+		
+		List words = (List) session.createSQLQuery("SELECT * FROM рубрики WHERE название_рубрики ='"+rubric.getName()+"'")
+			.list().get(0);*/
+		begin();
+		Query q = session.createQuery(
+	            "from entities.Probability as p "+
+				"inner join p.rubric as r " +
+				"inner join p.word as w " +
+				"where r.name = :rName and w.word = :wString"
+		);
+		q.setParameter("rName", rubric.getName());
+		q.setParameter("wString", word);
+		Probability p  = (Probability) q.uniqueResult();
+		double pp = p.getProbability();
+		end();
+		return pp;
 	}
 	
 	public static void checkProbabilityBounds(double probability){
