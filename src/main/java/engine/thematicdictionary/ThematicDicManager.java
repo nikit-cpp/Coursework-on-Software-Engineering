@@ -355,6 +355,7 @@ public final class ThematicDicManager extends ThematicDicList {
 	}
 	
 	private double getProbability4Word(Rubric rubric, String word){
+		System.out.println("getProbability4Word(): r:"+rubric.getName() + " w:" + word);
 		/*Word w = new Word(word);
 		begin();
 		List<Word> list = session.createCriteria(Word.class)
