@@ -16,10 +16,15 @@ public class СalcProbabilityforDicTest {
 	static Builder builder;
 	
 	@BeforeClass
-	public static void setUp() throws ThematicDicManagerException{
+	public static void setUpBefore() throws ThematicDicManagerException{
 		HibernateUtil.setUp(null);
 		tdm = ThematicDicManager.getInstance();
 		builder = new Builder();
+	}
+	
+	@Before
+	public void setUp() throws ThematicDicManagerException{
+		tdm.clearDbSQL(); // Очищаем содержимое БД, используя SQL
 		
 		tdm.addDic("megaDic", true);
 		
@@ -31,6 +36,7 @@ public class СalcProbabilityforDicTest {
 		tdm.addWord(0, "от", 1.0);
 		//megaDic.add("недобросовестный", 0.3);
 		//megaDic.add("исполнитель", 0.3);
+
 	}
 	
 	@Test
@@ -95,10 +101,11 @@ public class СalcProbabilityforDicTest {
 		assertEquals(0.5, p, 0.01);
 	}
 	
-	@Ignore // Игнорируем -- скорее всего из-за того что сост-е БД не сбрасывается между тестами
 	@Test
 	public void test4() throws Exception {
-
+		tdm.addWord(0, "исполнитель", 1.0);
+		tdm.addWord(0, "образ", 0.5);
+		
 		tdm.calcProbabilityforDic(r0, builder.buildMap("исполнителей исполнители образы").getStems());
 		double p = r0.getCalculatedProbability();
 		assertEquals(true, p<=1.0);
@@ -109,6 +116,9 @@ public class СalcProbabilityforDicTest {
 	
 	@Test
 	public void test5_withNonExisted() throws Exception {
+		tdm.addWord(0, "исполнитель", 1.0);
+		tdm.addWord(0, "образ", 0.5);
+		
 		tdm.calcProbabilityforDic(r0, builder.buildMap("исполнителей, исполнители образы несуществующееслово").getStems());
 		double p = r0.getCalculatedProbability();
 		assertEquals(true, p<=1.0);
