@@ -58,6 +58,7 @@ public class СalcProbabilityforDicTest {
 		tdm.addDic("исполнитель", true);
 		
 		Rubric r1 = tdm.getAllDicts().get(1);
+		assertEquals(r1.getName(), "исполнитель");
 		
 		tdm.calcProbabilityforDic(r1, builder.buildMap("исполнителей исполнители").getStems());
 		

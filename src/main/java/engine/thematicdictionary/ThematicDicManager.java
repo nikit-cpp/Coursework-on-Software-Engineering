@@ -358,15 +358,6 @@ public final class ThematicDicManager extends ThematicDicList {
 	public double getProbability4Word(Rubric rubric, String word) throws Exception{
 		try{
 			System.out.println("getProbability4Word(): r:"+rubric.getName() + " w:" + word);
-			/*Word w = new Word(word);
-			begin();
-			List<Word> list = session.createCriteria(Word.class)
-					.add(Example.create(w)).list();
-			end();*/
-			/*List<Probability> list = rubric.getProbabilitys();
-			
-			List words = (List) session.createSQLQuery("SELECT * FROM рубрики WHERE название_рубрики ='"+rubric.getName()+"'")
-				.list().get(0);*/
 			begin();
 			Query q = session.createQuery(
 					"select p "+
@@ -379,9 +370,10 @@ public final class ThematicDicManager extends ThematicDicList {
 			q.setParameter("wString", word);
 			Probability p  = (Probability) q.uniqueResult();
 			if(p==null) System.out.println("p obj==null");
-			double pp = p.getProbability();
 			end();
-			return pp;
+			
+			// Возвращаем найденную вероятность, или 0, если вероятность не найдена
+			return (p==null ? 0 : p.getProbability());
 		}catch(Exception e){
 			cancel();
 			throw new Exception(e);
