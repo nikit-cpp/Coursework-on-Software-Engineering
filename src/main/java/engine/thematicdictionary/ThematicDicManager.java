@@ -370,6 +370,7 @@ public final class ThematicDicManager extends ThematicDicList {
 			q.setParameter("wString", word);
 			Probability p  = (Probability) q.uniqueResult();
 			if(p==null) System.out.println("p obj==null");
+			else System.out.println("p="+p.getProbability());
 			end();
 			
 			// Возвращаем найденную вероятность, или 0, если вероятность не найдена

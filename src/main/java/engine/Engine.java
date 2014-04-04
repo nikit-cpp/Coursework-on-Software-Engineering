@@ -46,11 +46,13 @@ public final class Engine {
 	public void rubricate(String text){
 		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
-		for(Rubric dic: tdm.getAllDicts()){
+		
+		List<Rubric> allDicts = tdm.getAllDicts();
+		for(int i=0; i<allDicts.size(); i++){
+			Rubric dic = allDicts.get(i);
 			try {
 				tdm.calcProbabilityforDic(dic, stems);
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
