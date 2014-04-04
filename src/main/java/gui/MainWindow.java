@@ -205,8 +205,7 @@ public class MainWindow {
 			        //System.out.println(word);
 			        new AddWordWindow(display, word);
 		    	}catch(ArrayIndexOutOfBoundsException e){
-		    		
-		    	}
+		    	}catch(IllegalArgumentException e){}
 		      }
 		    });
 		
