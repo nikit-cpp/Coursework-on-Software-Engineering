@@ -337,8 +337,9 @@ public final class ThematicDicManager extends ThematicDicList {
 	 * @param dic - Тематический словарь, представляющий данную рубрику
 	 * @param stems - стемы(начальные формы)
 	 * @return вероятность
+	 * @throws Exception 
 	 */
-	public void calcProbabilityforDic(Rubric dic, Collection<WordInfo> stems) {
+	public void calcProbabilityforDic(Rubric dic, Collection<WordInfo> stems) throws Exception {
 		double p = 0;
 		int size = 0;
 		
@@ -354,30 +355,37 @@ public final class ThematicDicManager extends ThematicDicList {
 		dic.setCalculatedProbability(p);
 	}
 	
-	private double getProbability4Word(Rubric rubric, String word){
-		System.out.println("getProbability4Word(): r:"+rubric.getName() + " w:" + word);
-		/*Word w = new Word(word);
-		begin();
-		List<Word> list = session.createCriteria(Word.class)
-				.add(Example.create(w)).list();
-		end();*/
-		/*List<Probability> list = rubric.getProbabilitys();
-		
-		List words = (List) session.createSQLQuery("SELECT * FROM рубрики WHERE название_рубрики ='"+rubric.getName()+"'")
-			.list().get(0);*/
-		begin();
-		Query q = session.createQuery(
-	            "from entities.Probability as p "+
-				"inner join p.rubric as r " +
-				"inner join p.word as w " +
-				"where r.name = :rName and w.word = :wString"
-		);
-		q.setParameter("rName", rubric.getName());
-		q.setParameter("wString", word);
-		Probability p  = (Probability) q.uniqueResult();
-		double pp = p.getProbability();
-		end();
-		return pp;
+	public double getProbability4Word(Rubric rubric, String word) throws Exception{
+		try{
+			System.out.println("getProbability4Word(): r:"+rubric.getName() + " w:" + word);
+			/*Word w = new Word(word);
+			begin();
+			List<Word> list = session.createCriteria(Word.class)
+					.add(Example.create(w)).list();
+			end();*/
+			/*List<Probability> list = rubric.getProbabilitys();
+			
+			List words = (List) session.createSQLQuery("SELECT * FROM рубрики WHERE название_рубрики ='"+rubric.getName()+"'")
+				.list().get(0);*/
+			begin();
+			Query q = session.createQuery(
+					"select p "+
+		            "from entities.Probability as p "+
+					"inner join p.rubric as r " +
+					"inner join p.word as w " +
+					"where r.name = :rName and w.word = :wString"
+			);
+			q.setParameter("rName", rubric.getName());
+			q.setParameter("wString", word);
+			Probability p  = (Probability) q.uniqueResult();
+			if(p==null) System.out.println("p obj==null");
+			double pp = p.getProbability();
+			end();
+			return pp;
+		}catch(Exception e){
+			cancel();
+			throw new Exception(e);
+		}
 	}
 	
 	public static void checkProbabilityBounds(double probability){

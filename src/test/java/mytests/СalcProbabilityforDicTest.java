@@ -34,7 +34,17 @@ public class СalcProbabilityforDicTest {
 	}
 	
 	@Test
-	public void test1() {
+	public void testIfExistsWordInDB() throws Exception {
+		double p = r0.getCalculatedProbability();
+		assertEquals(true, p<=1.0);
+		System.out.println(p);
+		
+		double pw=tdm.getProbability4Word(r0, "начинать");
+		assertEquals(pw, 1.0, 0.001);
+	}
+	
+	@Test
+	public void test1() throws Exception {
 		tdm.calcProbabilityforDic( r0, builder.buildMap("начинает нас спасать от недобросовестных исполнителей").getStems());
 		double p = r0.getCalculatedProbability();
 		assertEquals(true, p<=1.0);
@@ -44,7 +54,7 @@ public class СalcProbabilityforDicTest {
 	}
 
 	@Test
-	public void test2() throws ThematicDicManagerException {
+	public void test2() throws Exception {
 		tdm.addDic("исполнитель", true);
 		
 		Rubric r1 = tdm.getAllDicts().get(1);
@@ -59,7 +69,7 @@ public class СalcProbabilityforDicTest {
 	}
 	
 	@Test
-	public void test3() throws ThematicDicManagerException {
+	public void test3() throws Exception {
 		tdm.addWord(0, "образ", 0.5);
 		
 		tdm.calcProbabilityforDic(r0, builder.buildMap("образом образ образы").getStems());
@@ -71,7 +81,7 @@ public class СalcProbabilityforDicTest {
 	}
 	
 	@Test
-	public void test4() {
+	public void test4() throws Exception {
 		tdm.calcProbabilityforDic(r0, builder.buildMap("исполнителей исполнители образы").getStems());
 		double p = r0.getCalculatedProbability();
 		assertEquals(true, p<=1.0);
@@ -81,7 +91,7 @@ public class СalcProbabilityforDicTest {
 	}
 	
 	@Test
-	public void test5_withNonExisted() {
+	public void test5_withNonExisted() throws Exception {
 		tdm.calcProbabilityforDic(r0, builder.buildMap("исполнителей, исполнители образы несуществующееслово").getStems());
 		double p = r0.getCalculatedProbability();
 		assertEquals(true, p<=1.0);

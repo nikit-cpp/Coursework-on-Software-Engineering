@@ -47,7 +47,12 @@ public final class Engine {
 		container = builder.buildMap(text);
 		Collection<WordInfo> stems = container.getStems();
 		for(Rubric dic: tdm.getAllDicts()){
-			tdm.calcProbabilityforDic(dic, stems);
+			try {
+				tdm.calcProbabilityforDic(dic, stems);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 	}
 	
