@@ -64,8 +64,10 @@ public final class ThematicDicManager extends ThematicDicList {
 			begin();
 			session.save(thematicDic);
 			end();
+			Options.getInstance().addDic(thematicDic.getRubricId());
 		}catch(HibernateException e){
 			cancel();
+			Options.getInstance().delDic(thematicDic.getRubricId());
 			throw new ThematicDicManagerException(e);
 		}
     }
@@ -340,6 +342,11 @@ public final class ThematicDicManager extends ThematicDicList {
 	 * @throws Exception 
 	 */
 	public void calcProbabilityforDic(Rubric dic, Collection<WordInfo> stems) throws Exception {
+		if(!dic.getDicEnabled()){ 
+			System.out.println("для " + dic + "вероятность не была подсчитана, т. к. этот словарь выключен");
+			return;
+		}
+		
 		double p = 0;
 		int size = 0;
 		

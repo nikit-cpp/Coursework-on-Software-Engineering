@@ -41,6 +41,8 @@ public final class Options {
 	// Ид : Значение
 	private HashMap<OptId, Object> optsVals = new HashMap<OptId, Object>();
 
+	private HashMap<Long, Boolean> dicMap = new HashMap<Long, Boolean>();
+
 	// Конструктор
 	@SuppressWarnings("unchecked")
 	private Options() {
@@ -115,5 +117,28 @@ public final class Options {
 
 	public String getString(OptId id) {
 		return (String) optsVals.get(id);
+	}
+
+	public boolean getDicEnabled(long rubricId) {
+		System.out.println("getDicEnabled("+ rubricId +")");
+		
+		// Ленивая инициализация ХэшМэпа dicMap
+		if(dicMap.get(rubricId)==null){
+			addDic(rubricId);
+		}
+		return dicMap.get(rubricId);
+	}
+
+	public void setDicEnabled(long rubricId, boolean b) {
+		System.out.println("setDicEnabled("+ rubricId + ", " + b +")");
+		dicMap.put(rubricId, b);
+	}
+
+	public void addDic(long rubricId) {
+		dicMap.put(rubricId, true);
+	}
+
+	public void delDic(long rubricId) {
+		dicMap.remove(rubricId);
 	}
 }

@@ -20,6 +20,8 @@ import javax.persistence.UniqueConstraint;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
+import engine.options.Options;
+
 @Entity
 @Table(	name = "рубрики",
 		uniqueConstraints= @UniqueConstraint(
@@ -98,13 +100,12 @@ public class Rubric implements Serializable, Iterable<String[]>{
 	}
 	
 	public void setDicEnabled(boolean b) {
-		// TODO Auto-generated method stub
-		
+		Options.getInstance().setDicEnabled(rubricId, b);
 	}
+	
 	@Transient
 	public boolean getDicEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		return Options.getInstance().getDicEnabled(rubricId);
 	}
 	
 	@Transient
@@ -113,7 +114,7 @@ public class Rubric implements Serializable, Iterable<String[]>{
 	 */
 	public String[] getRow() {
 		String dicName = getName();
-        String probabilitty = String.valueOf(getCalculatedProbability());
+        String probabilitty = getDicEnabled() ? String.valueOf(getCalculatedProbability()) : "";
         String[] row = {dicName, probabilitty};
 		
 		return row;
